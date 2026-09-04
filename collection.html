@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Puvela — Bộ sưu tập</title>
+  <meta name="description" content="Nước hoa chính hãng nhập khẩu — full bottle & chiết 5–10ml. Chọn theo Nữ, Nam, Unisex & Niche tại Puvela." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--ink:#2b2621;--paper:#f5f0e7;--line:rgba(43,38,33,.15);--clay:#9c5a41;--sand:#e7ddce}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",sans-serif;font-weight:400}a{color:inherit;text-decoration:none}.announcement{padding:10px 20px;background:var(--ink);color:#fff;text-align:center;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}nav{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,4vw,60px);border-bottom:1px solid var(--line)}.back,.bag{font-size:11px;letter-spacing:.08em;text-transform:uppercase}.bag{justify-self:end}.filters::-webkit-scrollbar{display:none}
+.brand{display:inline-flex;align-items:center;line-height:0}.brand img{height:38px;width:auto;display:block}.collection-head{padding:clamp(46px,6vw,86px) clamp(20px,5vw,78px) 36px}.eyebrow{margin:0 0 16px;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}.collection-head h1{margin:0;font:600 clamp(50px,6vw,86px)/.98 "Cormorant Garamond",serif;letter-spacing:-.01em}.collection-head p:not(.eyebrow){max-width:460px;margin:18px 0 0;font-size:15px;line-height:1.6}.filters{display:flex;gap:24px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:0 clamp(20px,5vw,78px) 18px;border-bottom:1px solid var(--line);scrollbar-width:none;-ms-overflow-style:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}.filters button{border:0;border-bottom:1px solid transparent;background:none;padding:0 0 13px;cursor:pointer;font:12px "Be Vietnam Pro",sans-serif;color:#635d57}.filters button.active{color:var(--ink);border-color:var(--ink)}
+.filters2{gap:8px;padding-top:14px;border-bottom:0;flex-wrap:wrap;overflow:visible;white-space:normal}
+.filters2 button{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#635d57;background:#fff}
+.filters2 button.active{background:var(--ink);border-color:var(--ink);color:#fff}
+.filters2 .flabel{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#a09a94;margin-right:2px}
+.filters2 .sep{width:1px;height:22px;background:var(--line);margin:0 6px;flex:none;display:inline-block}
+.fcount{margin:0;padding:14px clamp(20px,5vw,78px) 0;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;color:#635d57}
+.fcount b{color:var(--ink)}
+.fclear{margin-left:10px;border:0;background:none;padding:0;cursor:pointer;font:inherit;color:var(--clay);text-decoration:underline}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 18px;padding:55px clamp(20px,5vw,78px) 100px}.card{min-width:0;display:flex;flex-direction:column}
+.card>a{flex:1 1 auto;display:flex;flex-direction:column}
+.card .info{flex:1 1 auto;display:flex;flex-direction:column;justify-content:space-between}
+.card .add{margin-top:auto}.visual{height:min(24vw,340px);min-height:230px;position:relative;overflow:hidden;background:#eeeae4}.visual img{width:100%;height:100%;object-fit:cover;filter:saturate(.68);transition:transform .45s}.card:hover img{transform:scale(1.04)}.badge{position:absolute;z-index:1;left:12px;top:12px;padding:6px 8px;background:#fff;font:500 9px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase}.info{padding-top:14px;display:flex;justify-content:space-between;gap:8px}.info h2{margin:0;text-transform:uppercase;font-size:13px;letter-spacing:.05em}
+.cstar{display:block;margin:4px 0 0;font:500 11px "IBM Plex Mono",monospace;color:var(--clay);letter-spacing:.04em}
+.cstar i{font-style:normal;color:#7a7268}.info p{margin:5px 0 0;font-size:12px}.price{font-size:12px;white-space:nowrap}.add{width:100%;margin-top:18px;padding:12px;border:1px solid var(--ink);background:transparent;cursor:pointer;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;transition:.2s}.add:hover{background:var(--ink);color:#fff}.pv-footer{background:var(--ink);color:#f8f5ef;padding:52px clamp(20px,5vw,78px) 26px}.pv-footer .cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}.pv-footer h4{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;margin:0 0 12px}.pv-footer p{margin:0;font-size:13px;line-height:1.85;color:rgba(255,255,255,.72)}.pv-footer a{color:rgba(255,255,255,.72)}.pv-footer .copy{margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:11px}@media(max-width:800px){.pv-footer .cols{grid-template-columns:1fr 1fr}}@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.visual{height:42vw}}@media(max-width:480px){nav{height:66px}.brand{font-size:20px;letter-spacing:.12em}.grid{grid-template-columns:1fr;gap:32px;padding-top:36px}.visual{height:100vw}.filters{gap:18px}}
+  </style>
+  <style>
+    /* giá sale — thêm khi bỏ giá cứng, dùng chung cho 3 trang */
+    s{text-decoration:line-through;opacity:.5;font-weight:400}
+    .sale{color:#9e3b28;font-weight:600}
+    .badge-sale{background:#9e3b28 !important;color:#fff !important}
+  </style>
+
+  <style>
+    /* ===== chân trang dùng chung toàn site ===== */
+    footer[aria-label="Chân trang"]{background:#29251f;color:#e9e1d5;padding:clamp(56px,7vw,88px) clamp(22px,5vw,80px) 30px}
+    footer[aria-label="Chân trang"] a{color:inherit;text-decoration:none}
+    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:44px;
+      border-bottom:1px solid rgba(255,255,255,.16)}
+    .foot-brand img{height:30px;margin-bottom:16px;filter:brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg)}
+    .foot-brand p{max-width:34ch;font-size:13.5px;line-height:1.7;color:rgba(233,225,213,.66);margin:0}
+    .foot-col h4{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase;margin:0 0 16px;color:#fff}
+    .foot-col a{display:block;margin:9px 0;font-size:13.5px;color:rgba(233,225,213,.7)}
+    .foot-col a:hover{color:#fff}
+    .foot-bottom{padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;
+      font:10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:rgba(233,225,213,.55)}
+    .foot-social{display:flex;gap:22px}
+    .foot-social a:hover{color:#fff}
+    @media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:560px){.foot-grid{grid-template-columns:1fr}.foot-bottom{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <div class="announcement">Chính hãng 100% · Full &amp; Chiết · Freeship đơn từ 1.500.000₫</div>
+  <nav><a class="back" href="index.html#collections">← Quay lại</a><a class="brand" href="index.html" aria-label="Puvela"><img src="assets/logo-nav.png" alt="Puvela" /></a><a class="bag" href="#" data-cart-toggle>Túi (<span data-cart-count>0</span>)</a></nav>
+  <header class="collection-head"><p class="eyebrow">Puvela · Nước hoa chính hãng</p><h1 id="title">Nước hoa Nữ</h1><p id="intro"></p></header>
+  <div class="filters" id="f-brand" aria-label="Lọc theo thương hiệu"></div>
+  <div class="filters filters2" id="f-more" aria-label="Lọc theo giá"></div>
+  <p class="fcount" id="f-count"></p>
+  <main class="grid" id="grid"></main>
+  <footer aria-label="Chân trang">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="assets/logo-nav.png" alt="PUVELA" />
+        <p>Nước hoa chính hãng nhập khẩu — full &amp; chiết. Thử trước. Yêu rồi hãy mua cả chai.</p>
+      </div>
+      <div class="foot-col"><h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp; Niche</a><a href="index.html#bestsellers">Best sellers</a></div>
+      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a href="van-chuyen.html">Vận chuyển</a><a href="faq.html">FAQ</a></div>
+      <div class="foot-col"><h4>Chính sách</h4><a href="cam-ket-chinh-hang.html">Cam kết chính hãng</a><a href="kiem-tra-that-gia.html">Kiểm tra thật/giả</a><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 PUVELA</span>
+      <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a></div>
+      <span>Việt Nam</span>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/supabase.js"></script>
+  <script src="assets/cart.js"></script>
+  <script>
+    const META={all:{title:'Tất cả nước hoa',intro:'Toàn bộ nước hoa chính hãng tại Puvela — mua chiết 5–10ml để thử, hoặc full bottle nguyên seal.'},nu:{title:'Nước hoa Nữ',intro:'Nước hoa nữ chính hãng nhập khẩu — mua chiết 5–10ml để thử, hoặc full bottle nguyên seal. Từ designer quốc dân đến niche cao cấp.'},nam:{title:'Nước hoa Nam',intro:'Nước hoa nam chính hãng — những mùi "quốc dân" và niche được săn đón nhất. Thử chiết trước, ưng rồi rước full.'},unisex:{title:'Unisex & Niche',intro:'Những mùi hương phá vỡ ranh giới nam nữ — độc bản, sang trọng và gây thương nhớ.'}};
+    const money=n=>Number(n).toLocaleString('vi-VN')+'₫';
+    const params=new URLSearchParams(location.search);
+    const c=params.get('c')||'nu';
+    const meta=META[c]||META.nu;
+    document.title=`Puvela — ${meta.title}`;document.querySelector('#title').textContent=meta.title;document.querySelector('#intro').textContent=meta.intro;
+    function renderList(ds){document.querySelector('#grid').innerHTML=ds.map(function(o){return o.the;}).map(([name,desc,price,id,badge,img,dg])=>`<article class="card"><a href="product.html?p=${id}"><div class="visual">${badge?`<span class="badge${badge.charAt(0)==='-'?' badge-sale':''}">${badge}</span>`:''}<img src="${img}" onerror="this.onerror=null;this.src='assets/placeholder.svg'" alt="${name} chính hãng" loading="lazy" /></div><div class="info"><div><h2>${name}</h2>${dg||''}<p>${desc}</p></div><span class="price">${price}</span></div></a><button class="add" type="button" onclick="location.href='product.html?p=${id}'">Chọn dung tích</button></article>`).join('');}
+    /* ===== dữ liệu + bộ lọc thật ===== */
+    var DATA = [], DG = {};
+    var F = { brand:'', sort:'', niche:false };
+    var SAPXEP = [
+      {id:'asc',  ten:'Giá thấp → cao'},
+      {id:'desc', ten:'Giá cao → thấp'}
+    ];
+    function loc(){
+      var ds = DATA.filter(function(p){
+        if(F.brand && p.brand !== F.brand) return false;
+        if(F.niche && !p.niche) return false;
+        return true;
+      });
+      if(F.sort==='asc')  ds = ds.slice().sort(function(a,b){ return (a.giaMin||Infinity)-(b.giaMin||Infinity); });
+      if(F.sort==='desc') ds = ds.slice().sort(function(a,b){ return (b.giaMin||0)-(a.giaMin||0); });
+      return ds;
+    }
+    function veLoc(){
+      var dem={}, ten={};
+      DATA.forEach(function(p){ if(p.brand){ dem[p.brand]=(dem[p.brand]||0)+1; ten[p.brand]=p.brandTen; } });
+      var ds=Object.keys(dem).sort(function(a,b){ return dem[b]-dem[a] || ten[a].localeCompare(ten[b],'vi'); });
+      document.querySelector('#f-brand').innerHTML =
+        '<button data-b="" class="'+(F.brand?'':'active')+'">Tất cả</button>' +
+        ds.map(function(b){ return '<button data-b="'+b+'" class="'+(F.brand===b?'active':'')+'">'+ten[b]+'</button>'; }).join('');
+      document.querySelector('#f-more').innerHTML =
+        '<span class="flabel">Sắp xếp</span>' +
+        '<button data-s="" class="'+(F.sort?'':'active')+'">Mặc định</button>' +
+        SAPXEP.map(function(k){ return '<button data-s="'+k.id+'" class="'+(F.sort===k.id?'active':'')+'">'+k.ten+'</button>'; }).join('') +
+        '<span class="sep"></span>' +
+        '<button data-n="1" class="'+(F.niche?'active':'')+'">Chỉ hàng Niche</button>';
+    }
+    function veTatCa(){
+      var ds=loc(); veLoc(); renderList(ds);
+      var c=document.querySelector('#f-count');
+      if(!DATA.length){ c.innerHTML=''; return; }
+      var coLoc = F.brand || F.sort || F.niche;
+      c.innerHTML = 'Hiện <b>'+ds.length+'</b> / '+DATA.length+' sản phẩm' +
+        (coLoc ? ' <button class="fclear" id="f-clear">Xoá lọc</button>' : '');
+      if(!ds.length) document.querySelector('#grid').innerHTML =
+        '<p class="lead" style="grid-column:1/-1;text-align:center;padding:48px 0">Không có sản phẩm nào khớp bộ lọc. Thử bỏ bớt điều kiện.</p>';
+    }
+    document.addEventListener('click', function(e){
+      var b=e.target.closest('#f-brand button, #f-more button, #f-clear'); if(!b) return;
+      if(b.id==='f-clear') F={brand:'',sort:'',niche:false};
+      else if(b.dataset.b!==undefined) F.brand=b.dataset.b;
+      else if(b.dataset.s!==undefined) F.sort=b.dataset.s;
+      else if(b.dataset.n) F.niche=!F.niche;
+      veTatCa();
+    });
+    (async function(){
+      var rows=[];
+      if(window.puvela&&window.puvela.client){
+        try{
+          var q = window.puvela.client.from('products')
+            .select('slug,name,notes,badge,hero_image,is_niche,category,brand_slug,brands(name),product_variants(label,price,compare_at_price)')
+            .eq('is_published',true);
+          var r = (c==='all') ? await q.order('is_niche',{ascending:true})
+                              : await q.eq('gender',c).order('is_niche',{ascending:true});
+          rows=(r&&r.data)||[];
+          try{
+            var rv=await window.puvela.client.from('reviews').select('product_slug,rating').eq('is_published',true);
+            ((rv&&rv.data)||[]).forEach(function(x){
+              if(!x.product_slug) return;
+              DG[x.product_slug]=DG[x.product_slug]||{n:0,tong:0};
+              DG[x.product_slug].n++; DG[x.product_slug].tong+=(x.rating||0);
+            });
+          }catch(e){}
+        }catch(e){ console.warn('[Puvela] fetch collection lỗi:',e&&e.message); }
+      }
+      if(!rows.length){
+        document.querySelector('#grid').innerHTML='<p class="lead" style="grid-column:1/-1;text-align:center;padding:48px 0">'+
+          (window.puvela&&window.puvela.client ? 'Chưa có sản phẩm nào trong mục này.' : 'Chưa kết nối cửa hàng nên chưa hiện được sản phẩm.')+'</p>';
+        return;
+      }
+      DATA = rows.map(function(p){
+        var vs=(p.product_variants||[]).filter(function(v){return v.price>0;}).sort(function(a,b){return a.price-b.price;});
+        var min=vs.length?vs[0].price:0;
+        var goc=vs.length&&vs[0].compare_at_price>vs[0].price?vs[0].compare_at_price:0;
+        var v10=(p.product_variants||[]).filter(function(v){return /10ml/.test(v.label||'');})[0];
+        var giaHTML=min?(goc?'Từ <s>'+money(goc)+'</s> <b class="sale">'+money(min)+'</b>':'Từ '+money(min)):'';
+        // Sale có thể nằm ở cỡ khác cỡ rẻ nhất — vẫn phải gắn nhãn, không thì khách lướt qua không biết
+        var giamMax=0;
+        (p.product_variants||[]).forEach(function(v){
+          if(v.compare_at_price>v.price) giamMax=Math.max(giamMax, Math.round((1-v.price/v.compare_at_price)*100));
+        });
+        var nhan=giamMax?('-'+giamMax+'%'):(p.badge||'');
+        var n=p.notes||{}; var desc=[n.top,n.mid,n.base].filter(Boolean).join(' · ');
+        var d=DG[p.slug];
+        var dgHTML = d && d.n ? '<span class="cstar">★ '+(d.tong/d.n).toFixed(1)+' <i>('+d.n+')</i></span>' : '';
+        return { the:[p.name,desc,giaHTML,p.slug,nhan,p.hero_image||'',dgHTML],
+                 brand:p.brand_slug||'', brandTen:(p.brands&&p.brands.name)||p.brand_slug||'',
+                 niche:!!p.is_niche, giaMin:min, gia10:(v10&&v10.price)||min };
+      });
+      veTatCa();
+    })();
+  </script>
+</body>
+</html>

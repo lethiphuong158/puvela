@@ -1,0 +1,71 @@
+# PUVELA — tên file ảnh cần upload lên Supabase Storage (bucket: products)
+# Đặt tên ảnh CHÍNH XÁC như dưới (ảnh chính = <slug>.jpg; ảnh phụ = <slug>-2.jpg, <slug>-3.jpg)
+# Tổng: 67 sản phẩm
+
+narciso-rodriguez-for-her-edp.jpg               <-  Narciso Rodriguez For Her EDP
+narciso-rodriguez-for-her-edt.jpg               <-  Narciso Rodriguez For Her EDT
+narciso-rodriguez-rouge.jpg                     <-  Narciso Rodriguez Rouge
+narciso-rodriguez-poudree.jpg                   <-  Narciso Rodriguez Poudrée
+narciso-rodriguez-musc-noir.jpg                 <-  Narciso Rodriguez Musc Noir
+narciso-rodriguez-musc-noir-rose.jpg            <-  Narciso Rodriguez Musc Noir Rose
+narciso-rodriguez-pure-musc.jpg                 <-  Narciso Rodriguez Pure Musc
+narciso-rodriguez-fleur-musc.jpg                <-  Narciso Rodriguez Fleur Musc
+gucci-flora-gorgeous-jasmine.jpg                <-  Gucci Flora Gorgeous Jasmine
+gucci-flora-gorgeous-gardenia.jpg               <-  Gucci Flora Gorgeous Gardenia
+gucci-bloom.jpg                                 <-  Gucci Bloom
+bleu-de-chanel-edp.jpg                          <-  Bleu de Chanel EDP
+dior-sauvage-edp.jpg                            <-  Dior Sauvage EDP
+ysl-libre-edp.jpg                               <-  YSL Libre EDP
+ysl-y-edp.jpg                                   <-  YSL Y EDP
+ysl-black-opium-edp.jpg                         <-  YSL Black Opium EDP
+ysl-mon-paris-edp.jpg                           <-  YSL Mon Paris EDP
+le-labo-another-13.jpg                          <-  Le Labo Another 13
+chanel-coco-mademoiselle-edp.jpg                <-  Chanel Coco Mademoiselle EDP
+chanel-n5-edp.jpg                               <-  Chanel N°5 EDP
+miss-dior-edp.jpg                               <-  Miss Dior EDP
+montblanc-signature.jpg                         <-  Montblanc Signature
+montblanc-legend-edt.jpg                        <-  Montblanc Legend EDT
+montblanc-explorer-edp.jpg                      <-  Montblanc Explorer EDP
+giorgio-armani-acqua-di-gio-edt.jpg             <-  Giorgio Armani Acqua di Gio EDT
+jean-paul-gaultier-le-male-edt.jpg              <-  Jean Paul Gaultier Le Male EDT
+jean-paul-gaultier-scandal-edp.jpg              <-  Jean Paul Gaultier Scandal EDP
+burberry-her-edp.jpg                            <-  Burberry Her EDP
+byredo-la-tulipe.jpg                            <-  Byredo La Tulipe
+dolce-and-gabbana-the-one-edp.jpg               <-  Dolce & Gabbana The One EDP
+prada-lhomme.jpg                                <-  Prada L'Homme
+xerjoff-torino-21.jpg                           <-  Xerjoff Torino 21
+initio-oud-for-greatness.jpg                    <-  Initio Oud for Greatness
+salvatore-ferragamo-signorina.jpg               <-  Salvatore Ferragamo Signorina
+loewe-aire.jpg                                  <-  Loewe Aire
+maison-alhambra-amber-oud-ruby-edition.jpg      <-  Maison Alhambra Amber Oud Ruby Edition
+maison-alhambra-delilah.jpg                     <-  Maison Alhambra Delilah
+maison-alhambra-delilah-blanc.jpg               <-  Maison Alhambra Delilah Blanc
+maison-alhambra-delilah-rose.jpg                <-  Maison Alhambra Delilah Rose
+maison-alhambra-musc-al-harair.jpg              <-  Maison Alhambra Musc Al Harair
+maison-alhambra-kismet.jpg                      <-  Maison Alhambra Kismet
+jovoy-les-jeux-sont-faits.jpg                   <-  Jovoy Les Jeux Sont Faits
+montale-intense-cafe.jpg                        <-  Montale Intense Cafe
+mancera-cedrat-boise.jpg                        <-  Mancera Cedrat Boise
+armaf-club-de-nuit-intense-man.jpg              <-  Armaf Club de Nuit Intense Man
+chanel-chance-edt.jpg                           <-  Chanel Chance EDT
+chanel-chance-eau-fraiche.jpg                   <-  Chanel Chance Eau Fraîche
+versace-pour-homme.jpg                          <-  Versace Pour Homme
+parfums-de-marly-valaya.jpg                     <-  Parfums de Marly Valaya
+parfums-de-marly-delina.jpg                     <-  Parfums de Marly Delina
+dolce-and-gabbana-light-blue-edt.jpg            <-  Dolce & Gabbana Light Blue EDT
+giorgio-armani-acqua-di-gioia.jpg               <-  Giorgio Armani Acqua di Gioia
+giorgio-armani-acqua-di-gio-profondo.jpg        <-  Giorgio Armani Acqua di Gio Profondo
+prada-paradoxe.jpg                              <-  Prada Paradoxe
+versace-eros-edt.jpg                            <-  Versace Eros EDT
+jean-paul-gaultier-le-male-le-parfum.jpg        <-  Jean Paul Gaultier Le Male Le Parfum
+jean-paul-gaultier-divine.jpg                   <-  Jean Paul Gaultier Divine
+dior-sauvage-elixir.jpg                         <-  Dior Sauvage Elixir
+dior-addict-edp.jpg                             <-  Dior Addict EDP
+thomas-kosmala-no-4-apres-lamour.jpg            <-  Thomas Kosmala No. 4 Après l'Amour
+afnan-9pm.jpg                                   <-  Afnan 9PM
+montblanc-explorer-ultra-blue.jpg               <-  Montblanc Explorer Ultra Blue
+chanel-allure-homme-sport-edt.jpg               <-  Chanel Allure Homme Sport EDT
+carolina-herrera-212-men-sexy.jpg               <-  Carolina Herrera 212 Men Sexy
+miss-dior-blooming-bouquet.jpg                  <-  Miss Dior Blooming Bouquet
+giorgio-armani-my-way-edp.jpg                   <-  Giorgio Armani My Way EDP
+giorgio-armani-si-passione.jpg                  <-  Giorgio Armani Sì Passione

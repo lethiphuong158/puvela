@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local tooling
+.codex/
+.codex_backup_*/
+node_modules/
+.vercel/
+.netlify/
+supabase/.temp/
