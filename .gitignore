@@ -1,17 +1,25 @@
 # macOS
 .DS_Store
 
-# Secrets / local configuration
+# Environment / secrets
 .env
 .env.*
 !.env.example
+
+# Keys
 *.pem
 *.key
+*.p12
+*.pfx
 
-# Local tooling
-.codex/
-.codex_backup_*/
+# Dependencies
 node_modules/
+
+# Deployment / local tooling
 .vercel/
 .netlify/
+.codex/
+.codex_backup_*/
+
+# Supabase local
 supabase/.temp/

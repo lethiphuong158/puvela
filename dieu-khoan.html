@@ -1,78 +1,623 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="description" content="Nước hoa chính hãng nhập khẩu — full bottle & chiết 5–10ml. Chọn theo Nữ, Nam, Unisex & Niche tại Puvela." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description"
+    content="Nước hoa chính hãng nhập khẩu — full bottle & chiết 5–10ml. Chọn theo Nữ, Nam, Unisex & Niche tại Puvela." />
+    <link rel="icon" type="image/png" href="assets/favicon-puvela.png"><link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <style>
-    :root{--ink:#2b2621;--paper:#f5f0e7;--line:rgba(43,38,33,.15);--clay:#9c5a41;--sand:#e7ddce}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",sans-serif;font-weight:400}a{color:inherit;text-decoration:none}.announcement{padding:10px 20px;background:var(--ink);color:#fff;text-align:center;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}nav{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,4vw,60px);border-bottom:1px solid var(--line)}.back,.bag{font-size:11px;letter-spacing:.08em;text-transform:uppercase}.bag{justify-self:end}.brand{display:inline-flex;align-items:center;line-height:0}.brand img{height:38px;width:auto;display:block}.collection-head{padding:clamp(46px,6vw,86px) clamp(20px,5vw,78px) 36px}.eyebrow{margin:0 0 16px;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}.collection-head h1{margin:0;font:600 clamp(50px,6vw,86px)/.98 "Cormorant Garamond",serif;letter-spacing:-.01em}.collection-head p:not(.eyebrow){max-width:460px;margin:18px 0 0;font-size:15px;line-height:1.6}.filters{display:flex;gap:24px;overflow:auto;white-space:nowrap;padding:0 clamp(20px,5vw,78px) 18px;border-bottom:1px solid var(--line)}.filters button{border:0;border-bottom:1px solid transparent;background:none;padding:0 0 13px;cursor:pointer;font:12px "Be Vietnam Pro",sans-serif;color:#635d57}.filters button.active{color:var(--ink);border-color:var(--ink)}
-.filters2{gap:8px;padding-top:14px;border-bottom:0;flex-wrap:wrap;overflow:visible;white-space:normal}
-.filters2 button{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#635d57;background:#fff}
-.filters2 button.active{background:var(--ink);border-color:var(--ink);color:#fff}
-.filters2 .flabel{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#a09a94;margin-right:2px}
-.filters2 .sep{width:1px;height:22px;background:var(--line);margin:0 6px;flex:none;display:inline-block}
-.fcount{margin:0;padding:14px clamp(20px,5vw,78px) 0;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;color:#635d57}
-.fcount b{color:var(--ink)}
-.fclear{margin-left:10px;border:0;background:none;padding:0;cursor:pointer;font:inherit;color:var(--clay);text-decoration:underline}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 18px;padding:55px clamp(20px,5vw,78px) 100px}.card{min-width:0}.visual{height:min(24vw,340px);min-height:230px;position:relative;overflow:hidden;background:#eeeae4}.visual img{width:100%;height:100%;object-fit:cover;filter:saturate(.68);transition:transform .45s}.card:hover img{transform:scale(1.04)}.badge{position:absolute;z-index:1;left:12px;top:12px;padding:6px 8px;background:#fff;font:500 9px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase}.info{padding-top:14px;display:flex;justify-content:space-between;gap:8px}.info h2{margin:0;text-transform:uppercase;font-size:13px;letter-spacing:.05em}.info p{margin:5px 0 0;font-size:12px}.price{font-size:12px;white-space:nowrap}.add{width:100%;margin-top:18px;padding:12px;border:1px solid var(--ink);background:transparent;cursor:pointer;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;transition:.2s}.add:hover{background:var(--ink);color:#fff}.pv-footer{background:var(--ink);color:#f8f5ef;padding:52px clamp(20px,5vw,78px) 26px}.pv-footer .cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}.pv-footer h4{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;margin:0 0 12px}.pv-footer p{margin:0;font-size:13px;line-height:1.85;color:rgba(255,255,255,.72)}.pv-footer a{color:rgba(255,255,255,.72)}.pv-footer .copy{margin-top:28px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.6);font-size:11px}@media(max-width:800px){.pv-footer .cols{grid-template-columns:1fr 1fr}}@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.visual{height:42vw}}@media(max-width:480px){nav{height:66px}.brand{font-size:20px;letter-spacing:.12em}.grid{grid-template-columns:1fr;gap:32px;padding-top:36px}.visual{height:100vw}.filters{gap:18px}}
+    :root {
+      --ink: #2b2621;
+      --paper: #f5f0e7;
+      --line: rgba(43, 38, 33, .15);
+      --clay: #9c5a41;
+      --sand: #e7ddce
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Be Vietnam Pro", sans-serif;
+      font-weight: 400
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .announcement {
+      padding: 10px 20px;
+      background: var(--ink);
+      color: #fff;
+      text-align: center;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase
+    }
+
+    nav {
+      height: 78px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 clamp(20px, 4vw, 60px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .back,
+    .bag {
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .bag {
+      justify-self: end
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      line-height: 0
+    }
+
+    .brand img {
+      height: 38px;
+      width: auto;
+      display: block
+    }
+
+    .collection-head {
+      padding: clamp(46px, 6vw, 86px) clamp(20px, 5vw, 78px) 36px
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase
+    }
+
+    .collection-head h1 {
+      margin: 0;
+      font: 600 clamp(50px, 6vw, 86px)/.98 "Cormorant Garamond", serif;
+      letter-spacing: -.01em
+    }
+
+    .collection-head p:not(.eyebrow) {
+      max-width: 460px;
+      margin: 18px 0 0;
+      font-size: 15px;
+      line-height: 1.6
+    }
+
+    .filters {
+      display: flex;
+      gap: 24px;
+      overflow: auto;
+      white-space: nowrap;
+      padding: 0 clamp(20px, 5vw, 78px) 18px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .filters button {
+      border: 0;
+      border-bottom: 1px solid transparent;
+      background: none;
+      padding: 0 0 13px;
+      cursor: pointer;
+      font: 12px "Be Vietnam Pro", sans-serif;
+      color: #635d57
+    }
+
+    .filters button.active {
+      color: var(--ink);
+      border-color: var(--ink)
+    }
+
+    .filters2 {
+      gap: 8px;
+      padding-top: 14px;
+      border-bottom: 0;
+      flex-wrap: wrap;
+      overflow: visible;
+      white-space: normal
+    }
+
+    .filters2 button {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #635d57;
+      background: #fff
+    }
+
+    .filters2 button.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff
+    }
+
+    .filters2 .flabel {
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #a09a94;
+      margin-right: 2px
+    }
+
+    .filters2 .sep {
+      width: 1px;
+      height: 22px;
+      background: var(--line);
+      margin: 0 6px;
+      flex: none;
+      display: inline-block
+    }
+
+    .fcount {
+      margin: 0;
+      padding: 14px clamp(20px, 5vw, 78px) 0;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      color: #635d57
+    }
+
+    .fcount b {
+      color: var(--ink)
+    }
+
+    .fclear {
+      margin-left: 10px;
+      border: 0;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      font: inherit;
+      color: var(--clay);
+      text-decoration: underline
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px 18px;
+      padding: 55px clamp(20px, 5vw, 78px) 100px
+    }
+
+    .card {
+      min-width: 0
+    }
+
+    .visual {
+      height: min(24vw, 340px);
+      min-height: 230px;
+      position: relative;
+      overflow: hidden;
+      background: #eeeae4
+    }
+
+    .visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.68);
+      transition: transform .45s
+    }
+
+    .card:hover img {
+      transform: scale(1.04)
+    }
+
+    .badge {
+      position: absolute;
+      z-index: 1;
+      left: 12px;
+      top: 12px;
+      padding: 6px 8px;
+      background: #fff;
+      font: 500 9px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase
+    }
+
+    .info {
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px
+    }
+
+    .info h2 {
+      margin: 0;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: .05em
+    }
+
+    .info p {
+      margin: 5px 0 0;
+      font-size: 12px
+    }
+
+    .price {
+      font-size: 12px;
+      white-space: nowrap
+    }
+
+    .add {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      border: 1px solid var(--ink);
+      background: transparent;
+      cursor: pointer;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      transition: .2s
+    }
+
+    .add:hover {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .pv-footer {
+      background: var(--ink);
+      color: #f8f5ef;
+      padding: 52px clamp(20px, 5vw, 78px) 26px
+    }
+
+    .pv-footer .cols {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 28px
+    }
+
+    .pv-footer h4 {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin: 0 0 12px
+    }
+
+    .pv-footer p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.85;
+      color: rgba(255, 255, 255, .72)
+    }
+
+    .pv-footer a {
+      color: rgba(255, 255, 255, .72)
+    }
+
+    .pv-footer .copy {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, .18);
+      color: rgba(255, 255, 255, .6);
+      font-size: 11px
+    }
+
+    @media(max-width:800px) {
+      .pv-footer .cols {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:900px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .visual {
+        height: 42vw
+      }
+    }
+
+    @media(max-width:480px) {
+      nav {
+        height: 66px
+      }
+
+      .brand {
+        font-size: 20px;
+        letter-spacing: .12em
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-top: 36px
+      }
+
+      .visual {
+        height: 100vw
+      }
+
+      .filters {
+        gap: 18px
+      }
+    }
   </style>
   <style>
     /* giá sale — thêm khi bỏ giá cứng, dùng chung cho 3 trang */
-    s{text-decoration:line-through;opacity:.5;font-weight:400}
-    .sale{color:#9e3b28;font-weight:600}
-    .badge-sale{background:#9e3b28 !important;color:#fff !important}
+    s {
+      text-decoration: line-through;
+      opacity: .5;
+      font-weight: 400
+    }
+
+    .sale {
+      color: #9e3b28;
+      font-weight: 600
+    }
+
+    .badge-sale {
+      background: #9e3b28 !important;
+      color: #fff !important
+    }
   </style>
   <title>Puvela — Điều khoản sử dụng</title>
 
   <style>
     /* ===== trang nội dung (chính sách, điều khoản…) ===== */
-    .doc-head{padding:clamp(46px,6vw,86px) clamp(20px,5vw,78px) 26px}
-    .doc-head h1{margin:0;font:600 clamp(38px,5vw,64px)/1.02 "Cormorant Garamond",serif;letter-spacing:-.01em}
-    .doc-head p.sub{max-width:620px;margin:16px 0 0;font-size:15px;line-height:1.7;color:#544e48}
-    .doc-wrap{display:grid;grid-template-columns:220px minmax(0,1fr);gap:44px;
-      padding:10px clamp(20px,5vw,78px) 90px;align-items:start}
-    .doc-nav{position:sticky;top:24px;display:grid;gap:2px}
-    .doc-nav a{padding:9px 12px;font-size:13.5px;color:#635d57;border-left:2px solid transparent}
-    .doc-nav a:hover{color:var(--ink)}
-    .doc-nav a.on{color:var(--ink);border-left-color:var(--ink);background:rgba(43,38,33,.04)}
-    .doc-body{max-width:720px;font-size:15px;line-height:1.85;color:#3d3833}
-    .doc-body h2{margin:34px 0 12px;font:600 24px/1.25 "Cormorant Garamond",serif;letter-spacing:0}
-    .doc-body h2:first-child{margin-top:0}
-    .doc-body p{margin:0 0 14px}
-    .doc-body ul{margin:0 0 16px;padding-left:20px} .doc-body li{margin:0 0 7px}
-    .doc-body a{color:var(--clay);text-decoration:underline}
-    .doc-note{margin:26px 0 0;padding:14px 16px;border:1px dashed var(--line);background:rgba(176,106,79,.05);
-      font-size:13.5px;line-height:1.65;color:#6b625a}
-    .doc-updated{margin-top:30px;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:#7a7268}
-    @media(max-width:820px){.doc-wrap{grid-template-columns:1fr;gap:8px}.doc-nav{position:static;
-      display:flex;overflow:auto;white-space:nowrap;gap:6px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:22px}
-      .doc-nav a{border-left:0;border-bottom:2px solid transparent;padding:8px 4px}
-      .doc-nav a.on{border-left:0;border-bottom-color:var(--ink);background:none}}
+    .doc-head {
+      padding: clamp(46px, 6vw, 86px) clamp(20px, 5vw, 78px) 26px
+    }
+
+    .doc-head h1 {
+      margin: 0;
+      font: 600 clamp(38px, 5vw, 64px)/1.02 "Cormorant Garamond", serif;
+      letter-spacing: -.01em
+    }
+
+    .doc-head p.sub {
+      max-width: 620px;
+      margin: 16px 0 0;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #544e48
+    }
+
+    .doc-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 10px clamp(20px, 5vw, 78px) 90px;
+      align-items: start
+    }
+
+    .doc-nav {
+      position: static;
+      display: flex;
+      overflow: auto;
+      white-space: nowrap;
+      gap: 18px;
+      margin-left: -35px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 4px
+    }
+
+    .doc-nav a {
+      padding: 8px 2px;
+      font-size: 13.5px;
+      color: #635d57;
+      border-bottom: 2px solid transparent;
+      flex: none
+    }
+
+    .doc-nav a:hover {
+      color: var(--ink)
+    }
+
+    .doc-nav a.on {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+      background: none
+    }
+
+    .doc-body {
+      max-width: 720px;
+      font-size: 15px;
+      line-height: 1.85;
+      color: #3d3833
+    }
+
+    .doc-body h2 {
+      margin: 34px 0 12px;
+      font: 600 24px/1.25 "Cormorant Garamond", serif;
+      letter-spacing: 0
+    }
+
+    .doc-body h2:first-child {
+      margin-top: 0
+    }
+
+    .doc-body p {
+      margin: 0 0 14px
+    }
+
+    .doc-body ul {
+      margin: 0 0 16px;
+      padding-left: 20px
+    }
+
+    .doc-body li {
+      margin: 0 0 7px
+    }
+
+    .doc-body a {
+      color: var(--clay);
+      text-decoration: underline
+    }
+
+    .doc-note {
+      margin: 26px 0 0;
+      padding: 14px 16px;
+      border: 1px dashed var(--line);
+      background: rgba(176, 106, 79, .05);
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: #6b625a
+    }
+
+    .doc-updated {
+      margin-top: 30px;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #7a7268
+    }
+
+    @media(max-width:820px) {
+      .doc-wrap {
+        grid-template-columns: 1fr;
+        gap: 8px
+      }
+
+      .doc-nav {
+        position: static;
+        display: flex;
+        overflow: auto;
+        white-space: nowrap;
+        gap: 6px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 22px
+      }
+
+      .doc-nav a {
+        border-left: 0;
+        border-bottom: 2px solid transparent;
+        padding: 8px 4px
+      }
+
+      .doc-nav a.on {
+        border-left: 0;
+        border-bottom-color: var(--ink);
+        background: none
+      }
+    }
   </style>
 
   <style>
     /* ===== chân trang dùng chung toàn site ===== */
-    footer[aria-label="Chân trang"]{background:#29251f;color:#e9e1d5;padding:clamp(56px,7vw,88px) clamp(22px,5vw,80px) 30px}
-    footer[aria-label="Chân trang"] a{color:inherit;text-decoration:none}
-    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:44px;
-      border-bottom:1px solid rgba(255,255,255,.16)}
-    .foot-brand img{height:30px;margin-bottom:16px;filter:brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg)}
-    .foot-brand p{max-width:34ch;font-size:13.5px;line-height:1.7;color:rgba(233,225,213,.66);margin:0}
-    .foot-col h4{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase;margin:0 0 16px;color:#fff}
-    .foot-col a{display:block;margin:9px 0;font-size:13.5px;color:rgba(233,225,213,.7)}
-    .foot-col a:hover{color:#fff}
-    .foot-bottom{padding-top:26px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;
-      font:10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:rgba(233,225,213,.55)}
-    .foot-social{display:flex;gap:22px}
-    .foot-social a:hover{color:#fff}
-    @media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
-    @media(max-width:560px){.foot-grid{grid-template-columns:1fr}.foot-bottom{flex-direction:column}}
+    footer[aria-label="Chân trang"] {
+      background: #29251f;
+      color: #e9e1d5;
+      padding: clamp(56px, 7vw, 88px) clamp(22px, 5vw, 80px) 30px
+    }
+
+    footer[aria-label="Chân trang"] a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 36px;
+      padding-bottom: 44px;
+      border-bottom: 1px solid rgba(255, 255, 255, .16)
+    }
+
+    .foot-brand img {
+      height: 30px;
+      margin-bottom: 16px;
+      filter: brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg)
+    }
+
+    .foot-brand p {
+      max-width: 34ch;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: rgba(233, 225, 213, .66);
+      margin: 0
+    }
+
+    .foot-col h4 {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      color: #fff
+    }
+
+    .foot-col a {
+      display: block;
+      margin: 9px 0;
+      font-size: 13.5px;
+      color: rgba(233, 225, 213, .7)
+    }
+
+    .foot-col a:hover {
+      color: #fff
+    }
+
+    .foot-bottom {
+      padding-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font: 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: rgba(233, 225, 213, .55)
+    }
+
+    .foot-social {
+      display: flex;
+      gap: 22px
+    }
+
+    .foot-social a:hover {
+      color: #fff
+    }
+
+    @media(max-width:900px) {
+      .foot-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:560px) {
+      .foot-grid {
+        grid-template-columns: 1fr
+      }
+
+      .foot-bottom {
+        flex-direction: column
+      }
+    }
   </style>
 </head>
+
 <body>
-<div class="announcement">Chính hãng 100% · Full &amp; Chiết · Freeship đơn từ 1.500.000₫</div>
-  <nav><a class="back" href="index.html#collections">← Quay lại</a><a class="brand" href="index.html" aria-label="Puvela"><img src="assets/logo-nav.png" alt="Puvela" /></a><a class="bag" href="#" data-cart-toggle>Túi (<span data-cart-count>0</span>)</a></nav>
+  <div class="announcement">Chính hãng 100% · Full &amp; Chiết · Freeship đơn từ 1.500.000₫</div>
+  <nav><a class="back" href="index.html#collections">← Quay lại</a><a class="brand" href="index.html"
+      aria-label="Puvela"><img src="assets/logo-nav.png" alt="Puvela" /></a><a class="bag" href="#" data-cart-toggle>Túi
+      (<span data-cart-count>0</span>)</a></nav>
   <section class="doc-head">
     <p class="eyebrow">Puvela · Thông tin</p>
     <h1>Điều khoản sử dụng</h1>
@@ -80,42 +625,101 @@
   </section>
   <div class="doc-wrap">
     <nav class="doc-nav" aria-label="Các trang thông tin">
-          <a href="cam-ket-chinh-hang.html" class="">Cam kết chính hãng</a>
-          <a href="kiem-tra-that-gia.html" class="">Kiểm tra thật/giả</a>
-          <a href="van-chuyen.html" class="">Vận chuyển</a>
-          <a href="bao-mat.html" class="">Chính sách bảo mật</a>
-          <a href="dieu-khoan.html" class="on">Điều khoản sử dụng</a>
-          <a href="faq.html" class="">Câu hỏi thường gặp</a>
+      <a href="van-chuyen.html">Vận chuyển &amp; đổi trả</a>
+      <a href="bao-mat.html">Chính sách bảo mật</a>
+      <a href="dieu-khoan.html" class="on">Điều khoản sử dụng</a>
+      <a href="faq.html">Câu hỏi thường gặp</a>
     </nav>
     <div class="doc-body">
-<h2>Về website này</h2>
-<p>Puvela là cửa hàng bán nước hoa trực tuyến. Nội dung, hình ảnh và mô tả sản phẩm trên website thuộc về Puvela hoặc được sử dụng cho mục đích giới thiệu sản phẩm.</p>
-<h2>Giá và tình trạng hàng</h2>
-<p>Giá hiển thị đã bao gồm sản phẩm, chưa gồm phí giao hàng. Puvela có thể điều chỉnh giá; giá áp dụng cho đơn của bạn là giá tại thời điểm đơn được xác nhận.</p>
-<h2>Đặt hàng</h2>
-<p>Đơn đặt trên website là đề nghị mua hàng. Đơn được coi là chốt sau khi Puvela liên hệ xác nhận với bạn qua điện thoại hoặc tin nhắn.</p>
-<h2>Huỷ đơn</h2>
-<p>Bạn có thể huỷ đơn trước khi Puvela gửi hàng cho đơn vị vận chuyển, bằng cách nhắn tin cho Puvela.</p>
-<h2>Trách nhiệm</h2>
-<p>Nước hoa là sản phẩm dùng ngoài da. Nếu bạn có tiền sử dị ứng, hãy thử một lượng nhỏ trước khi dùng thường xuyên.</p>
-      <div class="doc-note">Nội dung trang này là bản nháp để bạn thay bằng chính sách thật của cửa hàng.
-        Sửa trực tiếp trong file <b>dieu-khoan.html</b>, phần nằm giữa thẻ <b>&lt;div class="doc-body"&gt;</b>.</div>
-      <p class="doc-updated">Cập nhật lần cuối: [ngày/tháng/năm]</p>
+      <h2>1. Giới thiệu</h2>
+      <p>Chào mừng bạn đến với Puvela. Khi truy cập và mua hàng tại website, bạn đồng ý với các điều khoản được nêu dưới
+        đây.</p>
+
+      <h2>2. Thông tin sản phẩm</h2>
+      <p>Puvela cung cấp nước hoa chính hãng, nước hoa chiết và các sản phẩm liên quan theo thông tin được công bố trên
+        website.</p>
+      <p>Hình ảnh sản phẩm có thể có khác biệt nhỏ về màu sắc hoặc bao bì do ánh sáng, thiết bị hiển thị hoặc thay đổi
+        từ nhà sản xuất. Thông tin về tên sản phẩm, dung tích, phiên bản và tình trạng hàng được thể hiện tại từng sản
+        phẩm.</p>
+
+      <h2>3. Giá bán</h2>
+      <p>Giá sản phẩm được niêm yết trên website tại thời điểm đặt hàng.</p>
+      <p>Puvela có thể cập nhật giá và chương trình ưu đãi theo từng thời điểm. Đơn hàng đã được Puvela xác nhận sẽ áp
+        dụng mức giá đã xác nhận, trừ trường hợp có thỏa thuận khác hoặc sai sót hiển thị rõ ràng.</p>
+
+      <h2>4. Đặt hàng &amp; xác nhận</h2>
+      <p>Khách hàng cung cấp đầy đủ và chính xác thông tin nhận hàng khi đặt mua.</p>
+      <p>Đơn hàng chỉ được xem là xác nhận sau khi Puvela tiếp nhận và xác nhận thông tin đơn hàng. Trong trường hợp cần
+        thiết, Puvela có thể liên hệ khách hàng để xác nhận lại trước khi giao hàng.</p>
+
+      <h2>5. Thanh toán &amp; giao hàng</h2>
+      <p>Puvela hỗ trợ hai phương thức thanh toán: <strong>thanh toán khi nhận hàng (COD)</strong> và <strong>chuyển
+          khoản ngân hàng</strong>.</p>
+      <p>Thời gian giao hàng được thông báo hoặc ước tính theo từng khu vực và có thể thay đổi do đơn vị vận chuyển hoặc
+        các yếu tố khách quan.</p>
+      <p>Chi tiết được quy định tại Chính sách vận chuyển &amp; đổi trả.</p>
+
+      <h2>6. Đổi trả &amp; hoàn tiền</h2>
+      <p>Puvela hỗ trợ đổi trả đối với các trường hợp như giao sai sản phẩm, sai dung tích/phiên bản hoặc sản phẩm bị hư
+        hỏng do quá trình vận chuyển theo chính sách hiện hành.</p>
+      <p>Khách hàng vui lòng liên hệ Puvela trong thời gian quy định để được hỗ trợ.</p>
+
+      <h2>7. Cam kết về sản phẩm</h2>
+      <p>Puvela cam kết cung cấp sản phẩm đúng với thông tin đã công bố và chịu trách nhiệm xử lý các vấn đề phát sinh
+        thuộc phạm vi trách nhiệm của Puvela.</p>
+
+      <h2>8. Trách nhiệm của khách hàng</h2>
+      <p>Khách hàng có trách nhiệm cung cấp thông tin đặt hàng chính xác, kiểm tra sản phẩm khi nhận và thông báo sớm
+        cho Puvela nếu phát hiện vấn đề.</p>
+      <p>Khách hàng không nên tự gửi trả sản phẩm trước khi được Puvela xác nhận phương án xử lý.</p>
+
+      <h2>9. Bảo mật thông tin</h2>
+      <p>Thông tin khách hàng cung cấp khi đặt hàng (họ tên, số điện thoại, địa chỉ) chỉ được Puvela sử dụng để xử lý và
+        giao đơn hàng, không chia sẻ cho bên thứ ba ngoài mục đích này.</p>
+      <p>Việc thu thập và sử dụng dữ liệu cá nhân được thực hiện theo Chính sách bảo mật của Puvela.</p>
+
+      <h2>10. Sở hữu trí tuệ</h2>
+      <p>Tên thương hiệu, logo, hình ảnh, nội dung và các tài liệu trên website thuộc quyền sở hữu hoặc quyền sử dụng
+        hợp pháp của Puvela và không được sao chép, sử dụng cho mục đích thương mại khi chưa được cho phép.</p>
+
+      <h2>11. Khiếu nại &amp; hỗ trợ</h2>
+      <p>Mọi thắc mắc hoặc khiếu nại liên quan đến đơn hàng, sản phẩm và dịch vụ, khách hàng có thể liên hệ Puvela qua
+        các kênh hỗ trợ được công bố trên website.</p>
+      <p>Puvela ưu tiên giải quyết các vấn đề trên tinh thần thiện chí, minh bạch và phù hợp với quy định pháp luật hiện
+        hành.</p>
+
+      <h2>12. Thay đổi điều khoản</h2>
+      <p>Puvela có thể cập nhật Điều khoản dịch vụ khi cần thiết. Các thay đổi sẽ được công bố trên website và áp dụng
+        cho các giao dịch phát sinh sau thời điểm cập nhật, trừ trường hợp pháp luật có quy định khác.</p>
+
     </div>
+    <p class="doc-updated">Cập nhật lần cuối: 10/09/2026</p>
   </div>
-<footer aria-label="Chân trang">
+  </div>
+  <footer aria-label="Chân trang">
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="assets/logo-nav.png" alt="PUVELA" />
         <p>Nước hoa chính hãng nhập khẩu — full &amp; chiết. Thử trước. Yêu rồi hãy mua cả chai.</p>
       </div>
-      <div class="foot-col"><h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp; Niche</a><a href="index.html#bestsellers">Best sellers</a></div>
-      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a href="van-chuyen.html">Vận chuyển</a><a href="faq.html">FAQ</a></div>
-      <div class="foot-col"><h4>Chính sách</h4><a href="cam-ket-chinh-hang.html">Cam kết chính hãng</a><a href="kiem-tra-that-gia.html">Kiểm tra thật/giả</a><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
+      <div class="foot-col">
+        <h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa
+          Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp;
+          Niche</a><a href="index.html#bestsellers">Best sellers</a>
+      </div>
+      <div class="foot-col">
+        <h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a
+          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a
+          href="van-chuyen.html">Vận chuyển &amp; đổi trả</a><a href="faq.html">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h4>Chính sách</h4><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a>
+      </div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 PUVELA</span>
-      <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a></div>
+      <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a
+          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a></div>
       <span>Việt Nam</span>
     </div>
   </footer>
@@ -123,4 +727,5 @@
   <script src="assets/supabase.js"></script>
   <script src="assets/cart.js"></script>
 </body>
+
 </html>

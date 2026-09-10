@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Quản lý nước hoa — Bảng giá, tồn kho, đơn hàng</title>
+<link rel="icon" type="image/png" href="assets/favicon-puvela.png">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
 <meta name="referrer" content="no-referrer" />
 <style>
@@ -43,7 +44,7 @@ button{cursor:pointer;background:none;border:none}
 a{color:var(--wine)}
 
 /* ---------- layout ---------- */
-.wrap{max-width:1400px;margin:0 auto;padding:0 14px 90px}
+.wrap{max-width:1550px;margin:0 auto;padding:0 14px 90px}
 header.top{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0 0}
 .topbar{max-width:1400px;margin:0 auto;padding:0 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .brand{font-weight:800;letter-spacing:-.02em;font-size:16px;color:var(--wine);white-space:nowrap}
@@ -524,22 +525,74 @@ function setPrice(pid, kind, ch, value){
 function setField(pid, field, value){
   const p = DB.products.find(x=>x.id===pid); if(!p) return false;
   let v = value;
+
   if(NUMF.has(field)){
     if(String(value).trim()==='') v = '';
     else {
       const n = num(value);
       if(n < 0){ toast('Không nhận số âm — đã bỏ qua'); return false; }
-      v = n;                       // luôn lưu dạng SỐ, không lưu chuỗi "4.800"
+      v = n;
     }
   }
+
   const old = p[field];
   p[field] = v;
   p.updatedAt = today();
   if(p.sample) delete p.sample;
   logChange(pid, field, old, v);
   save();
+
+  // Tên sản phẩm là field ngoại lệ:
+  // sửa trên Admin → cập nhật trực tiếp products.name trên Supabase
+  if(field === 'name' && p.webSlug && String(v).trim() !== ''){
+    sbReady().then(() =>
+      sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(p.webSlug)}`, {
+        method: 'PATCH',
+        headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({
+          name: String(v).trim()
+        })
+      })
+    ).catch(e => {
+      toast('Đã lưu tên trên Admin nhưng chưa sync tên lên web: ' + e.message);
+    });
+  }
+
   return true;
 }
+/* ---------- đồng bộ nội dung hiển thị trên website ---------- */
+async function syncWebContentField(p, field, value){
+  if(!p || !p.webSlug) return;
+  await sbReady();
+
+  const slug = encodeURIComponent(p.webSlug);
+  const rows = await sbFetch(`/rest/v1/products?slug=eq.${slug}&select=slug,description,notes,longevity,sillage`);
+  if(!(rows||[]).length) throw new Error('Không tìm thấy sản phẩm trên web với mã '+p.webSlug);
+
+  const current = rows[0] || {};
+  const body = {};
+
+  if(field === 'webDescription'){
+    body.description = String(value||'').trim();
+  } else if(field === 'webTopNote' || field === 'webMidNote' || field === 'webBaseNote'){
+    const notes = (current.notes && typeof current.notes === 'object') ? Object.assign({}, current.notes) : {};
+    const key = field === 'webTopNote' ? 'top' : field === 'webMidNote' ? 'mid' : 'base';
+    notes[key] = String(value||'').trim();
+    body.notes = notes;
+  } else if(field === 'webLongevity' || field === 'webSillage'){
+    const n = String(value||'').trim();
+    body[field === 'webLongevity' ? 'longevity' : 'sillage'] = n === '' ? null : Math.max(1, Math.min(5, parseInt(n,10)||3));
+  } else {
+    return;
+  }
+
+  await sbFetch(`/rest/v1/products?slug=eq.${slug}`, {
+    method:'PATCH',
+    headers:{Prefer:'return=minimal'},
+    body:JSON.stringify(body)
+  });
+}
+
 function productById(id){ return DB.products.find(p=>p.id===id); }
 
 /* ---------- lọc & tìm kiếm ---------- */
@@ -1382,6 +1435,21 @@ function openDetail(id){
       </div>
       <label class="fld"><span>Ghi chú</span><input class="inp" data-p="note" data-id="${id}" value="${esc(p.note||'')}" placeholder="Mùi, độ lưu hương, khách hay hỏi gì…"></label>
 
+      ${p.webSlug ? `<div class="card" style="box-shadow:none;background:var(--panel2);margin-top:12px"><div class="pad">
+        <h3 style="margin:0 0 10px;font-size:13px">Nội dung website</h3>
+        <p class="hint" style="margin:0 0 12px">Sửa tại đây sẽ cập nhật trực tiếp sản phẩm trên website, không cần vào Supabase.</p>
+        <label class="fld"><span>Mô tả website</span><textarea class="inp" data-webcontent="webDescription" data-id="${id}" rows="4" placeholder="Mô tả sản phẩm trên website">${esc(p.webDescription!==undefined ? p.webDescription : (p.note||''))}</textarea></label>
+        <div class="grid3">
+          <label class="fld"><span>Hương đầu</span><input class="inp" data-webcontent="webTopNote" data-id="${id}" value="${esc(p.webTopNote||'')}" placeholder="Hương đầu"></label>
+          <label class="fld"><span>Hương giữa</span><input class="inp" data-webcontent="webMidNote" data-id="${id}" value="${esc(p.webMidNote||'')}" placeholder="Hương giữa"></label>
+          <label class="fld"><span>Hương cuối</span><input class="inp" data-webcontent="webBaseNote" data-id="${id}" value="${esc(p.webBaseNote||'')}" placeholder="Hương cuối"></label>
+        </div>
+        <div class="grid2">
+          <label class="fld"><span>Độ lưu hương (1–5)</span><input class="inp" data-webcontent="webLongevity" data-id="${id}" value="${esc(p.webLongevity??p.longevity??'')}" inputmode="numeric" placeholder="1–5"></label>
+          <label class="fld"><span>Độ tỏa hương (1–5)</span><input class="inp" data-webcontent="webSillage" data-id="${id}" value="${esc(p.webSillage??p.sillage??'')}" inputmode="numeric" placeholder="1–5"></label>
+        </div>
+      </div></div>` : ''}
+
       <div class="card" style="box-shadow:none;background:var(--panel2)"><div class="pad">
         ${chList().map(x=>{ const b=c.byCh[x.id]||{};
           return `<div class="stat-row"><span>Giá bán · <b>${esc(x.name)}</b>${b.setFull||b.setDecant?'':' <span class="tiny muted">(gợi ý)</span>'}</span>
@@ -1405,6 +1473,7 @@ function openDetail(id){
     </div>
     <footer>
       <button class="btn danger" data-act="delproduct" data-id="${id}">Xoá sản phẩm</button>
+      ${p.webSlug ? `<button class="btn danger" data-act="deleteproductdb" data-id="${id}" title="Xóa sản phẩm và dữ liệu liên quan khỏi Supabase">🗑 Xóa khỏi database</button>` : ''}
       <span style="flex:1"></span>
       <button class="btn primary" data-close="1">Xong</button>
     </footer>
@@ -1566,6 +1635,81 @@ function copyText(t){
 }
 
 /* ============================ SỰ KIỆN ============================ */
+/* ---------- xóa sản phẩm khỏi Supabase + dữ liệu liên quan ---------- */
+/* ---------- xóa sản phẩm chỉ có trên catalog web ---------- */
+async function xoaSanPhamChiCoTrenWeb(slug){
+  if(!slug) throw new Error('Không có mã sản phẩm trên web');
+  if(!sbOn()) throw new Error('Chưa đăng nhập Supabase — không thể xóa khỏi database');
+  await sbReady();
+  const safeSlug = encodeURIComponent(String(slug));
+
+  // Xóa dữ liệu con trước để không vi phạm foreign key.
+  await sbFetch(`/rest/v1/product_collections?product_slug=eq.${safeSlug}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+  await sbFetch(`/rest/v1/product_variants?product_slug=eq.${safeSlug}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+  await sbFetch(`/rest/v1/reviews?product_slug=eq.${safeSlug}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+  await sbFetch(`/rest/v1/products?slug=eq.${safeSlug}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+
+  // Dọn ảnh vật lý của sản phẩm nếu có; lỗi ảnh không làm hỏng việc xóa DB.
+  for(let slot=1; slot<=3; slot++){
+    try{
+      await sbFetch(`/storage/v1/object/products/${anhTen(slug,slot)}`, {method:'DELETE'});
+    }catch(e){}
+  }
+
+  // Xóa mã khỏi danh sách catalog web đang cache trong máy này.
+  WEB_SLUGS = (WEB_SLUGS||[]).filter(x=>x.slug!==slug);
+  lsSet('pm_web_slugs', WEB_SLUGS);
+  // Đồng bộ ngay khối “Nhãn nổi bật trên web” để sản phẩm vừa xóa không còn hiện trong UI.
+  if(typeof NH!=='undefined' && Array.isArray(NH.list)){
+    NH.list = NH.list.filter(x=>x.slug!==slug);
+  }
+  return true;
+}
+
+async function xoaSanPhamKhoiDB(id){
+  const p = productById(id);
+  if(!p) throw new Error('Không tìm thấy sản phẩm');
+  if(!sbOn()) throw new Error('Chưa đăng nhập Supabase — không thể xóa khỏi database');
+  await sbReady();
+  const slug = p.webSlug;
+  if(!slug) throw new Error('Sản phẩm chưa có mã web (webSlug), không thể xác định dòng trong database');
+
+  // Xóa dữ liệu con trước để không vi phạm foreign key.
+  await sbFetch(`/rest/v1/product_collections?product_slug=eq.${encodeURIComponent(slug)}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+  await sbFetch(`/rest/v1/product_variants?product_slug=eq.${encodeURIComponent(slug)}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+  await sbFetch(`/rest/v1/reviews?product_slug=eq.${encodeURIComponent(slug)}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+  await sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(slug)}`, {
+    method:'DELETE', headers:{Prefer:'return=minimal'}
+  });
+
+  // Dọn ảnh vật lý của sản phẩm nếu có; lỗi ảnh không làm hỏng việc xóa DB.
+  for(let slot=1; slot<=3; slot++){
+    try{
+      await sbFetch(`/storage/v1/object/products/${anhTen(slug,slot)}`, {method:'DELETE'});
+    }catch(e){}
+  }
+
+  // Chỉ sau khi DB xóa thành công mới xóa dữ liệu local của đúng sản phẩm này.
+  DB.products = DB.products.filter(x=>x.id!==id);
+  DB.history = (DB.history||[]).filter(h=>h.pid!==id);
+  save();
+  return p;
+}
+
 function refreshRow(pid){
   const tr = document.querySelector(`tr[data-row="${pid}"]`);
   const p = productById(pid);
@@ -1641,6 +1785,17 @@ document.addEventListener('click', e=>{
       ask(`Xoá <b>${esc(p.name)}</b>? Không khôi phục được.`, ()=>{
         DB.products = DB.products.filter(x=>x.id!==id); save();
       },'Xoá sản phẩm',true); },
+    deleteproductdb(){ const p=productById(id); if(!p) return;
+      ask(`Xóa hẳn <b>${esc(p.name)}</b> khỏi database?<br><br>Hệ thống sẽ xóa sản phẩm, variants, collections, reviews liên quan và ảnh của đúng sản phẩm này. Không thể khôi phục.`, async ()=>{
+        try{
+          toast('Đang xóa sản phẩm khỏi database…');
+          await xoaSanPhamKhoiDB(id);
+          closeModal(); render();
+          toast(`Đã xóa ${p.name} khỏi database`);
+        }catch(err){
+          toast('Không xóa được: '+err.message);
+        }
+      },'Xóa khỏi database',true); },
     importcsv(){ pickFile('.csv,text/csv,text/plain', importCSV); },
     exportcsv(){ exportCSV(); },
     backup(){ download('sao-luu-nuoc-hoa-'+today()+'.json', JSON.stringify(DB,null,2), 'application/json'); },
@@ -1688,6 +1843,21 @@ document.addEventListener('change', e=>{
     setField(t.dataset.id, t.dataset.p, t.value.trim());
     if(t.dataset.p==='brand'){ const dl=$('#brands'); if(dl) dl.innerHTML = brandOptions(); }
     return; }
+  if(t.matches('[data-webcontent]')){
+    const p = productById(t.dataset.id); if(!p || !p.webSlug) return;
+    const f = t.dataset.webcontent;
+    const v = t.value.trim();
+    if(f==='webLongevity' || f==='webSillage'){
+      if(v==='') { p[f]=''; }
+      else { const n=parseInt(v,10); if(!Number.isFinite(n) || n<1 || n>5){ toast('Độ lưu/tỏa hương phải từ 1 đến 5'); return; } p[f]=n; }
+    } else {
+      p[f]=v;
+    }
+    p.updatedAt=today(); delete p.sample; save();
+    syncWebContentField(p, f, v).then(()=>{ toast('Đã cập nhật nội dung website'); })
+      .catch(e=>toast('Đã lưu trên Admin nhưng chưa sync lên web: '+e.message));
+    return;
+  }
   if(t.matches('[data-r]') && REFS){
     const p = productById(REFS.pid), list = refsOf(p,REFS.kind), r = list[num(t.dataset.i)];
     if(!r) return;
@@ -2229,12 +2399,35 @@ function webPlan(p){
 */
 const webList = () => {
   const q = norm(UI.q);
-  if(!q) return DB.products;
-  const terms = q.split(/\s+/);
-  return DB.products.filter(p=>{
+  const terms = q ? q.split(/\s+/) : [];
+
+  // Tab Đăng web hiển thị toàn bộ catalog web, nhưng vẫn giữ nguyên
+  // dữ liệu DB.products cho các sản phẩm đang quản lý trong app.
+  // Sản phẩm đã ghép mã sẽ dùng đúng dòng trong DB.products; các mã còn
+  // lại chỉ là dòng catalog web, không được đưa vào DB.products.
+  const app = DB.products.filter(p=>{
+    if(!terms.length) return true;
     const hay = norm([p.name, p.brand, p.note, p.webSlug].join(' '));
     return terms.every(t=>hay.includes(t));
   });
+
+  const appSlugs = new Set(DB.products.map(p=>p.webSlug).filter(Boolean));
+  const webOnly = (WEB_SLUGS||[])
+    .filter(w=>w && w.slug && !appSlugs.has(w.slug))
+    .map(w=>({
+      id:'__web__'+w.slug,
+      name:w.name || w.slug,
+      brand:'',
+      webSlug:w.slug,
+      webOnly:true
+    }))
+    .filter(p=>{
+      if(!terms.length) return true;
+      const hay = norm([p.name, p.webSlug].join(' '));
+      return terms.every(t=>hay.includes(t));
+    });
+
+  return app.concat(webOnly);
 };
 
 const webSlugHopLe = slug => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
@@ -2462,12 +2655,50 @@ function muiSel(p, f, nhan){
     .join('');
   return `<select class="cell" data-web="${f}" data-id="${p.id}" style="font-size:11.5px;padding:5px 4px">${opt}</select>`;
 }
+/* Thêm bộ chọn nhãn ngay trên từng sản phẩm trong tab Đăng web.
+   Dùng chung products.badge và handler nhanDoi() hiện có. */
+function webNhanSel(slug){
+  const cur = ((NH&&NH.list)||[]).find(x=>x.slug===slug);
+  const v = cur ? (cur.badge||'') : '';
+  return `<div style="margin-top:5px;display:flex;align-items:center;gap:5px">
+    <span class="tiny muted">Nhãn:</span>
+    <select class="inp" data-nhan="${esc(slug)}" title="Gắn nhãn nổi bật cho sản phẩm này" style="max-width:145px;padding:4px 7px;font-size:11.5px">
+      ${NHAN_LIST.map(n=>`<option value="${esc(n)}" ${(v===n)?'selected':''}>${n||'— không nhãn —'}</option>`).join('')}
+    </select>
+  </div>`;
+}
 function viewWeb(){
   const list = webList();
   const ch = webCh();
   const sanSang = DB.products.filter(p=>p.webPublish && p.webSlug && !webPlan(p).van.length).length;
   const slugOpts = (WEB_SLUGS||[]).map(x=>`<option value="${esc(x.slug)}">${esc(x.name||'')}</option>`).join('');
   const rows = list.map(p=>{
+    if(p.webOnly){
+      return `<tr>
+        <td class="l nm" data-l="Sản phẩm">
+          <div style="display:flex;gap:9px;align-items:flex-start">
+            <button class="anhbox" disabled title="Sản phẩm này chỉ có trong catalog web">
+              <span class="nhan">web</span>
+            </button>
+            <div style="min-width:0">
+              <b>${esc(p.name)}</b>
+              <div class="tiny muted">Catalog web</div>
+              ${webNhanSel(p.webSlug)}
+            </div>
+          </div>
+        </td>
+        <td class="l" data-l="Mã trên web">
+          <span class="tiny num">${esc(p.webSlug)}</span>
+        </td>
+        <td data-l="Giá web sẽ đăng"><span class="muted tiny">—</span></td>
+        <td data-l="Giá sale (${U()})"><span class="muted tiny">—</span></td>
+        <td data-l="Mùi hương"><span class="muted tiny">—</span></td>
+        <td data-l="Tình trạng"><span class="pill mute">chỉ có trên web</span></td>
+        <td data-l="Đăng">
+          <button class="btn sm danger" data-act="deletewebonly" data-slug="${esc(p.webSlug)}" style="margin-top:4px">🗑 Xóa</button>
+        </td>
+      </tr>`;
+    }
     const plan = webPlan(p), c = calc(p, ch);
     const laMaMoi = !!p.webSlug && !coTrongCatalog(p);
     return `<tr>
@@ -2482,6 +2713,7 @@ function viewWeb(){
           </button>
           <div style="min-width:0">
             <b>${esc(p.name)}</b>${p.brand?`<div class="tiny muted">${esc(p.brand)}</div>`:''}
+            ${p.webSlug ? webNhanSel(p.webSlug) : ''}
           </div>
         </div>
       </td>
@@ -2518,13 +2750,14 @@ function viewWeb(){
         <label class="sw"><input type="checkbox" data-web="webPublish" data-id="${p.id}" ${p.webPublish?'checked':''}>
           <span>${p.webPublish?'đang bán':'ẩn'}</span></label>
         ${p.webSlugAuto?`<button class="btn sm" data-act="webok" data-id="${p.id}" style="margin-top:4px">✓ Mã đúng</button>`:''}
+        ${p.webSlug?`<button class="btn sm danger" data-act="deleteproductdb" data-id="${p.id}" style="margin-top:4px">🗑 Xóa</button>`:''}
       </td>
     </tr>`;
   }).join('');
   return `
   <datalist id="webslugs">${slugOpts}</datalist>
   <div class="kpis">
-    <div class="kpi"><div class="k">Sẵn sàng đăng</div><div class="v">${sanSang}</div><div class="s">trên ${DB.products.length} sản phẩm</div></div>
+    <div class="kpi"><div class="k">Sẵn sàng đăng</div><div class="v">${sanSang}</div><div class="s">trên ${DB.products.length} sản phẩm trong app${WEB_SLUGS ? ` · ${WEB_SLUGS.length} mã trên web` : ''}</div></div>
     <div class="kpi"><div class="k">Giá lấy từ kênh</div><div class="v" style="font-size:17px">${esc(chName(ch))}</div><div class="s">đổi ở Cài đặt</div></div>
     <div class="kpi"><div class="k">Lần đăng gần nhất</div><div class="v" style="font-size:17px">${DB.lastWebPush? new Date(DB.lastWebPush).toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—'}</div>
       <div class="s">${WEB_SLUGS? WEB_SLUGS.length+' mã trong catalog web' : 'chưa tải catalog web'}</div></div>
@@ -2648,6 +2881,21 @@ document.addEventListener('click', async e=>{
     const n = DB.products.filter(p=>p.webPublish && p.webSlug).length;
     ask(`Đăng giá của <b>${n} sản phẩm</b> lên web puvela?<br>Khách sẽ thấy giá mới ngay khi tải lại trang.`,
       async ()=>{ try{ await webPush(); }catch(err){ toast('Lỗi: '+err.message); } }, 'Đăng lên web'); }
+  if(b.dataset.act==='deletewebonly'){ e.preventDefault();
+    const slug = b.dataset.slug;
+    const item = (WEB_SLUGS||[]).find(x=>x.slug===slug);
+    const name = item && item.name ? item.name : slug;
+    ask(`Xóa hẳn <b>${esc(name)}</b> khỏi database?<br><br>Sản phẩm này đang là "chỉ có trên web". Hệ thống sẽ xóa sản phẩm, variants, collections, reviews liên quan và ảnh của đúng mã <code>${esc(slug)}</code>. Không thể khôi phục.`, async ()=>{
+      try{
+        toast('Đang xóa sản phẩm khỏi database…');
+        await xoaSanPhamChiCoTrenWeb(slug);
+        render();
+        toast(`Đã xóa ${name} khỏi database`);
+      }catch(err){
+        toast('Không xóa được: '+err.message);
+      }
+    },'Xóa khỏi database',true);
+  }
 });
 </script>
 <style>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="description" content="Nước hoa chính hãng nhập khẩu — full bottle & chiết 5–10ml. Chọn theo Nữ, Nam, Unisex & Niche tại Puvela." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/png" href="assets/favicon-puvela.png"><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root{--ink:#2b2621;--paper:#f5f0e7;--line:rgba(43,38,33,.15);--clay:#9c5a41;--sand:#e7ddce}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",sans-serif;font-weight:400}a{color:inherit;text-decoration:none}.announcement{padding:10px 20px;background:var(--ink);color:#fff;text-align:center;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}nav{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,4vw,60px);border-bottom:1px solid var(--line)}.back,.bag{font-size:11px;letter-spacing:.08em;text-transform:uppercase}.bag{justify-self:end}.brand{display:inline-flex;align-items:center;line-height:0}.brand img{height:38px;width:auto;display:block}.collection-head{padding:clamp(46px,6vw,86px) clamp(20px,5vw,78px) 36px}.eyebrow{margin:0 0 16px;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}.collection-head h1{margin:0;font:600 clamp(50px,6vw,86px)/.98 "Cormorant Garamond",serif;letter-spacing:-.01em}.collection-head p:not(.eyebrow){max-width:460px;margin:18px 0 0;font-size:15px;line-height:1.6}.filters{display:flex;gap:24px;overflow:auto;white-space:nowrap;padding:0 clamp(20px,5vw,78px) 18px;border-bottom:1px solid var(--line)}.filters button{border:0;border-bottom:1px solid transparent;background:none;padding:0 0 13px;cursor:pointer;font:12px "Be Vietnam Pro",sans-serif;color:#635d57}.filters button.active{color:var(--ink);border-color:var(--ink)}
@@ -45,10 +45,15 @@
     .doc-note{margin:26px 0 0;padding:14px 16px;border:1px dashed var(--line);background:rgba(176,106,79,.05);
       font-size:13.5px;line-height:1.65;color:#6b625a}
     .doc-updated{margin-top:30px;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:#7a7268}
-    @media(max-width:820px){.doc-wrap{grid-template-columns:1fr;gap:8px}.doc-nav{position:static;
-      display:flex;overflow:auto;white-space:nowrap;gap:6px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:22px}
-      .doc-nav a{border-left:0;border-bottom:2px solid transparent;padding:8px 4px}
-      .doc-nav a.on{border-left:0;border-bottom-color:var(--ink);background:none}}
+    /* ===== điều hướng trang thông tin: desktop cũng xếp ngang như mobile ===== */
+      .doc-wrap{grid-template-columns:1fr;gap:8px}
+      .doc-nav{position:static;display:flex;overflow:auto;white-space:nowrap;gap:18px;
+        padding:0 0 14px;border-bottom:1px solid var(--line);margin-bottom:22px}
+      .doc-nav a{border-left:0;border-bottom:2px solid transparent;padding:8px 0;flex:0 0 auto}
+      .doc-nav a.on{border-left:0;border-bottom-color:var(--ink);background:none}
+      @media(max-width:820px){
+        .doc-nav{gap:14px}
+      }
   </style>
 
   <style>
@@ -80,32 +85,225 @@
   </section>
   <div class="doc-wrap">
     <nav class="doc-nav" aria-label="Các trang thông tin">
-          <a href="cam-ket-chinh-hang.html" class="">Cam kết chính hãng</a>
-          <a href="kiem-tra-that-gia.html" class="">Kiểm tra thật/giả</a>
-          <a href="van-chuyen.html" class="">Vận chuyển</a>
+          <a href="van-chuyen.html" class="">Vận chuyển &amp; đổi trả</a>
           <a href="bao-mat.html" class="on">Chính sách bảo mật</a>
           <a href="dieu-khoan.html" class="">Điều khoản sử dụng</a>
           <a href="faq.html" class="">Câu hỏi thường gặp</a>
     </nav>
     <div class="doc-body">
-<h2>Thông tin Puvela thu thập</h2>
-<p>Khi bạn đặt hàng, Puvela lưu tên, số điện thoại, địa chỉ nhận hàng và nội dung ghi chú của đơn. Khi bạn để lại email nhận tin, Puvela lưu địa chỉ email đó.</p>
-<h2>Dùng để làm gì</h2>
+<h2>CHÍNH SÁCH BẢO MẬT THÔNG TIN CÁ NHÂN</h2>
+<p><strong>Áp dụng cho website: Puvela.vn</strong><br><strong>Cập nhật lần cuối: 10/09/2026</strong></p>
+
+<p>Puvela tôn trọng quyền riêng tư và bảo vệ dữ liệu cá nhân của khách hàng. Chính sách này giải thích cách Puvela thu thập, sử dụng, lưu trữ, chia sẻ và bảo vệ dữ liệu cá nhân khi Quý khách truy cập website Puvela.vn, đăng ký tài khoản, sử dụng các tính năng trên website hoặc thực hiện giao dịch mua hàng.</p>
+
+<p>Puvela chỉ thu thập và xử lý dữ liệu cá nhân trong phạm vi phù hợp với mục đích cụ thể, rõ ràng và theo quy định pháp luật hiện hành.</p>
+
+<p>Chính sách này được xây dựng trên cơ sở các quy định pháp luật Việt Nam hiện hành, bao gồm:</p>
 <ul>
-  <li>Liên hệ xác nhận và giao đơn hàng của bạn</li>
-  <li>Hỗ trợ khi bạn cần đổi, hỏi hoặc khiếu nại về đơn</li>
-  <li>Gửi thông tin về sản phẩm mới nếu bạn đã đồng ý nhận tin</li>
+  <li>Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15;</li>
+  <li>Nghị định số 356/2025/NĐ-CP ngày 31/12/2025 của Chính phủ quy định chi tiết một số điều và biện pháp thi hành Luật Bảo vệ dữ liệu cá nhân;</li>
+  <li>Luật An ninh mạng số 116/2025/QH15;</li>
+  <li>Luật Bảo vệ quyền lợi người tiêu dùng số 19/2023/QH15 và các văn bản sửa đổi, bổ sung, hợp nhất có liên quan;</li>
+  <li>Luật Giao dịch điện tử số 20/2023/QH15;</li>
+  <li>Luật Thương mại điện tử số 122/2025/QH15;</li>
+  <li>Các quy định pháp luật khác có liên quan.</li>
 </ul>
-<h2>Puvela không làm gì</h2>
-<p>Không bán, không trao đổi thông tin của bạn cho bên thứ ba vì mục đích quảng cáo.</p>
-<h2>Lưu ở đâu</h2>
-<p>Dữ liệu đơn hàng được lưu trên hạ tầng máy chủ có kiểm soát truy cập. Chỉ người quản lý cửa hàng xem được.</p>
-<h2>Quyền của bạn</h2>
-<p>Bạn có thể yêu cầu xem, sửa hoặc xoá thông tin của mình bằng cách nhắn tin cho Puvela qua kênh chat.</p>
-      <div class="doc-note">Nội dung trang này là bản nháp để bạn thay bằng chính sách thật của cửa hàng.
-        Sửa trực tiếp trong file <b>bao-mat.html</b>, phần nằm giữa thẻ <b>&lt;div class="doc-body"&gt;</b>.</div>
-      <p class="doc-updated">Cập nhật lần cuối: [ngày/tháng/năm]</p>
-    </div>
+
+<h2>1. Loại dữ liệu cá nhân Puvela có thể thu thập</h2>
+<p>Tùy theo cách Quý khách sử dụng website và dịch vụ của Puvela, chúng tôi có thể thu thập các nhóm dữ liệu sau:</p>
+
+<h3>1.1. Thông tin Quý khách trực tiếp cung cấp</h3>
+<ul>
+  <li>Họ và tên;</li>
+  <li>Số điện thoại;</li>
+  <li>Địa chỉ email;</li>
+  <li>Địa chỉ nhận hàng hoặc thông tin cần thiết để thực hiện giao dịch;</li>
+  <li>Thông tin tài khoản đăng nhập;</li>
+  <li>Thông tin đơn hàng, sản phẩm đã mua và lịch sử giao dịch;</li>
+  <li>Nội dung trao đổi, yêu cầu tư vấn, khiếu nại, đổi trả hoặc hỗ trợ khách hàng;</li>
+  <li>Các thông tin khác mà Quý khách chủ động cung cấp khi sử dụng dịch vụ của Puvela.</li>
+</ul>
+<p>Puvela chỉ yêu cầu những thông tin cần thiết cho từng mục đích cụ thể. Các trường thông tin không bắt buộc sẽ được xác định rõ trên website khi có thể.</p>
+
+<h3>1.2. Thông tin phát sinh trong quá trình sử dụng website</h3>
+<ul>
+  <li>Địa chỉ IP;</li>
+  <li>Thông tin về trình duyệt và thiết bị;</li>
+  <li>Thời gian truy cập;</li>
+  <li>Trang hoặc nội dung được truy cập;</li>
+  <li>Thông tin cookie và các công nghệ tương tự;</li>
+  <li>Dữ liệu kỹ thuật và nhật ký hệ thống cần thiết để bảo đảm an toàn website.</li>
+</ul>
+
+<h3>1.3. Thông tin thanh toán</h3>
+<p>Khi Quý khách thực hiện thanh toán trực tuyến, thông tin thanh toán có thể được xử lý bởi ngân hàng, tổ chức cung ứng dịch vụ thanh toán hoặc đơn vị trung gian thanh toán tương ứng.</p>
+<p>Puvela không chủ động lưu trữ đầy đủ thông tin số thẻ thanh toán trên hệ thống của mình, trừ trường hợp việc lưu trữ đó được thực hiện theo phương thức và phạm vi được pháp luật cho phép.</p>
+
+<h2>2. Mục đích xử lý dữ liệu cá nhân</h2>
+<ul>
+  <li>Tiếp nhận và xử lý đơn hàng;</li>
+  <li>Xác nhận đơn hàng và liên hệ với khách hàng khi cần thiết;</li>
+  <li>Thực hiện giao hàng, thanh toán, đổi trả và các dịch vụ liên quan;</li>
+  <li>Quản lý tài khoản khách hàng;</li>
+  <li>Cung cấp dịch vụ tư vấn, hỗ trợ và chăm sóc khách hàng;</li>
+  <li>Giải quyết yêu cầu, khiếu nại, tranh chấp và các vấn đề phát sinh từ giao dịch;</li>
+  <li>Thực hiện nghĩa vụ về kế toán, thuế, hóa đơn, chứng từ và các nghĩa vụ pháp lý khác;</li>
+  <li>Bảo đảm an toàn, bảo mật cho website, tài khoản và hệ thống của Puvela;</li>
+  <li>Phát hiện, phòng ngừa và xử lý hành vi gian lận, truy cập trái phép hoặc hành vi vi phạm pháp luật;</li>
+  <li>Phân tích và cải thiện sản phẩm, dịch vụ, nội dung và trải nghiệm sử dụng website;</li>
+  <li>Thực hiện các hoạt động tiếp thị, giới thiệu sản phẩm, chương trình ưu đãi hoặc bộ sưu tập mới khi có căn cứ xử lý phù hợp và trong trường hợp cần sự đồng ý thì chỉ thực hiện sau khi Quý khách đã đồng ý;</li>
+  <li>Thực hiện các mục đích khác được thông báo cho Quý khách hoặc được pháp luật cho phép.</li>
+</ul>
+<p>Puvela không sử dụng dữ liệu cá nhân cho những mục đích không phù hợp với mục đích đã thông báo, trừ trường hợp pháp luật cho phép hoặc có căn cứ xử lý hợp pháp khác.</p>
+
+<h2>3. Căn cứ xử lý dữ liệu cá nhân</h2>
+<p>Puvela xử lý dữ liệu cá nhân trên cơ sở các căn cứ được pháp luật hiện hành cho phép, bao gồm sự đồng ý của chủ thể dữ liệu trong những trường hợp pháp luật yêu cầu, cũng như các căn cứ xử lý khác theo quy định pháp luật.</p>
+<p>Đối với những hoạt động mà pháp luật yêu cầu phải có sự đồng ý, Puvela sẽ cung cấp thông tin cần thiết về mục đích và phạm vi xử lý trước khi thực hiện và ghi nhận sự đồng ý theo phương thức phù hợp.</p>
+<p>Việc đồng ý nhận thông tin tiếp thị, khuyến mãi hoặc nội dung giới thiệu sản phẩm là <strong>tự nguyện</strong> và không phải là điều kiện bắt buộc để Quý khách mua hàng trên Puvela.vn.</p>
+<p>Quý khách có thể rút lại sự đồng ý đối với hoạt động xử lý dựa trên sự đồng ý bằng cách liên hệ với Puvela theo thông tin tại Mục 11 hoặc sử dụng cơ chế hủy đăng ký được cung cấp trong thông tin tiếp thị, nếu có.</p>
+<p>Việc rút lại sự đồng ý không ảnh hưởng đến tính hợp pháp của hoạt động xử lý dữ liệu đã được thực hiện trước thời điểm rút lại sự đồng ý.</p>
+
+<h2>4. Cookie và công nghệ tương tự</h2>
+<p>Puvela có thể sử dụng cookie và các công nghệ tương tự để:</p>
+<ul>
+  <li>Duy trì và bảo đảm hoạt động bình thường của website;</li>
+  <li>Ghi nhớ một số lựa chọn hoặc phiên truy cập của khách hàng;</li>
+  <li>Đo lường hiệu suất và cải thiện website;</li>
+  <li>Phân tích cách khách hàng sử dụng website;</li>
+  <li>Hỗ trợ hoạt động tiếp thị và quảng cáo phù hợp với cơ chế và căn cứ xử lý dữ liệu được áp dụng.</li>
+</ul>
+<p>Một số công cụ phân tích, quảng cáo hoặc tiếp thị do bên thứ ba cung cấp có thể xử lý dữ liệu kỹ thuật hoặc thông tin liên quan đến hoạt động truy cập website theo chính sách của các bên đó.</p>
+<p>Quý khách có thể quản lý hoặc xóa cookie thông qua cài đặt của trình duyệt hoặc các cơ chế quản lý cookie được Puvela cung cấp, tùy theo tính năng thực tế của website.</p>
+<p>Việc vô hiệu hóa một số cookie có thể ảnh hưởng đến một số chức năng của website.</p>
+
+<h2>5. Phạm vi sử dụng dữ liệu cá nhân</h2>
+<p>Dữ liệu cá nhân của Quý khách chỉ được sử dụng trong phạm vi cần thiết cho các mục đích được nêu tại Chính sách này hoặc các mục đích khác được thông báo và có căn cứ xử lý phù hợp theo pháp luật.</p>
+<ul>
+  <li>Xử lý và hoàn tất đơn hàng;</li>
+  <li>Giao tiếp với khách hàng về giao dịch;</li>
+  <li>Hỗ trợ và chăm sóc khách hàng;</li>
+  <li>Quản lý tài khoản và lịch sử giao dịch;</li>
+  <li>Phát hiện và ngăn chặn hành vi gian lận hoặc truy cập trái phép;</li>
+  <li>Phân tích dữ liệu ở dạng tổng hợp hoặc đã được khử định danh, khi phù hợp, để cải thiện sản phẩm, dịch vụ và trải nghiệm khách hàng;</li>
+  <li>Gửi thông tin marketing khi có căn cứ xử lý phù hợp và trong trường hợp cần sự đồng ý thì Quý khách đã đồng ý nhận thông tin đó.</li>
+</ul>
+<p>Puvela không bán hoặc cho thuê dữ liệu cá nhân của khách hàng cho bên thứ ba vì mục đích thương mại.</p>
+
+<h2>6. Các bên có thể được tiếp cận hoặc nhận dữ liệu cá nhân</h2>
+<p>Để vận hành website và thực hiện các dịch vụ cung cấp cho khách hàng, Puvela có thể cung cấp dữ liệu cá nhân ở phạm vi cần thiết cho các bên liên quan, bao gồm:</p>
+
+<h3>6.1. Đơn vị vận chuyển và giao nhận</h3>
+<p>Puvela có thể cung cấp các thông tin cần thiết như họ tên, số điện thoại, địa chỉ và thông tin liên quan đến đơn hàng để thực hiện việc giao hàng.</p>
+
+<h3>6.2. Ngân hàng, tổ chức thanh toán hoặc trung gian thanh toán</h3>
+<p>Trong trường hợp Quý khách lựa chọn thanh toán trực tuyến, dữ liệu cần thiết có thể được chuyển đến đơn vị cung cấp dịch vụ thanh toán để xử lý giao dịch.</p>
+
+<h3>6.3. Nhà cung cấp dịch vụ công nghệ</h3>
+<p>Puvela có thể sử dụng các nhà cung cấp dịch vụ công nghệ, lưu trữ dữ liệu, bảo mật, phân tích, chăm sóc khách hàng, email hoặc các dịch vụ hỗ trợ vận hành website.</p>
+<p>Các nhà cung cấp này chỉ được tiếp cận hoặc xử lý dữ liệu trong phạm vi cần thiết cho việc cung cấp dịch vụ và theo thỏa thuận, yêu cầu bảo mật và quy định pháp luật có liên quan.</p>
+
+<h3>6.4. Cơ quan nhà nước có thẩm quyền</h3>
+<p>Puvela có thể cung cấp dữ liệu cá nhân khi việc cung cấp là cần thiết để tuân thủ yêu cầu hợp pháp của cơ quan nhà nước có thẩm quyền hoặc thực hiện nghĩa vụ theo quy định pháp luật.</p>
+
+<h3>6.5. Các trường hợp khác</h3>
+<p>Trong trường hợp Puvela cần sử dụng hoặc chia sẻ dữ liệu cho một mục đích mới không thuộc phạm vi Chính sách này, Puvela sẽ thực hiện việc thông báo và xin sự đồng ý của Quý khách khi pháp luật yêu cầu.</p>
+<p>Puvela chỉ cung cấp dữ liệu ở phạm vi cần thiết cho mục đích tương ứng và áp dụng các biện pháp phù hợp để bảo vệ dữ liệu cá nhân.</p>
+
+<h2>7. Chuyển dữ liệu cá nhân ra nước ngoài</h2>
+<p>Hiện tại, Puvela không chủ động chuyển dữ liệu cá nhân của khách hàng ra ngoài lãnh thổ Việt Nam.</p>
+<p>Trong trường hợp hoạt động của Puvela có thay đổi dẫn đến việc dữ liệu cá nhân được lưu trữ, xử lý hoặc truyền tải ra nước ngoài, Puvela sẽ thực hiện các biện pháp và thủ tục theo quy định pháp luật hiện hành, bao gồm các nghĩa vụ liên quan đến đánh giá tác động hoặc thông báo khi thuộc trường hợp pháp luật yêu cầu, đồng thời cập nhật nội dung Chính sách này khi cần thiết.</p>
+
+<h2>8. Thời gian lưu trữ dữ liệu cá nhân</h2>
+<p>Puvela lưu trữ dữ liệu cá nhân trong thời gian cần thiết để:</p>
+<ul>
+  <li>Thực hiện các mục đích xử lý được nêu trong Chính sách này;</li>
+  <li>Hoàn thành giao dịch và cung cấp dịch vụ;</li>
+  <li>Giải quyết khiếu nại, tranh chấp hoặc yêu cầu của khách hàng;</li>
+  <li>Thực hiện nghĩa vụ về kế toán, thuế, hóa đơn, chứng từ và các nghĩa vụ pháp lý khác;</li>
+  <li>Bảo vệ quyền và lợi ích hợp pháp của Puvela trong phạm vi pháp luật cho phép.</li>
+</ul>
+<p>Đối với những dữ liệu không còn cần thiết và không thuộc trường hợp phải tiếp tục lưu trữ theo quy định pháp luật, Puvela sẽ thực hiện biện pháp phù hợp để xóa, hủy hoặc làm cho dữ liệu không còn được sử dụng cho mục đích ban đầu theo quy định pháp luật và khả năng kỹ thuật của hệ thống.</p>
+
+<h2>9. Bảo vệ dữ liệu cá nhân</h2>
+<p>Puvela áp dụng các biện pháp kỹ thuật và quản lý phù hợp để bảo vệ dữ liệu cá nhân khỏi nguy cơ truy cập, sử dụng, tiết lộ, thay đổi, mất mát hoặc phá hủy trái phép.</p>
+<ul>
+  <li>Sử dụng kết nối HTTPS/SSL cho việc truyền tải dữ liệu;</li>
+  <li>Kiểm soát và giới hạn quyền truy cập dữ liệu;</li>
+  <li>Chỉ cho phép nhân sự hoặc bên cung cấp dịch vụ có nhu cầu công việc hợp pháp tiếp cận dữ liệu trong phạm vi cần thiết;</li>
+  <li>Áp dụng biện pháp bảo vệ hệ thống và tài khoản;</li>
+  <li>Không lưu trữ trực tiếp thông tin thẻ thanh toán đầy đủ trên hệ thống Puvela trong trường hợp giao dịch được xử lý qua đơn vị thanh toán bên ngoài;</li>
+  <li>Thường xuyên rà soát và cập nhật các biện pháp bảo mật phù hợp với hệ thống thực tế.</li>
+</ul>
+<p>Mặc dù Puvela nỗ lực bảo vệ dữ liệu cá nhân, không có phương thức truyền tải hoặc lưu trữ điện tử nào có thể bảo đảm an toàn tuyệt đối trong mọi trường hợp.</p>
+<p>Nếu phát hiện hoặc nghi ngờ có sự cố liên quan đến dữ liệu cá nhân, Puvela sẽ thực hiện các biện pháp xử lý, khắc phục và thông báo cho các bên liên quan theo quy định pháp luật hiện hành.</p>
+<p>Quý khách có trách nhiệm bảo mật thông tin đăng nhập, mật khẩu và các thông tin xác thực tài khoản của mình. Puvela không chịu trách nhiệm đối với thiệt hại phát sinh từ việc Quý khách tự ý cung cấp thông tin đăng nhập cho bên thứ ba hoặc để lộ thông tin xác thực do lỗi của Quý khách, trừ trường hợp pháp luật có quy định khác hoặc sự cố phát sinh do lỗi của Puvela.</p>
+
+<h2>10. Quyền của khách hàng đối với dữ liệu cá nhân</h2>
+<p>Theo quy định pháp luật hiện hành về bảo vệ dữ liệu cá nhân, Quý khách có các quyền đối với dữ liệu cá nhân của mình trong phạm vi và điều kiện pháp luật quy định, bao gồm:</p>
+<ul>
+  <li>Được biết về hoạt động xử lý dữ liệu cá nhân;</li>
+  <li>Đồng ý hoặc không đồng ý đối với hoạt động xử lý trong trường hợp pháp luật yêu cầu sự đồng ý;</li>
+  <li>Rút lại sự đồng ý trong trường hợp việc xử lý dựa trên sự đồng ý;</li>
+  <li>Truy cập và yêu cầu cung cấp thông tin về dữ liệu cá nhân của mình;</li>
+  <li>Yêu cầu chỉnh sửa dữ liệu cá nhân không chính xác;</li>
+  <li>Yêu cầu xóa dữ liệu cá nhân trong các trường hợp pháp luật cho phép;</li>
+  <li>Yêu cầu hạn chế xử lý dữ liệu cá nhân trong các trường hợp pháp luật quy định;</li>
+  <li>Phản đối việc xử lý dữ liệu cá nhân trong các trường hợp pháp luật quy định;</li>
+  <li>Khiếu nại, tố cáo, khởi kiện hoặc yêu cầu bồi thường thiệt hại theo quy định pháp luật;</li>
+  <li>Các quyền khác theo quy định của pháp luật hiện hành.</li>
+</ul>
+<p>Việc thực hiện từng quyền có thể phụ thuộc vào điều kiện, thủ tục và các trường hợp ngoại lệ được pháp luật quy định.</p>
+
+<h2>11. Cách thức truy cập, chỉnh sửa và yêu cầu xử lý dữ liệu</h2>
+<p>Trong phạm vi chức năng website cho phép, Quý khách có thể đăng nhập tài khoản để kiểm tra hoặc cập nhật một số thông tin cá nhân.</p>
+<p>Đối với các yêu cầu khác liên quan đến dữ liệu cá nhân, Quý khách có thể liên hệ Puvela thông qua:</p>
+<ul>
+  <li><strong>Địa chỉ:</strong> [điền địa chỉ đăng ký kinh doanh]</li>
+  <li><strong>Hotline:</strong> [điền số điện thoại]</li>
+  <li><strong>Email:</strong> [điền email liên hệ]</li>
+</ul>
+<p>Khi tiếp nhận yêu cầu, Puvela có thể thực hiện các bước xác minh cần thiết để bảo đảm yêu cầu được gửi bởi đúng chủ thể dữ liệu hoặc người có quyền hợp pháp.</p>
+<p>Puvela sẽ tiếp nhận và xử lý yêu cầu trong phạm vi trách nhiệm của mình và theo thời hạn, trình tự, điều kiện được pháp luật hiện hành quy định.</p>
+<p>Trong trường hợp Puvela không thể thực hiện toàn bộ hoặc một phần yêu cầu do có căn cứ pháp luật, nghĩa vụ lưu trữ hoặc lý do hợp pháp khác, Puvela sẽ thông báo cho khách hàng trong phạm vi phù hợp.</p>
+
+<h2>12. Khiếu nại và phản ánh về dữ liệu cá nhân</h2>
+<p>Nếu Quý khách cho rằng dữ liệu cá nhân của mình bị thu thập, sử dụng, tiết lộ hoặc xử lý không phù hợp với Chính sách này hoặc quy định pháp luật, Quý khách có thể gửi phản ánh hoặc khiếu nại đến Puvela theo thông tin liên hệ tại Mục 11.</p>
+<p>Nội dung phản ánh nên bao gồm:</p>
+<ul>
+  <li>Họ tên người yêu cầu;</li>
+  <li>Thông tin liên hệ;</li>
+  <li>Nội dung yêu cầu hoặc khiếu nại;</li>
+  <li>Thông tin, tài liệu liên quan nếu có.</li>
+</ul>
+<p>Puvela sẽ xác minh và xử lý phản ánh trong phạm vi trách nhiệm của mình, phù hợp với tính chất của vụ việc và trong thời hạn theo quy định pháp luật hiện hành.</p>
+
+<h2>13. Trách nhiệm của khách hàng</h2>
+<ul>
+  <li>Cung cấp thông tin chính xác khi thực hiện giao dịch;</li>
+  <li>Không cung cấp thông tin đăng nhập hoặc mật khẩu cho người khác;</li>
+  <li>Chủ động bảo vệ tài khoản trên các thiết bị cá nhân;</li>
+  <li>Đăng xuất tài khoản sau khi sử dụng thiết bị công cộng hoặc thiết bị dùng chung;</li>
+  <li>Thông báo cho Puvela khi phát hiện dấu hiệu truy cập hoặc sử dụng tài khoản trái phép;</li>
+  <li>Không sử dụng công cụ hoặc phương thức trái phép để truy cập, khai thác, thay đổi hoặc lấy dữ liệu từ hệ thống Puvela.vn.</li>
+</ul>
+
+<h2>14. Thay đổi Chính sách bảo mật</h2>
+<p>Puvela có thể cập nhật Chính sách bảo mật này để phản ánh thay đổi trong hoạt động kinh doanh, hệ thống công nghệ, phương thức xử lý dữ liệu hoặc quy định pháp luật.</p>
+<p>Phiên bản mới nhất sẽ được công bố trên website Puvela.vn cùng với ngày cập nhật.</p>
+<p>Trong trường hợp thay đổi làm phát sinh nghĩa vụ thông báo hoặc yêu cầu sự đồng ý lại của khách hàng theo quy định pháp luật, Puvela sẽ thực hiện các thủ tục cần thiết trước hoặc tại thời điểm áp dụng thay đổi đó.</p>
+
+<h2>15. Thông tin liên hệ</h2>
+<p><strong>Puvela</strong></p>
+<ul>
+  <!-- <li><strong>Địa chỉ:</strong> [điền địa chỉ đăng ký kinh doanh]</li>
+  <li><strong>Hotline:</strong> [điền số điện thoại]</li>
+  <li><strong>Email:</strong> [điền email liên hệ]</li> -->
+  <li><strong>Website:</strong> puvela.vn</li>
+</ul>
+<p>Quý khách có thể liên hệ với Puvela thông qua các thông tin trên để đặt câu hỏi, yêu cầu hỗ trợ hoặc thực hiện các quyền liên quan đến dữ liệu cá nhân theo quy định pháp luật.</p>
+
+<p class="doc-updated">Cập nhật lần cuối: 10/09/2026</p>
+      </div>
   </div>
 <footer aria-label="Chân trang">
     <div class="foot-grid">
@@ -114,8 +312,8 @@
         <p>Nước hoa chính hãng nhập khẩu — full &amp; chiết. Thử trước. Yêu rồi hãy mua cả chai.</p>
       </div>
       <div class="foot-col"><h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp; Niche</a><a href="index.html#bestsellers">Best sellers</a></div>
-      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a href="van-chuyen.html">Vận chuyển</a><a href="faq.html">FAQ</a></div>
-      <div class="foot-col"><h4>Chính sách</h4><a href="cam-ket-chinh-hang.html">Cam kết chính hãng</a><a href="kiem-tra-that-gia.html">Kiểm tra thật/giả</a><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
+      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a></div>
+      <div class="foot-col"><h4>Chính sách</h4><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 PUVELA</span>

@@ -1,305 +1,2346 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Khám phá nước hoa chính hãng nhập khẩu tại PUVELA. Thử trước với nước hoa chiết 5–10ml hoặc chọn fullsize. Tìm mùi hương phù hợp với bạn." />
+  <meta name="description"
+    content="Khám phá nước hoa chính hãng nhập khẩu tại PUVELA. Thử trước với nước hoa chiết 5–10ml hoặc chọn fullsize. Tìm mùi hương phù hợp với bạn." />
   <title>PUVELA — Nước Hoa Chính Hãng & Nước Hoa Chiết 5–10ml</title>
+  <link rel="icon" type="image/png" href="assets/favicon-puvela.png">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
   <style>
-    :root { --ink:#27231f; --ink2:#332e29; --dark:#29251f; --paper:#f5f0e7; --paper2:#efe7db; --sand:#ded0bc; --clay:#9c5a41; --act:#9c5a41; --act-2:#8a4e38; --line:rgba(39,35,31,.14); }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Be Vietnam Pro",sans-serif; font-weight:400; -webkit-font-smoothing:antialiased; }
-    a { color:inherit; text-decoration:none; }
-    img { max-width:100%; }
-    .eyebrow { margin:0 0 18px; font:500 10px/1.4 "IBM Plex Mono",monospace; text-transform:uppercase; letter-spacing:.08em; color:var(--clay); }
-    h1,h2,h3 { font-family:"Cormorant Garamond",serif; font-weight:600; letter-spacing:-.01em; margin:0; }
-    .wrap { padding:clamp(52px,6vw,80px) clamp(22px,5vw,80px); }
-    .lead { max-width:560px; font-size:16px; line-height:1.75; color:#5b544c; }
+    :root {
+      --ink: #27231f;
+      --ink2: #332e29;
+      --dark: #29251f;
+      --paper: #f5f0e7;
+      --paper2: #efe7db;
+      --sand: #ded0bc;
+      --clay: #9c5a41;
+      --act: #9c5a41;
+      --act-2: #8a4e38;
+      --line: rgba(39, 35, 31, .14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Be Vietnam Pro", sans-serif;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      font: 500 10px/1.4 "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--clay);
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 600;
+      letter-spacing: -.01em;
+      margin: 0;
+    }
+
+    .wrap {
+      padding: clamp(52px, 6vw, 80px) clamp(22px, 5vw, 80px);
+    }
+
+    .lead {
+      max-width: 560px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: #5b544c;
+    }
+
     /* buttons */
-    .btn { display:inline-flex; align-items:center; gap:14px; padding:16px 26px; font:500 11px "IBM Plex Mono",monospace; letter-spacing:.07em; text-transform:uppercase; cursor:pointer; transition:.25s ease; border:1px solid var(--ink); }
-    .btn-solid { background:var(--act); border-color:var(--act); color:#fff; }
-    .btn-solid:hover { background:var(--act-2); border-color:var(--act-2); color:#fff; }
-    .btn-line { background:transparent; color:var(--ink); }
-    .btn-line:hover { background:var(--ink); color:#fff; }
-    .btn-ghost { border-color:rgba(255,255,255,.5); color:#fff; background:transparent; }
-    .btn-ghost:hover { background:#fff; color:var(--ink); border-color:#fff; }
-    .link-u { display:inline-flex; gap:8px; border-bottom:1px solid currentColor; padding-bottom:4px; font:500 11px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 26px;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: .25s ease;
+      border: 1px solid var(--ink);
+    }
+
+    .btn-solid {
+      background: var(--act);
+      border-color: var(--act);
+      color: #fff;
+    }
+
+    .btn-solid:hover {
+      background: var(--act-2);
+      border-color: var(--act-2);
+      color: #fff;
+    }
+
+    .btn-line {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn-line:hover {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .btn-ghost {
+      border-color: rgba(255, 255, 255, .5);
+      color: #fff;
+      background: transparent;
+    }
+
+    .btn-ghost:hover {
+      background: #fff;
+      color: var(--ink);
+      border-color: #fff;
+    }
+
+    .link-u {
+      display: inline-flex;
+      gap: 8px;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 4px;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
     /* announcement + nav */
-    .announcement { background:var(--dark); color:#f3ece1; text-align:center; padding:9px 20px; font:500 10px/1.3 "IBM Plex Mono",monospace; letter-spacing:.07em; text-transform:uppercase; }
-    .site-nav { position:sticky; top:0; z-index:50; background:var(--paper); border-bottom:1px solid var(--line); transition:box-shadow .3s ease; }
-    .site-nav.scrolled { box-shadow:0 8px 30px rgba(39,35,31,.07); }
-    .nav-in { height:74px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:0 clamp(20px,4vw,60px); }
-    .nav-links { display:flex; align-items:center; gap:26px; font:500 11px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; }
-    .nav-links a:hover { color:var(--clay); }
-    .nav-tools { display:flex; align-items:center; justify-content:flex-end; gap:18px; }
-    .brand { display:inline-flex; align-items:center; justify-self:center; line-height:0; }
-    .brand img { height:34px; width:auto; display:block; }
-    .nav-tools svg { width:19px; height:19px; stroke:currentColor; fill:none; stroke-width:1.4; }
-    .nav-tools a { display:inline-flex; align-items:center; }
-    .menu-button { display:none; border:0; background:none; font-size:20px; cursor:pointer; }
+    .announcement {
+      background: var(--dark);
+      color: #f3ece1;
+      text-align: center;
+      padding: 9px 20px;
+      font: 500 10px/1.3 "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      transition: box-shadow .3s ease;
+    }
+
+    .site-nav.scrolled {
+      box-shadow: 0 8px 30px rgba(39, 35, 31, .07);
+    }
+
+    .nav-in {
+      height: 74px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 clamp(20px, 4vw, 60px);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover {
+      color: var(--clay);
+    }
+
+    .nav-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      justify-self: center;
+      line-height: 0;
+    }
+
+    .brand img {
+      height: 34px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-tools svg {
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.4;
+    }
+
+    .nav-tools a {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .menu-button {
+      display: none;
+      border: 0;
+      background: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
     /* 01 HERO */
-    .hero { position:relative; min-height:calc(100svh - 116px); overflow:hidden; background:#171513; color:#fff; display:flex; }
-    .hero-media { position:absolute; inset:0; z-index:0; }
-    .hero-media video { width:100%; height:100%; object-fit:cover; filter:saturate(.8); transform:scale(1.04); }
-    .hero::after { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(180deg,rgba(20,17,14,.28),rgba(20,17,14,.05) 30%,rgba(20,17,14,.55)); }
-    .hero-in { position:relative; z-index:2; align-self:flex-end; width:100%; padding:clamp(40px,6vw,84px) clamp(22px,5vw,80px); }
-    .hero h1 { font-size:clamp(52px,7.4vw,116px); line-height:.96; max-width:14ch; }
-    .hero-sub { margin:20px 0 0; font-size:clamp(14px,1.5vw,17px); letter-spacing:.02em; color:rgba(255,255,255,.9); }
-    .hero-cta { display:flex; flex-wrap:wrap; gap:14px; margin:30px 0 20px; }
-    .hero-tag2 { font:500 12px/1.6 "IBM Plex Mono",monospace; letter-spacing:.06em; color:rgba(255,255,255,.85); text-transform:none; }
-    .hero-checks { display:flex; flex-wrap:wrap; gap:22px; margin-top:22px; font-size:12px; letter-spacing:.03em; color:rgba(255,255,255,.85); }
-    .hero-checks span::before { content:"✓ "; color:var(--clay); }
+    .hero {
+      position: relative;
+      min-height: calc(100svh - 116px);
+      overflow: hidden;
+      background: #171513;
+      color: #fff;
+      display: flex;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-media video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.8);
+      transform: scale(1.04);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(20, 17, 14, .28), rgba(20, 17, 14, .05) 30%, rgba(20, 17, 14, .55));
+    }
+
+    .hero-in {
+      position: relative;
+      z-index: 2;
+      align-self: flex-end;
+      width: 100%;
+      padding: clamp(40px, 6vw, 84px) clamp(22px, 5vw, 80px);
+    }
+
+    .hero h1 {
+      font-size: clamp(52px, 7.4vw, 116px);
+      line-height: .96;
+      max-width: 14ch;
+    }
+
+    .hero-sub {
+      margin: 20px 0 0;
+      font-size: clamp(14px, 1.5vw, 17px);
+      letter-spacing: .02em;
+      color: rgba(255, 255, 255, .9);
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 30px 0 20px;
+    }
+
+    .hero-tag2 {
+      font: 500 12px/1.6 "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      color: rgba(255, 255, 255, .85);
+      text-transform: none;
+    }
+
+    .hero-checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      margin-top: 22px;
+      font-size: 12px;
+      letter-spacing: .03em;
+      color: rgba(255, 255, 255, .85);
+    }
+
+    .hero-checks span::before {
+      content: "✓ ";
+      color: var(--clay);
+    }
+
     /* 02 TRUST BAR */
-    .trustbar { background:var(--paper2); border-bottom:1px solid var(--line); }
-    .trustbar-in { display:grid; grid-template-columns:repeat(3,1fr); }
-    .tb { padding:30px clamp(18px,3vw,40px); border-left:1px solid var(--line); display:flex; gap:16px; align-items:baseline; }
-    .tb:first-child { border-left:0; }
-    .tb i { font:500 12px "IBM Plex Mono",monospace; color:var(--clay); font-style:normal; letter-spacing:.05em; }
-    .tb b { font-weight:400; font-size:15px; letter-spacing:.01em; }
-    .tb small { display:block; margin-top:3px; font-size:11.5px; color:#6b6459; }
+    .trustbar {
+      background: var(--paper2);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .trustbar-in {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .tb {
+      padding: 30px clamp(18px, 3vw, 40px);
+      border-left: 1px solid var(--line);
+      display: flex;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .tb:first-child {
+      border-left: 0;
+    }
+
+    .tb i {
+      font: 500 12px "IBM Plex Mono", monospace;
+      color: var(--clay);
+      font-style: normal;
+      letter-spacing: .05em;
+    }
+
+    .tb b {
+      font-weight: 400;
+      font-size: 15px;
+      letter-spacing: .01em;
+    }
+
+    .tb small {
+      display: block;
+      margin-top: 3px;
+      font-size: 11.5px;
+      color: #6b6459;
+    }
+
     /* section head */
-    .shead { display:flex; justify-content:space-between; align-items:flex-end; gap:26px; margin-bottom:46px; }
-    h1, h2, h3, .lead { text-wrap:balance; }
-    .shead h2 { font-size:clamp(34px,4.4vw,60px); line-height:1.02; max-width:22ch; text-wrap:balance; }
-    .shead .lead { margin-top:16px; }
+    .shead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 26px;
+      margin-bottom: 46px;
+    }
+
+    h1,
+    h2,
+    h3,
+    .lead {
+      text-wrap: balance;
+    }
+
+    .shead h2 {
+      font-size: clamp(34px, 4.4vw, 60px);
+      line-height: 1.02;
+      max-width: 22ch;
+      text-wrap: balance;
+    }
+
+    .shead .lead {
+      margin-top: 16px;
+    }
+
     /* 03 BESTSELLERS */
-    .bestsellers { background:var(--paper); }
-    .pgrid { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,2vw,26px); }
-    .pcard { display:flex; flex-direction:column; }
-    .pcard-body { display:flex; flex-direction:column; flex:1 1 auto; }
-    .pcard-media { position:relative; display:block; aspect-ratio:1/1; overflow:hidden; background:var(--sand); }
-    .pcard-media img { width:100%; height:100%; object-fit:cover; transition:transform .8s ease; }
-    .pcard:hover .pcard-media img { transform:scale(1.05); }
-    .pcard .badge { position:absolute; top:12px; left:12px; padding:6px 10px; background:var(--paper); font:500 9px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; }
-    .pcard-fam { margin:16px 0 6px; font:500 9.5px "IBM Plex Mono",monospace; letter-spacing:.07em; text-transform:uppercase; color:var(--clay); }
-    .pcard h3 { font-size:22px; line-height:1.15; font-weight:500;
-      height:2.3em; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
-    .pcard-body > a { display:block; }
-    .pstar { min-height:1.5em; margin:8px 0 0; }
-    .pcard-notes { margin:6px 0 0; font-size:12.5px; line-height:1.5; color:#6b6459;
-      height:4.5em; overflow:hidden; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; }
-    .pcard-price { margin:0 0 14px; font-size:13px; line-height:1.5; letter-spacing:.01em;
-      height:3em; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
-    .pcard-price b { color:var(--clay); font-weight:500; }
-    .pcard-cta { display:flex; gap:8px; margin-top:auto; }
-    .pcard-cta .btn { flex:1; justify-content:center; padding:13px 12px; font-size:10px; letter-spacing:.05em; }
+    .bestsellers {
+      background: var(--paper);
+    }
+
+    .pgrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(14px, 2vw, 26px);
+    }
+
+    .pcard {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pcard-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+    }
+
+    .pcard-media {
+      position: relative;
+      display: block;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      background: var(--sand);
+    }
+
+    .pcard-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .8s ease;
+    }
+
+    .pcard:hover .pcard-media img {
+      transform: scale(1.05);
+    }
+
+    .pcard .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 10px;
+      background: var(--paper);
+      font: 500 9px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .pcard-fam {
+      margin: 16px 0 6px;
+      font: 500 9.5px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--clay);
+    }
+
+    .pcard h3 {
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 500;
+      height: 2.3em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .pcard-body>a {
+      display: block;
+    }
+
+    .pstar {
+      min-height: 1.5em;
+      margin: 8px 0 0;
+    }
+
+    .pcard-notes {
+      margin: 6px 0 0;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: #6b6459;
+      height: 4.5em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    .pcard-price {
+      margin: 0 0 14px;
+      font-size: 13px;
+      line-height: 1.5;
+      letter-spacing: .01em;
+      height: 3em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .pcard-price b {
+      color: var(--clay);
+      font-weight: 500;
+    }
+
+    .pcard-cta {
+      display: flex;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .pcard-cta .btn {
+      flex: 1;
+      justify-content: center;
+      padding: 13px 12px;
+      font-size: 10px;
+      letter-spacing: .05em;
+    }
+
     /* 04 MOOD */
-    .mood { background:var(--paper2); }
-    .mood-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(12px,1.6vw,20px); }
-    .mtile { position:relative; aspect-ratio:4/5; overflow:hidden; color:#fff; display:block; }
-    .mtile img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.72) saturate(.8); transition:transform .8s ease; }
-    .mtile:hover img { transform:scale(1.06); }
-    .mtile::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.5)); }
-    .mtile-c { position:absolute; z-index:1; inset:auto 26px 26px; }
-    .mtile-c h3 { font:500 15px "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; }
-    .mtile-c p { margin:8px 0 12px; font-size:13px; line-height:1.5; color:rgba(255,255,255,.9); max-width:24ch; }
-    .mtile-c span { font:500 10px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.6); padding-bottom:3px; }
+    .mood {
+      background: var(--paper2);
+    }
+
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(12px, 1.6vw, 20px);
+    }
+
+    .mtile {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      color: #fff;
+      display: block;
+    }
+
+    .mtile img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.72) saturate(.8);
+      transition: transform .8s ease;
+    }
+
+    .mtile:hover img {
+      transform: scale(1.06);
+    }
+
+    .mtile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, .05), rgba(0, 0, 0, .5));
+    }
+
+    .mtile-c {
+      position: absolute;
+      z-index: 1;
+      inset: auto 26px 26px;
+    }
+
+    .mtile-c h3 {
+      font: 500 15px "IBM Plex Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .mtile-c p {
+      margin: 8px 0 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, .9);
+      max-width: 24ch;
+    }
+
+    .mtile-c span {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, .6);
+      padding-bottom: 3px;
+    }
+
     /* 05 DECANT USP */
-    .decant { background:var(--dark); color:#f3ece1; }
-    .decant-in { display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(40px,6vw,90px); align-items:center; }
-    .decant h2 { font-size:clamp(38px,4.8vw,68px); line-height:1.02; color:#fff; }
-    .decant .lead { color:rgba(243,236,225,.72); margin-top:22px; }
-    .decant-cta { display:flex; flex-wrap:wrap; gap:14px; margin-top:34px; }
-    .steps { border-top:1px solid rgba(255,255,255,.16); }
-    .step { display:flex; gap:20px; align-items:baseline; padding:20px 0; border-bottom:1px solid rgba(255,255,255,.16); }
-    .step i { font:500 11px "IBM Plex Mono",monospace; color:var(--clay); font-style:normal; letter-spacing:.05em; min-width:34px; }
-    .step b { font-weight:400; font-size:17px; }
-    .step small { display:block; margin-top:4px; font-size:12.5px; color:rgba(243,236,225,.6); }
+    .decant {
+      background: var(--dark);
+      color: #f3ece1;
+    }
+
+    .decant-in {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: clamp(40px, 6vw, 90px);
+      align-items: center;
+    }
+
+    .decant h2 {
+      font-size: clamp(38px, 4.8vw, 68px);
+      line-height: 1.02;
+      color: #fff;
+    }
+
+    .decant .lead {
+      color: rgba(243, 236, 225, .72);
+      margin-top: 22px;
+    }
+
+    .decant-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .steps {
+      border-top: 1px solid rgba(255, 255, 255, .16);
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: baseline;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .16);
+    }
+
+    .step i {
+      font: 500 11px "IBM Plex Mono", monospace;
+      color: var(--clay);
+      font-style: normal;
+      letter-spacing: .05em;
+      min-width: 34px;
+    }
+
+    .step b {
+      font-weight: 400;
+      font-size: 17px;
+    }
+
+    .step small {
+      display: block;
+      margin-top: 4px;
+      font-size: 12.5px;
+      color: rgba(243, 236, 225, .6);
+    }
+
     /* 06 SCENT FINDER (quiz CTA) */
-    .finder { background:var(--paper); text-align:center; }
-    .finder .eyebrow { color:var(--clay); }
-    .finder h2 { font-size:clamp(36px,4.6vw,64px); line-height:1.02; max-width:22ch; margin:0 auto; text-wrap:balance; }
-    .finder .lead { margin:20px auto 30px; text-align:center; }
-    .finder .micro { margin-top:16px; font:500 10px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; color:#7a7268; }
-    .quiz-open { display:inline-flex; align-items:center; gap:14px; padding:17px 30px; border:1px solid var(--ink); background:var(--ink); color:#fff; cursor:pointer; font:500 11px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; transition:.25s; }
-    .quiz-open:hover { background:transparent; color:var(--ink); }
+    .finder {
+      background: #F3EBDD;
+      text-align: center;
+    }
+
+    .finder .eyebrow {
+      color: var(--clay);
+    }
+
+    .finder h2 {
+      font-size: clamp(36px, 4.6vw, 64px);
+      line-height: 1.02;
+      max-width: 22ch;
+      margin: 0 auto;
+      text-wrap: balance;
+    }
+
+    .finder .lead {
+      margin: 20px auto 30px;
+      text-align: center;
+    }
+
+    .finder .micro {
+      margin-top: 16px;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #7a7268;
+    }
+
+    .quiz-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 17px 30px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      cursor: pointer;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: .25s;
+    }
+
+    .quiz-open:hover {
+      background: transparent;
+      color: var(--ink);
+    }
 
     /* ===== lớp phủ tìm kiếm & viết trải nghiệm ===== */
-    .sr-ov{position:fixed;inset:0;z-index:90;background:rgba(32,28,24,.55);display:flex;
-      align-items:flex-start;justify-content:center;padding:clamp(12px,6vh,80px) 16px;overflow:auto}
-    .sr-ov[hidden]{display:none}
-    .sr-box{width:min(100%,680px);background:var(--paper);border:1px solid var(--line);max-height:82vh;
-      display:flex;flex-direction:column;animation:srIn .22s ease both}
-    @keyframes srIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-    .sr-top{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
-    .sr-ic{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:1.6;flex:none}
-    .sr-top input{flex:1;border:0;background:none;outline:none;font:16px "Be Vietnam Pro",sans-serif;color:var(--ink)}
-    .sr-top button{border:0;background:none;cursor:pointer;font-size:20px;color:#7a7268;padding:2px 6px}
-    .sr-list{overflow:auto;padding:8px 0}
-    .sr-hint,.sr-empty{margin:0;padding:26px 20px;text-align:center;font-size:14px;color:#7a7268}
-    .sr-it{display:flex;gap:14px;align-items:center;padding:11px 18px;cursor:pointer;text-decoration:none;color:inherit}
-    .sr-it:hover,.sr-it.on{background:rgba(43,38,33,.05)}
-    .sr-it img{width:46px;height:58px;object-fit:cover;background:#eeeae4;flex:none}
-    .sr-it .nm{font-size:14.5px;margin:0 0 3px}
-    .sr-it .mt{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:#7a7268}
-    .sr-it .pr{margin-left:auto;font-size:13.5px;white-space:nowrap}
+    .sr-ov {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      background: rgba(32, 28, 24, .55);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: clamp(12px, 6vh, 80px) 16px;
+      overflow: auto
+    }
+
+    .sr-ov[hidden] {
+      display: none
+    }
+
+    .sr-box {
+      width: min(100%, 680px);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      max-height: 82vh;
+      display: flex;
+      flex-direction: column;
+      animation: srIn .22s ease both
+    }
+
+    @keyframes srIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .sr-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .sr-ic {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 1.6;
+      flex: none
+    }
+
+    .sr-top input {
+      flex: 1;
+      border: 0;
+      background: none;
+      outline: none;
+      font: 16px "Be Vietnam Pro", sans-serif;
+      color: var(--ink)
+    }
+
+    .sr-top button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: #7a7268;
+      padding: 2px 6px
+    }
+
+    .sr-list {
+      overflow: auto;
+      padding: 8px 0
+    }
+
+    .sr-hint,
+    .sr-empty {
+      margin: 0;
+      padding: 26px 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #7a7268
+    }
+
+    .sr-it {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      padding: 11px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit
+    }
+
+    .sr-it:hover,
+    .sr-it.on {
+      background: rgba(43, 38, 33, .05)
+    }
+
+    .sr-it img {
+      width: 46px;
+      height: 58px;
+      object-fit: cover;
+      background: #eeeae4;
+      flex: none
+    }
+
+    .sr-it .nm {
+      font-size: 14.5px;
+      margin: 0 0 3px
+    }
+
+    .sr-it .mt {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #7a7268
+    }
+
+    .sr-it .pr {
+      margin-left: auto;
+      font-size: 13.5px;
+      white-space: nowrap
+    }
+
     /* form trải nghiệm */
-    .tn-box{max-width:560px}
-    .tn-form{padding:18px;display:grid;gap:5px;overflow:auto}
-    .tn-form label{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:#635d57;margin-top:12px}
-    .tn-form input,.tn-form textarea,.tn-form select{border:1px solid var(--line);background:#fff;padding:11px 13px;
-      font:14px "Be Vietnam Pro",sans-serif;color:var(--ink);width:100%}
-    .tn-form input:focus,.tn-form textarea:focus,.tn-form select:focus{outline:none;border-color:var(--ink)}
-    .tn-stars{display:flex;gap:4px}
-    .tn-stars button{border:0;background:none;cursor:pointer;font-size:26px;line-height:1;padding:0 2px;color:#d5ccc0}
-    .tn-stars button.on{color:var(--clay)}
-    .tn-act{display:flex;gap:10px;margin-top:18px}
-    .tn-act button[type=submit]{border:0;background:var(--ink);color:#fff;padding:12px 26px;cursor:pointer;
-      font:500 11px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase}
-    .tn-act button[type=submit][disabled]{opacity:.5}
-    .tn-act button[type=button]{border:1px solid var(--line);background:none;color:#635d57;padding:12px 18px;cursor:pointer;
-      font:500 11px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase}
-    .tn-msg{margin:12px 0 0;font-size:13.5px;line-height:1.6}
-    .tn-msg.ok{color:#1f7a4d} .tn-msg.err{color:#9e3b28}
-    .ugc-cta{margin:26px auto 0;display:block;border:1px solid var(--ink);background:transparent;color:var(--ink);
-      cursor:pointer;padding:13px 26px;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase}
-    .ugc-cta:hover{background:var(--ink);color:#fff}
+    .tn-box {
+      max-width: 560px
+    }
+
+    .tn-form {
+      padding: 18px;
+      display: grid;
+      gap: 5px;
+      overflow: auto
+    }
+
+    .tn-form label {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #635d57;
+      margin-top: 12px
+    }
+
+    .tn-form input,
+    .tn-form textarea,
+    .tn-form select {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 11px 13px;
+      font: 14px "Be Vietnam Pro", sans-serif;
+      color: var(--ink);
+      width: 100%
+    }
+
+    .tn-form input:focus,
+    .tn-form textarea:focus,
+    .tn-form select:focus {
+      outline: none;
+      border-color: var(--ink)
+    }
+
+    .tn-stars {
+      display: flex;
+      gap: 4px
+    }
+
+    .tn-stars button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-size: 26px;
+      line-height: 1;
+      padding: 0 2px;
+      color: #d5ccc0
+    }
+
+    .tn-stars button.on {
+      color: var(--clay)
+    }
+
+    .tn-act {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px
+    }
+
+    .tn-act button[type=submit] {
+      border: 0;
+      background: var(--ink);
+      color: #fff;
+      padding: 12px 26px;
+      cursor: pointer;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase
+    }
+
+    .tn-act button[type=submit][disabled] {
+      opacity: .5
+    }
+
+    .tn-act button[type=button] {
+      border: 1px solid var(--line);
+      background: none;
+      color: #635d57;
+      padding: 12px 18px;
+      cursor: pointer;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase
+    }
+
+    .tn-msg {
+      margin: 12px 0 0;
+      font-size: 13.5px;
+      line-height: 1.6
+    }
+
+    .tn-msg.ok {
+      color: #1f7a4d
+    }
+
+    .tn-msg.err {
+      color: #9e3b28
+    }
+
+    .ugc-cta {
+      margin: 26px auto 0;
+      display: block;
+      border: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 13px 26px;
+      font: 500 11px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase
+    }
+
+    .ugc-cta:hover {
+      background: var(--ink);
+      color: #fff
+    }
+
     /* 07 UGC */
-    .ugc { background:var(--paper2); }
-    .ugc-track { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,2vw,22px); }
-    .navsearch { display:inline-flex; align-items:center; gap:8px; padding:7px 14px 7px 11px;
-      border:1px solid var(--line); border-radius:999px; transition:.2s; }
-    .navsearch svg { width:16px; height:16px; flex:none; }
-    .navsearch span { font:500 10px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; white-space:nowrap; }
-    .navsearch:hover { border-color:var(--ink); background:var(--ink); color:var(--paper); }
-    @media (max-width:700px){ .navsearch span { display:none; } .navsearch { padding:8px; } }
-    .pstar { margin:6px 0 0; font:500 11px "IBM Plex Mono",monospace; color:var(--clay); letter-spacing:.04em; }
-    .pstar i { font-style:normal; color:#7a7268; }
-    .ucard-sp { display:block; margin:0 0 10px; font:500 10px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:var(--clay); text-decoration:none; }
-    .ucard-sp:hover { text-decoration:underline; }
-    .ucard { background:var(--paper); border:1px solid var(--line); padding:26px 24px; display:flex; flex-direction:column; }
-    .ucard .stars { color:var(--clay); letter-spacing:3px; font-size:14px; }
-    .ucard-body { margin:14px 0 18px; font-size:14.5px; line-height:1.62; color:#3f3a34; }
-    .ucard-meta { margin-top:auto; font-size:12px; color:#7a7268; display:flex; gap:10px; align-items:center; }
-    .ucard-meta .verified { color:#6f7d5e; }
-    .ugc-empty { grid-column:1/-1; text-align:center; padding:40px 20px; border:1px dashed var(--line); color:#7a7268; font-size:14px; line-height:1.7; }
+    .ugc {
+      background: var(--paper2);
+    }
+
+    .ugc-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(14px, 2vw, 22px);
+    }
+
+    .navsearch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      transition: .2s;
+    }
+
+    .navsearch svg {
+      width: 16px;
+      height: 16px;
+      flex: none;
+    }
+
+    .navsearch span {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .navsearch:hover {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    @media (max-width:700px) {
+      .navsearch span {
+        display: none;
+      }
+
+      .navsearch {
+        padding: 8px;
+      }
+    }
+
+    .pstar {
+      margin: 6px 0 0;
+      font: 500 11px "IBM Plex Mono", monospace;
+      color: var(--clay);
+      letter-spacing: .04em;
+    }
+
+    .pstar i {
+      font-style: normal;
+      color: #7a7268;
+    }
+
+    .ucard-sp {
+      display: block;
+      margin: 0 0 10px;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--clay);
+      text-decoration: none;
+    }
+
+    .ucard-sp:hover {
+      text-decoration: underline;
+    }
+
+    .ucard {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ucard .stars {
+      color: var(--clay);
+      letter-spacing: 3px;
+      font-size: 14px;
+    }
+
+    .ucard-body {
+      margin: 14px 0 18px;
+      font-size: 14.5px;
+      line-height: 1.62;
+      color: #3f3a34;
+    }
+
+    .ucard-meta {
+      margin-top: auto;
+      font-size: 12px;
+      color: #7a7268;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .ucard-meta .verified {
+      color: #6f7d5e;
+    }
+
+    .ugc-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 40px 20px;
+      border: 1px dashed var(--line);
+      color: #7a7268;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
     /* 08 COMPARE */
-    .compare { background:var(--paper); }
-    .cmp-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2.4vw,30px); }
-    .cmp { border:1px solid var(--line); padding:clamp(30px,4vw,52px); background:var(--paper2); display:flex; flex-direction:column; }
-    .cmp.hot { background:var(--dark); color:#f3ece1; border-color:var(--dark); }
-    .cmp .tag { font:500 10px "IBM Plex Mono",monospace; letter-spacing:.07em; text-transform:uppercase; color:var(--clay); }
-    .cmp h3 { font-size:clamp(28px,3vw,42px); margin:12px 0 20px; font-weight:500; }
-    .cmp.hot h3 { color:#fff; }
-    .cmp ul { list-style:none; margin:0 0 28px; padding:0; }
-    .cmp li { padding:12px 0; border-top:1px solid var(--line); font-size:14.5px; }
-    .cmp.hot li { border-color:rgba(255,255,255,.16); }
-    .cmp li::before { content:"—  "; color:var(--clay); }
-    .cmp .btn { align-self:flex-start; margin-top:auto; }
+    .compare {
+      background: var(--paper);
+    }
+
+    .cmp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(16px, 2.4vw, 30px);
+    }
+
+    .cmp {
+      border: 1px solid var(--line);
+      padding: clamp(30px, 4vw, 52px);
+      background: var(--paper2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cmp.hot {
+      background: var(--dark);
+      color: #f3ece1;
+      border-color: var(--dark);
+    }
+
+    .cmp .tag {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--clay);
+    }
+
+    .cmp h3 {
+      font-size: clamp(28px, 3vw, 42px);
+      margin: 12px 0 20px;
+      font-weight: 500;
+    }
+
+    .cmp.hot h3 {
+      color: #fff;
+    }
+
+    .cmp ul {
+      list-style: none;
+      margin: 0 0 28px;
+      padding: 0;
+    }
+
+    .cmp li {
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+      font-size: 14.5px;
+    }
+
+    .cmp.hot li {
+      border-color: rgba(255, 255, 255, .16);
+    }
+
+    .cmp li::before {
+      content: "—  ";
+      color: var(--clay);
+    }
+
+    .cmp .btn {
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
     /* 09 BRAND STORY */
-    .story { display:grid; grid-template-columns:.95fr 1.05fr; background:var(--sand); max-height:100vh; }
-    .story-photo { min-height:0; position:relative; overflow:hidden; }
-    .story-photo img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(.7); display:block; }
-    .story-copy { padding:clamp(28px,5vh,76px) clamp(40px,5vw,76px); display:flex; flex-direction:column; justify-content:center; }
-    .story-cta { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
-    .story-copy h2 { font-size:clamp(34px,4vw,58px); line-height:1.04; max-width:20ch; text-wrap:balance; }
-    .story-statement { margin:22px 0 8px; font-family:"Cormorant Garamond",serif; font-style:italic; font-size:clamp(22px,2.4vw,30px); color:var(--clay); }
-    .story-copy p { max-width:52ch; font-size:15px; line-height:1.72; color:#4d463f; margin:14px 0 0; }
-    .story-copy .link-u { margin-top:30px; align-self:flex-start; }
+    .story {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      background: var(--paper);
+      max-height: 100vh;
+    }
+
+    .story-photo {
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.7);
+      display: block;
+    }
+
+    .story-copy {
+      padding: clamp(28px, 5vh, 76px) clamp(40px, 5vw, 76px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .story-cta {
+      display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+    }
+
+    .story-cta .btn {
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+  text-align: center;
+}
+
+    .story-copy h2 {
+      font-size: clamp(34px, 4vw, 58px);
+      line-height: 1.04;
+      max-width: 20ch;
+      text-wrap: balance;
+    }
+
+    .story-statement {
+      margin: 22px 0 8px;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: clamp(22px, 2.4vw, 30px);
+      color: var(--clay);
+    }
+
+    .story-copy p {
+      max-width: 52ch;
+      font-size: 15px;
+      line-height: 1.72;
+      color: #4d463f;
+      margin: 14px 0 0;
+    }
+
+    .story-copy .link-u {
+      margin-top: 30px;
+      align-self: flex-start;
+    }
+
     /* 10 OFFER */
-    .offer { background:var(--paper2); text-align:center; }
-    .offer h2 { font-size:clamp(34px,4.2vw,58px); line-height:1.04; max-width:24ch; margin:0 auto; text-wrap:balance; }
-    .offer .lead { margin:18px auto 30px; text-align:center; }
-    .offer-form { display:flex; gap:0; width:min(100%,480px); margin:0 auto; border:1px solid var(--ink); }
-    .offer-form input { flex:1; min-width:0; border:0; background:transparent; padding:16px 18px; outline:0; font:14px "Be Vietnam Pro",sans-serif; color:var(--ink); }
-    .offer-form button { border:0; background:var(--ink); color:#fff; padding:0 26px; cursor:pointer; font:500 10px "IBM Plex Mono",monospace; letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; }
-    .offer .micro { margin-top:16px; font:500 10px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:#7a7268; }
-    .form-msg { min-height:1.2em; margin:14px 0 0; font-size:13px; }
-    .form-msg.ok { color:#6f7d5e; } .form-msg.err { color:#a5603f; }
+    .offer {
+      background: var(--paper2);
+      text-align: center;
+    }
+
+    .offer h2 {
+      font-size: clamp(34px, 4.2vw, 58px);
+      line-height: 1.04;
+      max-width: 24ch;
+      margin: 0 auto;
+      text-wrap: balance;
+    }
+
+    .offer .lead {
+      margin: 18px auto 30px;
+      text-align: center;
+    }
+
+    .offer-form {
+      display: flex;
+      gap: 0;
+      width: min(100%, 480px);
+      margin: 0 auto;
+      border: 1px solid var(--ink);
+    }
+
+    .offer-form input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      padding: 16px 18px;
+      outline: 0;
+      font: 14px "Be Vietnam Pro", sans-serif;
+      color: var(--ink);
+    }
+
+    .offer-form button {
+      border: 0;
+      background: var(--ink);
+      color: #fff;
+      padding: 0 26px;
+      cursor: pointer;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .offer .micro {
+      margin-top: 16px;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #7a7268;
+    }
+
+    .form-msg {
+      min-height: 1.2em;
+      margin: 14px 0 0;
+      font-size: 13px;
+    }
+
+    .form-msg.ok {
+      color: #6f7d5e;
+    }
+
+    .form-msg.err {
+      color: #a5603f;
+    }
+
     /* 11 FOOTER */
-    footer { background:var(--dark); color:#e9e1d5; padding:clamp(56px,7vw,88px) clamp(22px,5vw,80px) 30px; }
-    .foot-grid { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:36px; padding-bottom:44px; border-bottom:1px solid rgba(255,255,255,.16); }
-    .foot-brand img { height:30px; margin-bottom:16px; filter:brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg); }
-    .foot-brand p { max-width:34ch; font-size:13.5px; line-height:1.7; color:rgba(233,225,213,.66); }
-    .foot-col h4 { font:500 10px "IBM Plex Mono",monospace; letter-spacing:.07em; text-transform:uppercase; margin:0 0 16px; color:#fff; }
-    .foot-col a { display:block; margin:9px 0; font-size:13.5px; color:rgba(233,225,213,.7); }
-    .foot-col a:hover { color:#fff; }
-    .foot-bottom { padding-top:26px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font:10px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; color:rgba(233,225,213,.55); }
-    .foot-social { display:flex; gap:22px; }
-    .foot-social a:hover { color:#fff; }
+    footer {
+      background: var(--dark);
+      color: #e9e1d5;
+      padding: clamp(56px, 7vw, 88px) clamp(22px, 5vw, 80px) 30px;
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 36px;
+      padding-bottom: 44px;
+      border-bottom: 1px solid rgba(255, 255, 255, .16);
+    }
+
+    .foot-brand img {
+      height: 30px;
+      margin-bottom: 16px;
+      filter: brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg);
+    }
+
+    .foot-brand p {
+      max-width: 34ch;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: rgba(233, 225, 213, .66);
+    }
+
+    .foot-col h4 {
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      color: #fff;
+    }
+
+    .foot-col a {
+      display: block;
+      margin: 9px 0;
+      font-size: 13.5px;
+      color: rgba(233, 225, 213, .7);
+    }
+
+    .foot-col a:hover {
+      color: #fff;
+    }
+
+    .foot-bottom {
+      padding-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font: 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: rgba(233, 225, 213, .55);
+    }
+
+    .foot-social {
+      display: flex;
+      gap: 22px;
+    }
+
+    .foot-social a:hover {
+      color: #fff;
+    }
+
     /* QUIZ MODAL (preserved) */
-    .quiz-modal { position:fixed; z-index:80; inset:0; display:none; overflow:auto; padding:24px; background:rgba(32,28,24,.56); }
-    .quiz-modal.show { display:block; }
-    .quiz-box { position:relative; width:min(100%,780px); min-height:min(680px,calc(100svh - 48px)); margin:auto; padding:clamp(34px,6vw,72px); background:var(--paper); box-shadow:0 20px 65px rgba(0,0,0,.22); }
-    .quiz-close { position:absolute; top:18px; right:20px; border:0; background:none; cursor:pointer; font-size:26px; line-height:1; }
-    .quiz-progress { height:2px; width:100%; margin:0 0 30px; background:#ded6ca; } .quiz-progress span { display:block; height:100%; width:0; background:var(--ink); transition:width .35s ease; }
-    .quiz-step { margin:0; font:500 10px "IBM Plex Mono",monospace; letter-spacing:.07em; text-transform:uppercase; color:var(--clay); }
-    .quiz-box h2 { margin:20px 0 26px; font-size:clamp(30px,3.6vw,46px); }
-    .quiz-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    .quiz-options button { min-height:68px; border:1px solid var(--line); background:transparent; text-align:left; padding:16px; cursor:pointer; font:14px "Be Vietnam Pro",sans-serif; transition:.22s; } .quiz-options button:hover { border-color:var(--ink); background:#eee7dc; }
-    .quiz-result { display:none; } .quiz-result.show { display:block; animation:quizIn .45s ease both; }
-    .result-top { text-align:center; } .result-top h3 { margin:8px 0 12px; font:600 clamp(40px,5.4vw,64px)/1 "Cormorant Garamond",serif; letter-spacing:-.02em; }
-    .consult { line-height:1.72; font-size:14.5px; color:#4d463f; margin:26px 0; text-align:center; }
-    .recommended { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; margin-top:18px; } .recommended.rec4 { grid-template-columns:1fr 1fr; }
-    .recommended a { min-width:0; padding:16px 12px; background:var(--paper2); border:1px solid var(--line); font-size:12px; text-align:center; transition:.2s; } .recommended a:hover { border-color:var(--ink); }
-    .recommended strong,.recommended span { display:block; } .recommended span { margin-top:5px; font-size:10.5px; opacity:.7; } .recommended a .rp { margin-top:8px; color:var(--clay); opacity:1; font-size:11px; }
-    .quiz-email { display:flex; gap:8px; margin:26px auto 0; max-width:440px; border:1px solid var(--line); padding:5px 5px 5px 14px; } .quiz-email input { flex:1; min-width:0; border:0; background:none; outline:0; font:14px "Be Vietnam Pro",sans-serif; } .quiz-email button { border:0; background:var(--ink); color:#fff; padding:11px 18px; cursor:pointer; font:500 10px "IBM Plex Mono",monospace; letter-spacing:.08em; text-transform:uppercase; } .quiz-email .done { margin:0; padding:6px 0; font-size:13px; color:#6f7d5e; }
-    .result-actions { display:flex; justify-content:center; gap:22px; margin-top:30px; } .result-actions button { border:0; border-bottom:1px solid var(--ink); padding:0 0 4px; background:transparent; cursor:pointer; font:500 10px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; }
-    @keyframes quizIn { from { opacity:0; transform:translateY(10px) } to { opacity:1; transform:translateY(0) } }
+    .quiz-modal {
+      position: fixed;
+      z-index: 99999;
+      inset: 0;
+      display: none;
+      overflow: auto;
+      padding: 24px;
+      background: rgba(32, 28, 24, .56);
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 100dvh;
+    }
+
+    .quiz-modal.show {
+      display: flex;
+    }
+
+    .quiz-box {
+      position: relative;
+      width: min(100%, 780px);
+      max-height: calc(100dvh - 48px);
+      overflow: auto;
+      margin: auto;
+      padding: clamp(34px, 6vw, 72px);
+      background: var(--paper);
+      box-shadow: 0 20px 65px rgba(0, 0, 0, .22);
+    }
+
+    html {
+      scrollbar-gutter: stable;
+    }
+
+    body.quiz-body-locked {
+      overflow: hidden;
+    }
+
+    .quiz-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .quiz-progress {
+      height: 2px;
+      width: 100%;
+      margin: 0 0 30px;
+      background: #ded6ca;
+    }
+
+    .quiz-progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--ink);
+      transition: width .35s ease;
+    }
+
+    .quiz-step {
+      margin: 0;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--clay);
+    }
+
+    .quiz-box h2 {
+      margin: 20px 0 26px;
+      font-size: clamp(30px, 3.6vw, 46px);
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .quiz-options button {
+      min-height: 68px;
+      border: 1px solid var(--line);
+      background: transparent;
+      text-align: left;
+      padding: 16px;
+      cursor: pointer;
+      font: 14px "Be Vietnam Pro", sans-serif;
+      transition: .22s;
+    }
+
+    .quiz-options button:hover {
+      border-color: var(--ink);
+      background: #eee7dc;
+    }
+
+    .quiz-result {
+      display: none;
+    }
+
+    .quiz-result.show {
+      display: block;
+      animation: quizIn .45s ease both;
+    }
+
+    .result-top {
+      text-align: center;
+    }
+
+    .result-top h3 {
+      margin: 8px 0 12px;
+      font: 600 clamp(40px, 5.4vw, 64px)/1 "Cormorant Garamond", serif;
+      letter-spacing: -.02em;
+    }
+
+    .consult {
+      line-height: 1.72;
+      font-size: 14.5px;
+      color: #4d463f;
+      margin: 26px 0;
+      text-align: center;
+    }
+
+    .recommended {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 11px;
+      margin-top: 18px;
+    }
+
+    .recommended.rec4 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .recommended a {
+      min-width: 0;
+      padding: 16px 12px;
+      background: var(--paper2);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      text-align: center;
+      transition: .2s;
+    }
+
+    .recommended a:hover {
+      border-color: var(--ink);
+    }
+
+    .recommended strong,
+    .recommended span {
+      display: block;
+    }
+
+    .recommended span {
+      margin-top: 5px;
+      font-size: 10.5px;
+      opacity: .7;
+    }
+
+    .recommended a .rp {
+      margin-top: 8px;
+      color: var(--clay);
+      opacity: 1;
+      font-size: 11px;
+    }
+
+    .quiz-email {
+      display: flex;
+      gap: 8px;
+      margin: 26px auto 0;
+      max-width: 440px;
+      border: 1px solid var(--line);
+      padding: 5px 5px 5px 14px;
+    }
+
+    .quiz-email input {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      background: none;
+      outline: 0;
+      font: 14px "Be Vietnam Pro", sans-serif;
+    }
+
+    .quiz-email button {
+      border: 0;
+      background: var(--ink);
+      color: #fff;
+      padding: 11px 18px;
+      cursor: pointer;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .quiz-email .done {
+      margin: 0;
+      padding: 6px 0;
+      font-size: 13px;
+      color: #6f7d5e;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      margin-top: 30px;
+    }
+
+    .result-actions button {
+      border: 0;
+      border-bottom: 1px solid var(--ink);
+      padding: 0 0 4px;
+      background: transparent;
+      cursor: pointer;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    /* ===== PUVELA SCENT MATCHING V2 ===== */
+    .puvela-quiz-box {
+      max-width: 820px;
+      min-height: min(720px, calc(100svh - 48px));
+    }
+
+    .quiz-intro {
+      min-height: 590px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      max-width: 640px;
+      margin: auto;
+    }
+
+    .quiz-kicker {
+      margin: 0;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      color: var(--clay);
+    }
+
+    .quiz-intro h2 {
+      margin: 18px 0 18px;
+      max-width: 16ch;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.02;
+      text-wrap: balance;
+    }
+
+    .quiz-intro p:not(.quiz-kicker) {
+      max-width: 58ch;
+      margin: 0 auto;
+      color: #5d554c;
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .quiz-begin {
+      margin-top: 30px;
+      border: 0;
+      background: var(--ink);
+      color: #fff;
+      padding: 15px 26px;
+      cursor: pointer;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .quiz-flow[hidden],
+    .quiz-intro[hidden] {
+      display: none;
+    }
+
+    .quiz-flow-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .quiz-back {
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      padding: 0 0 4px;
+      color: #6f675e;
+      cursor: pointer;
+      font: 500 10px "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .quiz-box .quiz-progress {
+      margin-bottom: 22px;
+    }
+
+    .quiz-box .quiz-step {
+      margin: 0;
+    }
+
+    .quiz-hint {
+      max-width: 62ch;
+      margin: -10px 0 24px;
+      color: #7a7268;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .quiz-box h2#quiz-question {
+      max-width: 19ch;
+      margin: 18px 0 24px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.04;
+      text-wrap: balance;
+    }
+
+    .quiz-options {
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .quiz-options button {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border: 1px solid var(--line);
+      background: #f8f4ec;
+      text-align: left;
+      padding: 18px 18px 18px 20px;
+    }
+
+    .quiz-options button:hover,
+    .quiz-options button:focus-visible {
+      border-color: var(--ink);
+      background: #eee5d8;
+      outline: none;
+    }
+
+    .qo-text {
+      line-height: 1.5;
+    }
+
+    .qo-arrow {
+      flex: none;
+      opacity: .45;
+      font-size: 14px;
+    }
+
+    .quiz-result {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .result-loading {
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .result-loading h3 {
+      margin: 16px 0 10px;
+      font: 600 clamp(34px, 4.8vw, 58px)/1 "Cormorant Garamond", serif;
+    }
+
+    .result-loading p:last-child {
+      max-width: 52ch;
+      color: #6c645b;
+      line-height: 1.7;
+      font-size: 13px;
+    }
+
+    .result-top {
+      text-align: center;
+    }
+
+    .result-top h3 {
+      margin: 10px 0 8px;
+      font: 600 clamp(40px, 5.4vw, 64px)/.98 "Cormorant Garamond", serif;
+      letter-spacing: -.02em;
+    }
+
+    .result-tag {
+      margin: 0;
+      color: var(--clay);
+      font-size: 13px;
+    }
+
+    .result-story {
+      max-width: 58ch;
+      margin: 24px auto 0;
+      text-align: center;
+      color: #4d463f;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+
+    .result-story p {
+      margin: 9px 0;
+    }
+
+    .result-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 30px 0 24px;
+    }
+
+    .match-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+
+    .match-head h4 {
+      margin: 6px 0 0;
+      font: 600 32px/1 "Cormorant Garamond", serif;
+    }
+
+    .match-head>span {
+      max-width: 30ch;
+      text-align: right;
+      color: #81786d;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .recommended.rec3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .rec-card {
+      min-width: 0;
+      padding: 0 14px 16px;
+      background: var(--paper2);
+      border: 1px solid var(--line);
+      color: inherit;
+      text-decoration: none;
+      text-align: left;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rec-card:hover {
+      border-color: var(--ink);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(36, 28, 22, .08);
+    }
+
+    .rec-media {
+      height: 175px;
+      margin: 0 -14px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f3eee5;
+      overflow: hidden;
+    }
+
+    .rec-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12px 18px;
+      display: block;
+    }
+
+    .rec-rank {
+      margin-bottom: 10px;
+      color: var(--clay);
+      font: 500 9px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .rec-card strong {
+      display: block;
+      font: 600 22px/1.08 "Cormorant Garamond", serif;
+    }
+
+    .rec-card .rec-notes {
+      display: block;
+      margin-top: 8px;
+      color: #756d64;
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    .rec-card em {
+      display: block;
+      margin-top: 12px;
+      color: #4f4841;
+      font-style: normal;
+      font-size: 11.5px;
+      line-height: 1.55;
+    }
+
+    .rec-card b {
+      display: block;
+      margin-top: auto;
+      padding-top: 14px;
+      color: var(--clay);
+      font: 500 10px "IBM Plex Mono", monospace;
+    }
+
+    .rec-empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 35px;
+      border: 1px dashed var(--line);
+      color: #6f675e;
+    }
+
+    .result-note {
+      margin: 24px auto 0;
+      padding: 18px 20px;
+      background: #eee5d8;
+      color: #5c554d;
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .result-note strong {
+      color: var(--ink);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .result-note p {
+      margin: 7px 0 0;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .result-actions button {
+      border: 0;
+      border-bottom: 1px solid var(--ink);
+      padding: 0 0 4px;
+      background: transparent;
+      cursor: pointer;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .quiz-email {
+      margin-top: 24px;
+    }
+
+    @keyframes quizIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
     /* reveal on scroll */
     /* trượt lên nhẹ khi cuộn tới; nếu JS hỏng thì .reveal vẫn hiện đủ */
-    .reveal { opacity:1; }
-    html.js .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.3,1); }
-    html.js .reveal.hien { opacity:1; transform:none; }
-    @media (prefers-reduced-motion:reduce){ html.js .reveal{opacity:1;transform:none;transition:none} }
+    .reveal {
+      opacity: 1;
+    }
+
+    html.js .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .3, 1);
+    }
+
+    html.js .reveal.hien {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      html.js .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none
+      }
+    }
+
     /* ảnh thẻ phóng nhẹ khi rê chuột */
-    .pcard-media img, .rowcard img { transition:transform .7s cubic-bezier(.2,.7,.3,1); }
-    .pcard:hover .pcard-media img, .rowcard:hover img { transform:scale(1.05); }
+    .pcard-media img,
+    .rowcard img {
+      transition: transform .7s cubic-bezier(.2, .7, .3, 1);
+    }
+
+    .pcard:hover .pcard-media img,
+    .rowcard:hover img {
+      transform: scale(1.05);
+    }
+
     /* ===== dãy sản phẩm cuộn ngang ===== */
-    .rowsec { padding:clamp(40px,5vw,64px) 0; }
-    .rowsec .rowhead { display:flex; align-items:flex-end; justify-content:space-between; gap:20px;
-      padding:0 clamp(22px,5vw,80px); margin-bottom:22px; }
-    .rowsec h2 { margin:0; font:600 clamp(26px,3vw,38px)/1.1 "Cormorant Garamond",serif; }
-    .rownav { display:flex; gap:8px; flex:none; }
-    .rownav button { width:38px; height:38px; border:1px solid var(--line); background:transparent; cursor:pointer;
-      font-size:16px; line-height:1; color:var(--ink); transition:.2s; }
-    .rownav button:hover:not(:disabled) { background:var(--ink); color:#fff; }
-    .rownav button:disabled { opacity:.28; cursor:default; }
-    .rowtrack { display:flex; gap:clamp(12px,1.6vw,20px); overflow-x:auto; scroll-behavior:smooth;
-      padding:4px clamp(22px,5vw,80px) 10px; scrollbar-width:none; }
-    .rowtrack::-webkit-scrollbar { display:none; }
-    .rowcard { flex:0 0 clamp(180px,22vw,250px); text-decoration:none; color:inherit; }
-    #bs-grid.rowtrack { display:flex; padding-left:0; padding-right:0; }
-    #bs-grid.rowtrack .pcard { flex:0 0 clamp(200px,23vw,270px); }
-    .rowcard .m { position:relative; aspect-ratio:1/1; overflow:hidden; background:var(--sand); }
-    .rowcard img { width:100%; height:100%; object-fit:cover; }
-    .rowcard .bdg { position:absolute; left:10px; top:10px; padding:5px 8px; background:#fff;
-      font:500 9px "IBM Plex Mono",monospace; letter-spacing:.05em; text-transform:uppercase; }
-    .rowcard .bdg.sale { background:#9e3b28; color:#fff; }
-    .rowcard h3 { margin:12px 0 3px; font-size:13px; text-transform:uppercase; letter-spacing:.04em; }
-    .rowcard .st { font:500 11px "IBM Plex Mono",monospace; color:var(--clay); }
-    .rowcard .pr { margin:4px 0 0; font-size:13px; }
-    .rowcard .pr s { opacity:.5; margin-right:5px; }
+    .rowsec {
+      padding: clamp(40px, 5vw, 64px) 0;
+    }
+
+    .rowsec .rowhead {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 clamp(22px, 5vw, 80px);
+      margin-bottom: 22px;
+    }
+
+    .rowsec h2 {
+      margin: 0;
+      font: 600 clamp(26px, 3vw, 38px)/1.1 "Cormorant Garamond", serif;
+    }
+
+    .rownav {
+      display: flex;
+      gap: 8px;
+      flex: none;
+    }
+
+    .rownav button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      background: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      color: var(--ink);
+      transition: .2s;
+    }
+
+    .rownav button:hover:not(:disabled) {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .rownav button:disabled {
+      opacity: .28;
+      cursor: default;
+    }
+
+    .rowtrack {
+      display: flex;
+      gap: clamp(12px, 1.6vw, 20px);
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 4px clamp(22px, 5vw, 80px) 10px;
+      scrollbar-width: none;
+    }
+
+    .rowtrack::-webkit-scrollbar {
+      display: none;
+    }
+
+    .rowcard {
+      flex: 0 0 clamp(180px, 22vw, 250px);
+      text-decoration: none;
+      color: inherit;
+    }
+
+    #bs-grid.rowtrack {
+      display: flex;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    #bs-grid.rowtrack .pcard {
+      flex: 0 0 clamp(200px, 23vw, 270px);
+    }
+
+    .rowcard .m {
+      position: relative;
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      background: var(--sand);
+    }
+
+    .rowcard img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .rowcard .bdg {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      padding: 5px 8px;
+      background: #fff;
+      font: 500 9px "IBM Plex Mono", monospace;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .rowcard .bdg.sale {
+      background: #9e3b28;
+      color: #fff;
+    }
+
+    .rowcard h3 {
+      margin: 12px 0 3px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .rowcard .st {
+      font: 500 11px "IBM Plex Mono", monospace;
+      color: var(--clay);
+    }
+
+    .rowcard .pr {
+      margin: 4px 0 0;
+      font-size: 13px;
+    }
+
+    .rowcard .pr s {
+      opacity: .5;
+      margin-right: 5px;
+    }
+
     /* RESPONSIVE */
     @media (max-width:960px) {
-      .decant-in { grid-template-columns:1fr; gap:44px; } .story { grid-template-columns:1fr; max-height:none; } .story-photo { min-height:0; height:clamp(240px,40vh,380px); }
-      .foot-grid { grid-template-columns:1fr 1fr; }
+      .decant-in {
+        grid-template-columns: 1fr;
+        gap: 44px;
+      }
+
+      .story {
+        grid-template-columns: 1fr;
+        max-height: none;
+      }
+
+      .story-photo {
+        min-height: 0;
+        height: clamp(240px, 40vh, 380px);
+      }
+
+      .foot-grid {
+        grid-template-columns: 1fr 1fr;
+      }
     }
+
     @media (max-width:800px) {
-      .nav-links { display:none; } .nav-links.open { display:flex; position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:flex-start; background:var(--paper); border-bottom:1px solid var(--line); padding:22px 25px; gap:20px; z-index:6; }
-      .menu-button { display:block; } .nav-in { grid-template-columns:auto 1fr auto; } .brand { justify-self:start; }
-      .trustbar-in { grid-template-columns:repeat(3,1fr); } .tb { padding:20px 12px; } .tb i { display:none; } .tb b { font-size:13px; } .tb small { font-size:11px; line-height:1.4; }
-      .pgrid { grid-template-columns:1fr 1fr; } .mood-grid { grid-template-columns:1fr 1fr; }
-      .ugc-track { grid-template-columns:1fr; } .cmp-grid { grid-template-columns:1fr; }
-      .shead { flex-direction:column; align-items:flex-start; } .shead .text-link,.shead .link-u { display:none; }
+      .nav-links {
+        display: none;
+      }
+
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        background: var(--paper);
+        border-bottom: 1px solid var(--line);
+        padding: 22px 25px;
+        gap: 20px;
+        z-index: 6;
+      }
+
+      .menu-button {
+        display: block;
+      }
+
+      .nav-in {
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .brand {
+        justify-self: start;
+      }
+
+      .trustbar-in {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .tb {
+        padding: 20px 12px;
+      }
+
+      .tb i {
+        display: none;
+      }
+
+      .tb b {
+        font-size: 13px;
+      }
+
+      .tb small {
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      .pgrid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .mood-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .ugc-track {
+        grid-template-columns: 1fr;
+      }
+
+      .cmp-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .shead {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .shead .text-link,
+      .shead .link-u {
+        display: none;
+      }
     }
+
+    /* QUIZ RESULT — mobile-first layout, scoped only to the quiz modal. */
+    @media (max-width:700px) {
+      .quiz-modal {
+        align-items: flex-start;
+        padding: 8px;
+      }
+
+      .quiz-modal .quiz-box {
+        width: 100%;
+        max-height: calc(100dvh - 16px);
+        min-height: 0;
+        padding: 38px 16px 24px;
+      }
+
+      .quiz-modal .quiz-close {
+        top: 12px;
+        right: 12px;
+        font-size: 23px;
+      }
+
+      .quiz-modal .quiz-result {
+        max-width: none;
+      }
+
+      .quiz-modal .result-top h3 {
+        font-size: clamp(38px, 11vw, 52px);
+        line-height: .98;
+        margin: 7px 0;
+      }
+
+      .quiz-modal .result-story {
+        margin-top: 18px;
+        font-size: 13.5px;
+        line-height: 1.62;
+      }
+
+      .quiz-modal .result-divider {
+        margin: 22px 0 20px;
+      }
+
+      .quiz-modal .match-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .quiz-modal .match-head h4 {
+        font-size: 31px;
+        line-height: .98;
+        max-width: 10ch;
+      }
+
+      .quiz-modal .match-head>span {
+        max-width: none;
+        text-align: left;
+        font-size: 10px;
+      }
+
+      .quiz-modal .recommended.rec3 {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .quiz-modal .rec-card {
+        padding: 0 14px 15px;
+      }
+
+      .quiz-modal .rec-media {
+        height: 190px;
+        margin: 0 -14px 13px;
+      }
+
+      .quiz-modal .rec-media img {
+        padding: 10px 28px;
+      }
+
+      .quiz-modal .rec-card strong {
+        font-size: 25px;
+        line-height: 1.03;
+      }
+
+      .quiz-modal .rec-card em {
+        font-size: 11.5px;
+        line-height: 1.5;
+      }
+
+      .quiz-modal .result-note {
+        margin-top: 18px;
+        padding: 15px 16px;
+      }
+
+      .quiz-modal .quiz-email {
+        margin-top: 18px;
+      }
+
+      .quiz-modal .quiz-email button {
+        padding: 11px 13px;
+      }
+    }
+
     @media (max-width:480px) {
-      .hero h1 { font-size:44px; } .mood-grid { grid-template-columns:1fr; } .foot-grid { grid-template-columns:1fr; } .foot-bottom { flex-direction:column; }
-      .quiz-modal { padding:0; } .quiz-box { min-height:100svh; padding:44px 24px 30px; } .quiz-options,.recommended,.recommended.rec4 { grid-template-columns:1fr; }
-      .hero-cta .btn { flex:1; justify-content:center; }
+      .hero h1 {
+        font-size: 44px;
+      }
+
+      .mood-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .foot-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .foot-bottom {
+        flex-direction: column;
+      }
+
+      .quiz-modal {
+        padding: 0;
+      }
+
+      .quiz-box {
+        min-height: 100svh;
+        padding: 44px 24px 30px;
+      }
+
+      .quiz-options,
+      .recommended,
+      .recommended.rec4 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-cta .btn {
+        flex: 1;
+        justify-content: center;
+      }
     }
   </style>
   <style>
     /* giá sale — thêm khi bỏ giá cứng, dùng chung cho 3 trang */
-    s{text-decoration:line-through;opacity:.5;font-weight:400}
-    .sale{color:#9e3b28;font-weight:600}
-    .badge-sale{background:#9e3b28 !important;color:#fff !important}
+    s {
+      text-decoration: line-through;
+      opacity: .5;
+      font-weight: 400
+    }
+
+    .sale {
+      color: #9e3b28;
+      font-weight: 600
+    }
+
+    .badge-sale {
+      background: #9e3b28 !important;
+      color: #fff !important
+    }
   </style>
 </head>
+
 <body>
   <div class="announcement">Chính hãng 100% · Full &amp; Chiết 5–10ml · Freeship đơn từ 1.500.000₫</div>
   <header class="site-nav" id="siteNav">
@@ -308,13 +2349,20 @@
         <a href="collection.html?c=nu">Nước hoa Nữ</a>
         <a href="collection.html?c=nam">Nước hoa Nam</a>
         <a href="collection.html?c=unisex">Unisex &amp; Niche</a>
-        <a href="#scent-finder">Quiz tìm mùi</a>
+        <a href="#scent-finder">Tìm mùi hương</a>
       </nav>
       <a class="brand" href="#top" aria-label="PUVELA"><img src="assets/logo-nav.png" alt="PUVELA" /></a>
       <div class="nav-tools">
-        <a href="#" id="btn-search" class="navsearch" aria-label="Tìm nước hoa"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>Tìm nước hoa</span></a>
-        <a href="#" data-cart-toggle aria-label="Giỏ hàng"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg><span data-cart-count style="font-size:11px;margin-left:5px">0</span></a>
-        <button class="menu-button" aria-label="Mở menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+        <a href="#" id="btn-search" class="navsearch" aria-label="Tìm nước hoa"><svg viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg><span>Tìm nước hoa</span></a>
+        <a href="#" data-cart-toggle aria-label="Giỏ hàng"><svg viewBox="0 0 24 24">
+            <path d="M5 8h14l-1 12H6L5 8Z" />
+            <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+          </svg><span data-cart-count style="font-size:11px;margin-left:5px">0</span></a>
+        <button class="menu-button" aria-label="Mở menu"
+          onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
       </div>
     </div>
   </header>
@@ -323,42 +2371,49 @@
     <!-- 01 HERO -->
     <section class="hero" aria-label="Giới thiệu PUVELA">
       <div class="hero-media">
-        <video data-simg="hero-poster" autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?auto=format&fit=crop&w=1400&q=80" aria-label="Video nước hoa PUVELA">
+        <video data-simg="hero-poster" autoplay muted loop playsinline preload="auto" poster="assets/banner-poster.jpg"
+          aria-label="Video nước hoa PUVELA">
           <source src="assets/banner.mp4" type="video/mp4" />
         </video>
       </div>
       <div class="hero-in">
         <p class="eyebrow" style="color:rgba(255,255,255,.85)">PUVELA · Authentic Fragrance</p>
-        <h1>Mùi hương dành riêng cho bạn.</h1>
-        <p class="hero-sub">Nước hoa chính hãng nhập khẩu · Fullsize &amp; Chiết 5–10ml</p>
+        <h1>Tìm đúng mùi theo cách của bạn.</h1>
+        <p class="hero-sub">Nước hoa chính hãng · Fullsize &amp; Chiết 5–10ml</p>
         <div class="hero-cta">
-          <a class="btn btn-ghost" href="#bestsellers">Khám phá mùi hương</a>
-          <a class="btn btn-ghost" href="#scent-finder">Tìm mùi của bạn →</a>
+          <a class="btn btn-ghost" href="#bestsellers">Tìm mùi của bạn →</a>
+          <a class="btn btn-ghost" href="#scent-finder">Khám phá mùi hương →</a>
         </div>
         <p class="hero-tag2">“Thử trước. Yêu rồi hãy mua cả chai.”</p>
         <div class="hero-checks"><span>Chính hãng</span><span>Chiết trực tiếp từ chai fullsize</span></div>
       </div>
     </section>
 
-    <!-- 02 TRUST BAR -->
-    <section class="trustbar" aria-label="Cam kết">
-      <div class="trustbar-in">
-        <div class="tb"><i>01</i><div><b>100% chính hãng</b><small>Hoàn tiền nếu phát hiện fake</small></div></div>
-        <div class="tb"><i>02</i><div><b>Chiết trực tiếp</b><small>Từ chai fullsize nguyên seal</small></div></div>
-        <div class="tb"><i>03</i><div><b>Tư vấn chọn mùi</b><small>Theo phong cách của bạn</small></div></div>
-      </div>
+    <!-- 02 SCENT FINDER (QUIZ) -->
+    <section class="finder wrap reveal" id="scent-finder" aria-label="Trắc nghiệm tìm mùi">
+      <p class="eyebrow">Không biết mình hợp mùi nào?</p>
+      <h2>Tìm mùi hương phù hợp với bạn trong 2 phút.</h2>
+      <p class="lead">Không cần biết tên nước hoa. Chỉ cần cho PUVELA biết bạn thích gì, cần gì và muốn mang mùi hương
+        ấy khi nào.</p>
+      <button class="quiz-open" id="quiz-open" type="button">Bắt đầu Quiz →</button>
+      <p class="micro">Miễn phí · Không cần đăng ký</p>
     </section>
 
     <!-- 03 BESTSELLERS -->
     <section class="bestsellers wrap reveal" id="bestsellers" aria-label="Bán chạy">
       <div class="shead">
-        <div><p class="eyebrow">Bán chạy nhất</p><h2>Những mùi hương được yêu thích nhất</h2></div>
+        <div>
+          <p class="eyebrow">Bán chạy nhất</p>
+          <h2>Những mùi hương được yêu thích nhất</h2>
+        </div>
         <div style="display:flex;align-items:center;gap:18px">
-          <div class="rownav"><button type="button" data-row="bs" data-dir="-1" aria-label="Lùi">←</button><button type="button" data-row="bs" data-dir="1" aria-label="Tiến">→</button></div>
+          <div class="rownav"><button type="button" data-row="bs" data-dir="-1" aria-label="Lùi">←</button><button
+              type="button" data-row="bs" data-dir="1" aria-label="Tiến">→</button></div>
           <a class="link-u" href="collection.html?c=all">Xem tất cả →</a>
         </div>
       </div>
-      <p class="lead" style="margin:-24px 0 40px">Những lựa chọn được PUVELA tuyển chọn cho những ai muốn bắt đầu với một mùi hương dễ yêu.</p>
+      <p class="lead" style="margin:-24px 0 40px">Những chai được khách PUVELA chọn nhiều nhất — từ những mùi dễ dùng
+        mỗi ngày đến những lựa chọn có cá tính riêng.</p>
       <div class="pgrid rowtrack" id="bs-grid">
         <p class="lead" id="bs-empty" style="grid-column:1/-1;text-align:center;padding:40px 0">Đang tải sản phẩm…</p>
       </div>
@@ -366,8 +2421,12 @@
 
     <section class="rowsec reveal" id="row-duoi200" hidden aria-label="Dưới 200k">
       <div class="rowhead">
-        <div><p class="eyebrow">Dễ bắt đầu</p><h2>Chiết dùng thử — dưới 400.000₫</h2></div>
-        <div class="rownav"><button type="button" data-row="duoi200" data-dir="-1" aria-label="Lùi">←</button><button type="button" data-row="duoi200" data-dir="1" aria-label="Tiến">→</button></div>
+        <div>
+          <p class="eyebrow">Dễ bắt đầu</p>
+          <h2>Chiết dùng thử — dưới 400.000₫</h2>
+        </div>
+        <div class="rownav"><button type="button" data-row="duoi200" data-dir="-1" aria-label="Lùi">←</button><button
+            type="button" data-row="duoi200" data-dir="1" aria-label="Tiến">→</button></div>
       </div>
       <div class="rowtrack" id="track-duoi200"></div>
     </section>
@@ -375,32 +2434,54 @@
 
     <!-- 04 SHOP BY MOOD -->
     <section class="mood wrap reveal" id="mood" aria-label="Chọn theo dòng nước hoa">
-      <div class="shead"><div><p class="eyebrow">Chọn theo dòng</p><h2>Bạn đang tìm cho ai?</h2></div></div>
-      <p class="lead" style="margin:-24px 0 40px">Chọn dòng bạn quan tâm, mỗi mùi đều có bản chiết 5–10ml để thử trước.</p>
+      <div class="shead">
+        <div>
+          <p class="eyebrow">Chọn theo dòng</p>
+          <h2>Bạn đang tìm cho ai?</h2>
+        </div>
+      </div>
+      <p class="lead" style="margin:-24px 0 40px">Chọn dòng bạn quan tâm, mỗi mùi đều có bản chiết 5–10ml để thử trước.
+      </p>
       <div class="mood-grid">
-        <a class="mtile" href="collection.html?c=nu"><img data-simg="nhom-nu" src="assets/placeholder.svg" alt="Nước hoa nữ chính hãng" loading="lazy" /><div class="mtile-c"><h3>Nước hoa Nữ</h3><p>Từ designer quốc dân đến niche cao cấp</p><span class="mtile-cta">Xem tất cả</span></div></a>
-        <a class="mtile" href="collection.html?c=nam"><img data-simg="nhom-nam" src="assets/placeholder.svg" alt="Nước hoa nam chính hãng" loading="lazy" /><div class="mtile-c"><h3>Nước hoa Nam</h3><p>Những mùi "quốc dân" và niche được săn đón</p><span class="mtile-cta">Xem tất cả</span></div></a>
-        <a class="mtile" href="collection.html?c=unisex"><img data-simg="nhom-unisex" src="assets/placeholder.svg" alt="Nước hoa unisex niche" loading="lazy" /><div class="mtile-c"><h3>Unisex & Niche</h3><p>Độc bản, phá vỡ ranh giới nam nữ</p><span class="mtile-cta">Xem tất cả</span></div></a>
+        <a class="mtile" href="collection.html?c=nu"><img data-simg="nhom-nu" src="assets/placeholder.svg"
+            alt="Nước hoa nữ chính hãng" loading="lazy" />
+          <div class="mtile-c">
+            <h3>Nước hoa Nữ</h3>
+            <p>Từ designer quốc dân đến niche cao cấp</p><span class="mtile-cta">Xem tất cả</span>
+          </div>
+        </a>
+        <a class="mtile" href="collection.html?c=nam"><img data-simg="nhom-nam" src="assets/placeholder.svg"
+            alt="Nước hoa nam chính hãng" loading="lazy" />
+          <div class="mtile-c">
+            <h3>Nước hoa Nam</h3>
+            <p>Những mùi "quốc dân" và niche được săn đón</p><span class="mtile-cta">Xem tất cả</span>
+          </div>
+        </a>
+        <a class="mtile" href="collection.html?c=unisex"><img data-simg="nhom-unisex" src="assets/placeholder.svg"
+            alt="Nước hoa unisex niche" loading="lazy" />
+          <div class="mtile-c">
+            <h3>Unisex & Niche</h3>
+            <p>Độc bản, phá vỡ ranh giới nam nữ</p><span class="mtile-cta">Xem tất cả</span>
+          </div>
+        </a>
       </div>
     </section>
 
     <!-- 05 DECANT USP -->
 
-    <!-- 06 SCENT FINDER (QUIZ) -->
-    <section class="finder wrap reveal" id="scent-finder" aria-label="Trắc nghiệm tìm mùi">
-      <p class="eyebrow">Không biết mình hợp mùi nào?</p>
-      <h2>Tìm mùi hương dành cho bạn trong 2 phút.</h2>
-      <p class="lead">Trả lời vài câu hỏi về phong cách, hoàn cảnh và những mùi hương bạn yêu thích. PUVELA sẽ chọn ra những mùi phù hợp nhất với bạn.</p>
-      <button class="quiz-open" id="quiz-open" type="button">Bắt đầu Quiz →</button>
-      <p class="micro">Miễn phí · Không cần đăng ký</p>
-    </section>
-
     <!-- 07 SOCIAL PROOF / UGC -->
     <section class="ugc wrap reveal" id="ugc" aria-label="Đánh giá khách hàng">
-      <div class="shead"><div><p class="eyebrow">Khách hàng PUVELA</p><h2>PUVELA trên làn da thật</h2></div></div>
-      <p class="lead" style="margin:-24px 0 40px">Điều khách hàng yêu thích nhất không phải là chai nước hoa. Mà là cảm giác khi họ tìm đúng mùi hương của mình.</p>
+      <div class="shead">
+        <div>
+          <p class="eyebrow">Khách hàng PUVELA</p>
+          <h2>PUVELA trên làn da thật</h2>
+        </div>
+      </div>
+      <p class="lead" style="margin:-24px 0 40px">Điều khách hàng yêu thích nhất không phải là chai nước hoa. Mà là cảm
+        giác khi họ tìm đúng mùi hương của mình.</p>
       <div class="ugc-track" id="ugc-track">
-        <div class="ugc-empty">Những chia sẻ thật của khách hàng sẽ xuất hiện tại đây.<br />Hãy là người đầu tiên kể câu chuyện mùi hương của bạn.</div>
+        <div class="ugc-empty">Những chia sẻ thật của khách hàng sẽ xuất hiện tại đây.<br />Hãy là người đầu tiên kể câu
+          chuyện mùi hương của bạn.</div>
       </div>
       <button class="ugc-cta" id="ugc-cta" type="button">✎ Viết trải nghiệm của bạn</button>
     </section>
@@ -409,13 +2490,17 @@
 
     <!-- 09 BRAND STORY -->
     <section class="story reveal" id="story" aria-label="Câu chuyện PUVELA">
-      <div class="story-photo"><img data-simg="story" src="https://images.unsplash.com/photo-1587017539504-67cfbddac569?auto=format&fit=crop&w=1100&q=80" alt="Nước hoa PUVELA" loading="lazy" /></div>
+      <div class="story-photo"><img data-simg="story"
+          src="https://images.unsplash.com/photo-1587017539504-67cfbddac569?auto=format&fit=crop&w=1100&q=80"
+          alt="Nước hoa PUVELA" loading="lazy" /></div>
       <div class="story-copy">
         <p class="eyebrow">Câu chuyện</p>
         <h2>Vì sao PUVELA tồn tại?</h2>
         <p class="story-statement">Thử trước. Yêu rồi hãy sở hữu.</p>
-        <p>Một chai nước hoa có thể trị giá hàng triệu đồng — nhưng vài lần xịt thử ở cửa hàng không đủ để biết bạn có yêu nó hay không.</p>
-        <p>Puvela bắt đầu từ một lượng nhỏ: chiết trực tiếp từ chai nguyên seal, để bạn thử trên da mình, sống cùng nó vài ngày, rồi mới quyết định.</p>
+        <p>Một chai nước hoa có thể trị giá hàng triệu đồng — nhưng vài lần xịt thử ở cửa hàng không đủ để biết bạn có
+          yêu nó hay không.</p>
+        <p>Puvela bắt đầu từ một lượng nhỏ: chiết trực tiếp từ chai nguyên seal, để bạn thử trên da mình, sống cùng nó
+          vài ngày, rồi mới quyết định.</p>
         <p>Mùi hương đúng không phải mùi đang được yêu thích nhất. Đó là mùi khiến bạn muốn xịt thêm một lần nữa.</p>
         <div class="story-cta">
           <a class="btn btn-solid" href="collection.html?c=all">Xem tất cả nước hoa</a>
@@ -445,31 +2530,72 @@
         <img src="assets/logo-nav.png" alt="PUVELA" />
         <p>Nước hoa chính hãng nhập khẩu — full &amp; chiết. Thử trước. Yêu rồi hãy mua cả chai.</p>
       </div>
-      <div class="foot-col"><h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp; Niche</a><a href="#bestsellers">Best sellers</a></div>
-      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a href="van-chuyen.html">Vận chuyển</a><a href="faq.html">FAQ</a></div>
-      <div class="foot-col"><h4>Chính sách</h4><a href="cam-ket-chinh-hang.html">Cam kết chính hãng</a><a href="kiem-tra-that-gia.html">Kiểm tra thật/giả</a><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
+      <div class="foot-col">
+        <h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa
+          Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp;
+          Niche</a><a href="#bestsellers">Best sellers</a>
+      </div>
+      <div class="foot-col">
+        <h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a
+          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a>
+      </div>
+      <div class="foot-col">
+        <h4>Chính sách</h4><a href="van-chuyen.html" class="on">Vận chuyển &amp; đổi trả</a>
+        <a href="bao-mat.html" class="">Chính sách bảo mật</a>
+        <a href="dieu-khoan.html" class="">Điều khoản sử dụng</a>
+        <a href="faq.html" class="">Câu hỏi thường gặp</a>
+      </div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 PUVELA</span>
-      <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a></div>
+      <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a
+          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a></div>
       <span>Việt Nam</span>
     </div>
   </footer>
 
-  <!-- QUIZ MODAL (preserved) -->
+  <!-- PUVELA SCENT MATCHING -->
   <div class="quiz-modal" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-question">
-    <div class="quiz-box"><button class="quiz-close" id="quiz-close" aria-label="Đóng trắc nghiệm">×</button><div id="quiz-content"><div class="quiz-progress"><span id="quiz-progress"></span></div><p class="quiz-step" id="quiz-step">Phong cách · Câu 1/6</p><h2 id="quiz-question">Bạn tìm nước hoa theo phong cách nào?</h2><div class="quiz-options" id="quiz-options"></div></div><div class="quiz-result" id="quiz-result"></div></div>
+    <div class="quiz-box puvela-quiz-box">
+      <button class="quiz-close" id="quiz-close" type="button" aria-label="Đóng trắc nghiệm">×</button>
+      <div id="quiz-content">
+        <div class="quiz-intro">
+          <p class="quiz-kicker">PUVELA · SCENT MATCHING</p>
+          <h2>Đừng chọn một nốt hương.<br>Hãy kể PUVELA nghe về bạn.</h2>
+          <p>Không có đáp án đúng hay sai. Chọn điều giống bạn nhất — PUVELA sẽ tự dịch những câu trả lời đời thường
+            thành một hồ sơ mùi và tìm những chai phù hợp từ catalog.</p>
+          <button class="quiz-begin" id="quiz-begin" type="button">Bắt đầu →</button>
+        </div>
+        <div class="quiz-flow" id="quiz-flow" hidden>
+          <div class="quiz-progress"><span id="quiz-progress"></span></div>
+          <div class="quiz-flow-top">
+            <p class="quiz-step" id="quiz-step">Câu 1/7</p>
+            <button class="quiz-back" id="quiz-back" type="button">← Quay lại</button>
+          </div>
+          <h2 id="quiz-question"></h2>
+          <p class="quiz-hint" id="quiz-hint"></p>
+          <div class="quiz-options" id="quiz-options"></div>
+        </div>
+      </div>
+      <div class="quiz-result" id="quiz-result"></div>
+    </div>
   </div>
 
   <!-- LỚP PHỦ TÌM KIẾM -->
   <div class="sr-ov" id="sr-ov" hidden>
     <div class="sr-box" role="dialog" aria-label="Tìm nước hoa">
       <div class="sr-top">
-        <svg viewBox="0 0 24 24" class="sr-ic"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="sr-input" type="search" autocomplete="off" placeholder="Tìm nước hoa — gõ không dấu cũng ra (vd: coco, sauvage)" />
+        <svg viewBox="0 0 24 24" class="sr-ic">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m20 20-3.5-3.5" />
+        </svg>
+        <input id="sr-input" type="search" autocomplete="off"
+          placeholder="Tìm nước hoa — gõ không dấu cũng ra (vd: coco, sauvage)" />
         <button id="sr-close" aria-label="Đóng">✕</button>
       </div>
-      <div class="sr-list" id="sr-list"><p class="sr-hint">Gõ tên nước hoa hoặc tên hãng để tìm.</p></div>
+      <div class="sr-list" id="sr-list">
+        <p class="sr-hint">Gõ tên nước hoa hoặc tên hãng để tìm.</p>
+      </div>
     </div>
   </div>
 
@@ -477,10 +2603,13 @@
   <div class="sr-ov" id="tn-ov" hidden>
     <div class="sr-box tn-box" role="dialog" aria-label="Viết trải nghiệm">
       <div class="sr-top"><b style="flex:1;font:600 18px/1.2 'Cormorant Garamond',serif">Viết trải nghiệm của bạn</b>
-        <button id="tn-close" aria-label="Đóng">✕</button></div>
+        <button id="tn-close" aria-label="Đóng">✕</button>
+      </div>
       <form id="tn-form" class="tn-form">
         <label>Bạn dùng mùi nào?</label>
-        <select id="tn-sp" required><option value="">— Chọn sản phẩm —</option></select>
+        <select id="tn-sp" required>
+          <option value="">— Chọn sản phẩm —</option>
+        </select>
         <label>Bạn cho mấy sao?</label>
         <div class="tn-stars" id="tn-stars"></div>
         <label>Tên của bạn</label>
@@ -502,304 +2631,959 @@
   <script src="assets/cart.js"></script>
   <script>
     /* sticky nav shadow */
-    (function(){
-      var nav=document.querySelector('#siteNav');
-      window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>16);},{passive:true});
+    (function () {
+      var nav = document.querySelector('#siteNav');
+      window.addEventListener('scroll', function () { nav.classList.toggle('scrolled', window.scrollY > 16); }, { passive: true });
     })();
 
     /* ===== hiệu ứng trượt lên khi cuộn tới =====
        Đánh dấu html.js trước, để nếu JS lỗi thì nội dung vẫn hiển thị đủ. */
-    (function(){
-      if(!('IntersectionObserver' in window)) return;
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
       document.documentElement.classList.add('js');
-      var io=new IntersectionObserver(function(es){
-        es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('hien'); io.unobserve(e.target); } });
-      },{rootMargin:'0px 0px -8% 0px', threshold:.05});
-      document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('hien'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: .05 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
     })();
 
     /* ===== dãy sản phẩm cuộn ngang ===== */
-    (function(){
-      var CACHE=null;
-      async function tai(){
-        if(CACHE) return CACHE;
-        if(!(window.puvela&&window.puvela.client)) return (CACHE=[]);
-        try{
-          var r=await window.puvela.client.from('products')
+    (function () {
+      var CACHE = null;
+      async function tai() {
+        if (CACHE) return CACHE;
+        if (!(window.puvela && window.puvela.client)) return (CACHE = []);
+        try {
+          var r = await window.puvela.client.from('products')
             .select('slug,name,badge,is_niche,category,hero_image,product_variants(label,price,compare_at_price)')
-            .eq('is_published',true);
-          CACHE=((r&&r.data)||[]).map(function(p){
-            var vs=(p.product_variants||[]).filter(function(v){return v.price>0;}).sort(function(a,b){return a.price-b.price;});
-            var min=vs.length?vs[0].price:0;
-            var goc=vs.length&&vs[0].compare_at_price>vs[0].price?vs[0].compare_at_price:0;
-            var giam=0;
-            (p.product_variants||[]).forEach(function(v){ if(v.compare_at_price>v.price)
-              giam=Math.max(giam, Math.round((1-v.price/v.compare_at_price)*100)); });
-            return {slug:p.slug,name:p.name,badge:p.badge||'',niche:!!p.is_niche,
-                    img:p.hero_image||'assets/placeholder.svg',min:min,goc:goc,giam:giam};
+            .eq('is_published', true);
+          CACHE = ((r && r.data) || []).map(function (p) {
+            var vs = (p.product_variants || []).filter(function (v) { return v.price > 0; }).sort(function (a, b) { return a.price - b.price; });
+            var min = vs.length ? vs[0].price : 0;
+            var goc = vs.length && vs[0].compare_at_price > vs[0].price ? vs[0].compare_at_price : 0;
+            var giam = 0;
+            (p.product_variants || []).forEach(function (v) {
+              if (v.compare_at_price > v.price)
+                giam = Math.max(giam, Math.round((1 - v.price / v.compare_at_price) * 100));
+            });
+            return {
+              slug: p.slug, name: p.name, badge: p.badge || '', niche: !!p.is_niche,
+              img: p.hero_image || 'assets/placeholder.svg', min: min, goc: goc, giam: giam
+            };
           });
-        }catch(e){ CACHE=[]; }
+        } catch (e) { CACHE = []; }
         return CACHE;
       }
-      var tien=function(n){return Number(n).toLocaleString('vi-VN')+'₫';};
-      function the(p,DGX){
-        var d=DGX&&DGX[p.slug];
-        return '<a class="rowcard" href="product.html?p='+p.slug+'">'+
-          '<div class="m">'+(p.giam?'<span class="bdg sale">-'+p.giam+'%</span>':(p.badge?'<span class="bdg">'+p.badge+'</span>':''))+
-          '<img src="'+p.img+'" alt="'+p.name+'" loading="lazy" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" /></div>'+
-          '<h3>'+p.name+'</h3>'+
-          (d&&d.n?'<div class="st">★ '+(d.tong/d.n).toFixed(1)+' ('+d.n+')</div>':'')+
-          '<p class="pr">'+(p.min?(p.goc?'<s>'+tien(p.goc)+'</s>'+tien(p.min):'Từ '+tien(p.min)):'')+'</p></a>';
+      var tien = function (n) { return Number(n).toLocaleString('vi-VN') + '₫'; };
+      function the(p, DGX) {
+        var d = DGX && DGX[p.slug];
+        return '<a class="rowcard" href="product.html?p=' + p.slug + '">' +
+          '<div class="m">' + (p.giam ? '<span class="bdg sale">-' + p.giam + '%</span>' : (p.badge ? '<span class="bdg">' + p.badge + '</span>' : '')) +
+          '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" /></div>' +
+          '<h3>' + p.name + '</h3>' +
+          (d && d.n ? '<div class="st">★ ' + (d.tong / d.n).toFixed(1) + ' (' + d.n + ')</div>' : '') +
+          '<p class="pr">' + (p.min ? (p.goc ? '<s>' + tien(p.goc) + '</s>' + tien(p.min) : 'Từ ' + tien(p.min)) : '') + '</p></a>';
       }
-      function nutCuon(key){
-        var track=document.querySelector('#track-'+key);
-        document.querySelectorAll('[data-row="'+key+'"]').forEach(function(b){
-          b.addEventListener('click', function(){
-            track.scrollBy({left: Number(b.dataset.dir)*track.clientWidth*0.8, behavior:'smooth'});
+      function nutCuon(key) {
+        var track = document.querySelector('#track-' + key);
+        document.querySelectorAll('[data-row="' + key + '"]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            track.scrollBy({ left: Number(b.dataset.dir) * track.clientWidth * 0.8, behavior: 'smooth' });
           });
         });
-        function capNhat(){
+        function capNhat() {
           var het = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-          document.querySelectorAll('[data-row="'+key+'"]').forEach(function(b){
-            b.disabled = Number(b.dataset.dir)<0 ? track.scrollLeft<=2 : het;
+          document.querySelectorAll('[data-row="' + key + '"]').forEach(function (b) {
+            b.disabled = Number(b.dataset.dir) < 0 ? track.scrollLeft <= 2 : het;
           });
         }
-        track.addEventListener('scroll', capNhat, {passive:true}); capNhat();
+        track.addEventListener('scroll', capNhat, { passive: true }); capNhat();
       }
-      if(document.querySelector('#bs-grid')) nutCuon2('bs','#bs-grid');
-      function nutCuon2(key, sel){
-        var track=document.querySelector(sel);
-        document.querySelectorAll('[data-row="'+key+'"]').forEach(function(b){
-          b.addEventListener('click', function(){
-            track.scrollBy({left: Number(b.dataset.dir)*track.clientWidth*0.8, behavior:'smooth'});
+      if (document.querySelector('#bs-grid')) nutCuon2('bs', '#bs-grid');
+      function nutCuon2(key, sel) {
+        var track = document.querySelector(sel);
+        document.querySelectorAll('[data-row="' + key + '"]').forEach(function (b) {
+          b.addEventListener('click', function () {
+            track.scrollBy({ left: Number(b.dataset.dir) * track.clientWidth * 0.8, behavior: 'smooth' });
           });
         });
-        function capNhat(){
+        function capNhat() {
           var het = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-          document.querySelectorAll('[data-row="'+key+'"]').forEach(function(b){
-            b.disabled = Number(b.dataset.dir)<0 ? track.scrollLeft<=2 : het;
+          document.querySelectorAll('[data-row="' + key + '"]').forEach(function (b) {
+            b.disabled = Number(b.dataset.dir) < 0 ? track.scrollLeft <= 2 : het;
           });
         }
-        track.addEventListener('scroll', capNhat, {passive:true});
+        track.addEventListener('scroll', capNhat, { passive: true });
         setTimeout(capNhat, 1500);
       }
-      (async function(){
-        var ds=await tai(); if(!ds.length) return;
-        var DGX={};
-        try{
-          var rv=await window.puvela.client.from('reviews').select('product_slug,rating').eq('is_published',true);
-          ((rv&&rv.data)||[]).forEach(function(x){ if(!x.product_slug)return;
-            DGX[x.product_slug]=DGX[x.product_slug]||{n:0,tong:0};
-            DGX[x.product_slug].n++; DGX[x.product_slug].tong+=(x.rating||0); });
-        }catch(e){}
+      (async function () {
+        var ds = await tai(); if (!ds.length) return;
+        var DGX = {};
+        try {
+          var rv = await window.puvela.client.from('reviews').select('product_slug,rating').eq('is_published', true);
+          ((rv && rv.data) || []).forEach(function (x) {
+            if (!x.product_slug) return;
+            DGX[x.product_slug] = DGX[x.product_slug] || { n: 0, tong: 0 };
+            DGX[x.product_slug].n++; DGX[x.product_slug].tong += (x.rating || 0);
+          });
+        } catch (e) { }
         // xếp từ cao xuống thấp trong ngưỡng: dải mở đầu bằng hàng khá, không phải hàng rẻ nhất
-        var day={ duoi200: ds.filter(function(p){return p.min>0 && p.min<400000;})
-                            .sort(function(a,b){return b.min-a.min;}).slice(0,12) };
-        Object.keys(day).forEach(function(k){
-          if(day[k].length<3) return;
-          document.querySelector('#track-'+k).innerHTML = day[k].map(function(p){return the(p,DGX);}).join('');
-          document.querySelector('#row-'+k).hidden=false;
+        var day = {
+          duoi200: ds.filter(function (p) { return p.min > 0 && p.min < 400000; })
+            .sort(function (a, b) { return b.min - a.min; })
+        };
+        Object.keys(day).forEach(function (k) {
+          if (day[k].length < 3) return;
+          document.querySelector('#track-' + k).innerHTML = day[k].map(function (p) { return the(p, DGX); }).join('');
+          document.querySelector('#row-' + k).hidden = false;
           nutCuon(k);
         });
       })();
     })();
     /* email offer — loading/success/error states, giữ Supabase leads */
-    async function puvelaSubscribe(form){
-      var input=form.querySelector('input'),btn=form.querySelector('button'),msg=form.parentElement.querySelector('.form-msg');
-      var email=(input.value||'').trim(); if(!email)return;
-      btn.disabled=true; if(msg){msg.className='form-msg';msg.textContent='Đang gửi…';}
-      var res=(window.puvela&&window.puvela.saveLead)?await window.puvela.saveLead({email:email,source:'newsletter'}):{ok:false,reason:'not-configured'};
-      btn.disabled=false;
-      if(res&&res.ok){input.value='';input.placeholder='Đã đăng ký ✓';if(msg){msg.className='form-msg ok';msg.textContent='Cảm ơn bạn! Ưu đãi 10% sẽ tới email của bạn.';}}
-      else{input.value='';if(msg){msg.className='form-msg err';msg.textContent=(res&&res.reason==='not-configured')?'Đã ghi nhận email của bạn.':'Có lỗi, vui lòng thử lại sau.';}}
+    async function puvelaSubscribe(form) {
+      var input = form.querySelector('input'), btn = form.querySelector('button'), msg = form.parentElement.querySelector('.form-msg');
+      var email = (input.value || '').trim(); if (!email) return;
+      btn.disabled = true; if (msg) { msg.className = 'form-msg'; msg.textContent = 'Đang gửi…'; }
+      var res = (window.puvela && window.puvela.saveLead) ? await window.puvela.saveLead({ email: email, source: 'newsletter' }) : { ok: false, reason: 'not-configured' };
+      btn.disabled = false;
+      if (res && res.ok) { input.value = ''; input.placeholder = 'Đã đăng ký ✓'; if (msg) { msg.className = 'form-msg ok'; msg.textContent = 'Cảm ơn bạn! Ưu đãi 10% sẽ tới email của bạn.'; } }
+      else { input.value = ''; if (msg) { msg.className = 'form-msg err'; msg.textContent = (res && res.reason === 'not-configured') ? 'Đã ghi nhận email của bạn.' : 'Có lỗi, vui lòng thử lại sau.'; } }
     }
     /* ẢNH TRANG TRÍ — lấy từ bảng site_images, chưa có thì giữ ảnh mặc định */
-    (function(){
-      if(!(window.puvela&&window.puvela.client))return;
-      window.puvela.client.from('site_images').select('key,url').then(function(r){
-        if(!r||r.error||!r.data)return;
-        r.data.forEach(function(row){
-          if(!row.url)return;
-          document.querySelectorAll('[data-simg="'+row.key+'"]').forEach(function(el){
-            if(el.tagName==='VIDEO') el.poster=row.url; else el.src=row.url;
+    (function () {
+      if (!(window.puvela && window.puvela.client)) return;
+      window.puvela.client.from('site_images').select('key,url').then(function (r) {
+        if (!r || r.error || !r.data) return;
+        r.data.forEach(function (row) {
+          if (!row.url) return;
+          document.querySelectorAll('[data-simg="' + row.key + '"]').forEach(function (el) {
+            if (el.tagName === 'VIDEO') el.poster = row.url; else el.src = row.url;
           });
         });
-      }).catch(function(e){console.warn('[Puvela] ảnh trang trí:',e&&e.message);});
+      }).catch(function (e) { console.warn('[Puvela] ảnh trang trí:', e && e.message); });
     })();
     /* 03 BESTSELLERS — đọc từ Supabase (badge Best seller) */
-    (function(){
-      var grid=document.querySelector('#bs-grid');
-      if(!grid)return;
-      var trong=function(msg){grid.innerHTML='<p class="lead" style="grid-column:1/-1;text-align:center;padding:40px 0">'+msg+'</p>';};
-      if(!(window.puvela&&window.puvela.client)){trong('Chưa kết nối cửa hàng nên chưa hiện được sản phẩm.');return;}
-      var money=n=>Number(n).toLocaleString('vi-VN')+'₫';
-      var DGX={};
-      window.puvela.client.from('reviews').select('product_slug,rating').eq('is_published',true).then(function(rv){
-        ((rv&&rv.data)||[]).forEach(function(x){ if(!x.product_slug)return;
-          DGX[x.product_slug]=DGX[x.product_slug]||{n:0,tong:0};
-          DGX[x.product_slug].n++; DGX[x.product_slug].tong+=(x.rating||0); });
-      }).catch(function(){}).then(function(){
-      window.puvela.client.from('products').select('slug,name,notes,badge,category,hero_image,product_variants(label,price,compare_at_price)').eq('badge','Best seller').limit(8).then(function(r){
-        if(!r||r.error){trong('Không tải được sản phẩm. Kiểm tra kết nối rồi tải lại trang.');return;}
-        if(!r.data||!r.data.length){trong('Chưa có sản phẩm nào được đánh dấu “Best seller”.');return;}
-        grid.innerHTML=r.data.slice(0,8).map(function(p){
-          var vs=(p.product_variants||[]);
-          var v10=vs.find(function(v){return (v.label||'').indexOf('10ml')>-1;});
-          var vFull=vs.find(function(v){return (v.label||'').indexOf('Full')>-1;});
-          var prices=vs.map(function(v){return v.price;}).filter(function(x){return x>0;});
-          var min=prices.length?Math.min.apply(null,prices):0;
-          var fam=(p.category||'').split(' · ')[0]||'Eau de Parfum';
-          var n=p.notes||{};var notes=[n.top,n.mid,n.base].filter(Boolean).join(' · ');
-          var vMin=vs.filter(function(v){return v.price>0;}).sort(function(a,b){return a.price-b.price;})[0]||null;
-          var goc=vMin&&vMin.compare_at_price>vMin.price?vMin.compare_at_price:0;
-          var priceLine='Chiết từ '+(goc?'<s>'+money(goc)+'</s> <b class="sale">'+money(min)+'</b>':'<b>'+money(min)+'</b>')
-            +(vFull?' · Full '+money(vFull.price):'');
-          var giam=goc?Math.round((1-vMin.price/goc)*100):0;
-          return '<article class="pcard"><a class="pcard-media" href="product.html?p='+p.slug+'">'+(giam?'<span class="badge badge-sale">-'+giam+'%</span>':(p.badge?'<span class="badge">'+p.badge+'</span>':''))+'<img src="'+(p.hero_image||'')+'" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" alt="'+p.name+'" loading="lazy" /></a>'+
-            '<div class="pcard-body"><p class="pcard-fam">'+fam+'</p><a href="product.html?p='+p.slug+'"><h3>'+p.name+'</h3></a>'+
-            (function(){var d=DGX[p.slug];return d&&d.n?'<p class="pstar">★ '+(d.tong/d.n).toFixed(1)+' <i>('+d.n+')</i></p>':'<p class="pstar" aria-hidden="true"></p>';})()+
-            '<p class="pcard-notes">'+notes+'</p><p class="pcard-price">'+priceLine+'</p>'+
-            '<div class="pcard-cta"><button class="btn btn-solid" data-add data-slug="'+p.slug+'" data-name="'+p.name.replace(/"/g,'&quot;')+'" data-price="'+(v10?v10.price:min)+'" data-img="'+(p.hero_image||'')+'">Thử 10ml</button>'+
-            '<a class="btn btn-line" href="product.html?p='+p.slug+'">Chi tiết</a></div></div></article>';
-        }).join('');
-        grid.querySelectorAll('[data-add]').forEach(function(b){b.addEventListener('click',function(){window.puvelaCart&&window.puvelaCart.add({slug:b.dataset.slug,name:b.dataset.name,label:'Chiết 10ml',price:Number(b.dataset.price),image:b.dataset.img});});});
-      }).catch(function(e){console.warn('[Puvela] bestsellers lỗi:',e&&e.message);trong('Không tải được sản phẩm. Thử tải lại trang.');});
+    (function () {
+      var grid = document.querySelector('#bs-grid');
+      if (!grid) return;
+      var trong = function (msg) { grid.innerHTML = '<p class="lead" style="grid-column:1/-1;text-align:center;padding:40px 0">' + msg + '</p>'; };
+      if (!(window.puvela && window.puvela.client)) { trong('Chưa kết nối cửa hàng nên chưa hiện được sản phẩm.'); return; }
+      var money = n => Number(n).toLocaleString('vi-VN') + '₫';
+      var DGX = {};
+      window.puvela.client.from('reviews').select('product_slug,rating').eq('is_published', true).then(function (rv) {
+        ((rv && rv.data) || []).forEach(function (x) {
+          if (!x.product_slug) return;
+          DGX[x.product_slug] = DGX[x.product_slug] || { n: 0, tong: 0 };
+          DGX[x.product_slug].n++; DGX[x.product_slug].tong += (x.rating || 0);
+        });
+      }).catch(function () { }).then(function () {
+        window.puvela.client.from('products')
+          .select('slug,name,notes,badge,category,hero_image,product_variants(label,price,compare_at_price)')
+          .eq('badge', 'Best seller').then(function (r) {
+            if (!r || r.error) { trong('Không tải được sản phẩm. Kiểm tra kết nối rồi tải lại trang.'); return; }
+            if (!r.data || !r.data.length) { trong('Chưa có sản phẩm nào được đánh dấu “Best seller”.'); return; }
+            grid.innerHTML = r.data.map(function (p) {
+              var vs = (p.product_variants || []);
+              var v10 = vs.find(function (v) { return (v.label || '').indexOf('10ml') > -1; });
+              var vFull = vs.find(function (v) { return (v.label || '').indexOf('Full') > -1; });
+              var prices = vs.map(function (v) { return v.price; }).filter(function (x) { return x > 0; });
+              var min = prices.length ? Math.min.apply(null, prices) : 0;
+              var fam = (p.category || '').split(' · ')[0] || 'Eau de Parfum';
+              var n = p.notes || {}; var notes = [n.top, n.mid, n.base].filter(Boolean).join(' · ');
+              var vMin = vs.filter(function (v) { return v.price > 0; }).sort(function (a, b) { return a.price - b.price; })[0] || null;
+              var goc = vMin && vMin.compare_at_price > vMin.price ? vMin.compare_at_price : 0;
+              var priceLine = 'Chiết từ ' + (goc ? '<s>' + money(goc) + '</s> <b class="sale">' + money(min) + '</b>' : '<b>' + money(min) + '</b>')
+                + (vFull ? ' · Full ' + money(vFull.price) : '');
+              var giam = goc ? Math.round((1 - vMin.price / goc) * 100) : 0;
+              return '<article class="pcard"><a class="pcard-media" href="product.html?p=' + p.slug + '">' + (giam ? '<span class="badge badge-sale">-' + giam + '%</span>' : (p.badge ? '<span class="badge">' + p.badge + '</span>' : '')) + '<img src="' + (p.hero_image || '') + '" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" alt="' + p.name + '" loading="lazy" /></a>' +
+                '<div class="pcard-body"><p class="pcard-fam">' + fam + '</p><a href="product.html?p=' + p.slug + '"><h3>' + p.name + '</h3></a>' +
+                (function () { var d = DGX[p.slug]; return d && d.n ? '<p class="pstar">★ ' + (d.tong / d.n).toFixed(1) + ' <i>(' + d.n + ')</i></p>' : '<p class="pstar" aria-hidden="true"></p>'; })() +
+                '<p class="pcard-notes">' + notes + '</p><p class="pcard-price">' + priceLine + '</p>' +
+                '<div class="pcard-cta"><button class="btn btn-solid" data-add data-slug="' + p.slug + '" data-name="' + p.name.replace(/"/g, '&quot;') + '" data-price="' + (v10 ? v10.price : min) + '" data-img="' + (p.hero_image || '') + '">Thử 10ml</button>' +
+                '<a class="btn btn-line" href="product.html?p=' + p.slug + '">Chi tiết</a></div></div></article>';
+            }).join('');
+            grid.querySelectorAll('[data-add]').forEach(function (b) { b.addEventListener('click', function () { window.puvelaCart && window.puvelaCart.add({ slug: b.dataset.slug, name: b.dataset.name, label: 'Chiết 10ml', price: Number(b.dataset.price), image: b.dataset.img }); }); });
+          }).catch(function (e) { console.warn('[Puvela] bestsellers lỗi:', e && e.message); trong('Không tải được sản phẩm. Thử tải lại trang.'); });
       });
     })();
 
     /* ===== TÌM KIẾM — tải 1 lần rồi lọc tại chỗ, gõ không dấu vẫn ra ===== */
     var SP_CACHE = null;
-    var khongDau = function(x){ return (x||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().trim(); };
-    async function taiSanPham(){
-      if(SP_CACHE) return SP_CACHE;
-      if(!(window.puvela&&window.puvela.client)) return (SP_CACHE=[]);
-      try{
+    var khongDau = function (x) {
+      return (x || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase().trim();
+    };
+    async function taiSanPham() {
+      if (SP_CACHE) return SP_CACHE;
+      if (!(window.puvela && window.puvela.client)) return (SP_CACHE = []);
+      try {
         var r = await window.puvela.client.from('products')
           .select('slug,name,hero_image,category,brands(name),product_variants(price)')
-          .eq('is_published',true).order('name');
-        SP_CACHE = ((r&&r.data)||[]).map(function(p){
-          var gia=(p.product_variants||[]).map(function(v){return v.price;}).filter(function(x){return x>0;});
-          return { slug:p.slug, name:p.name, img:p.hero_image||'assets/placeholder.svg',
-                   hang:(p.brands&&p.brands.name)||'', loai:p.category||'',
-                   min:gia.length?Math.min.apply(null,gia):0,
-                   key:khongDau(p.name+' '+((p.brands&&p.brands.name)||'')+' '+(p.category||'')) };
+          .eq('is_published', true).order('name');
+        SP_CACHE = ((r && r.data) || []).map(function (p) {
+          var gia = (p.product_variants || []).map(function (v) { return v.price; }).filter(function (x) { return x > 0; });
+          return {
+            slug: p.slug, name: p.name, img: p.hero_image || 'assets/placeholder.svg',
+            hang: (p.brands && p.brands.name) || '', loai: p.category || '',
+            min: gia.length ? Math.min.apply(null, gia) : 0,
+            key: khongDau(p.name + ' ' + ((p.brands && p.brands.name) || '') + ' ' + (p.category || ''))
+          };
         });
-      }catch(e){ SP_CACHE=[]; }
+      } catch (e) { SP_CACHE = []; }
       return SP_CACHE;
     }
-    (function(){
-      var ov=document.querySelector('#sr-ov'), inp=document.querySelector('#sr-input'),
-          ds=document.querySelector('#sr-list'), nut=document.querySelector('#btn-search');
-      if(!ov||!nut) return;
-      var chon=-1, ketQua=[];
-      function ve(){
-        if(!inp.value.trim()){ ds.innerHTML='<p class="sr-hint">Gõ tên nước hoa hoặc tên hãng để tìm.</p>'; ketQua=[]; return; }
-        var t=khongDau(inp.value).split(/\s+/).filter(Boolean);
-        ketQua=(SP_CACHE||[]).filter(function(p){ return t.every(function(k){ return p.key.indexOf(k)>-1; }); }).slice(0,8);
-        if(!ketQua.length){ ds.innerHTML='<p class="sr-empty">Không tìm thấy “'+inp.value.replace(/[<>]/g,'')+'”.</p>'; return; }
-        ds.innerHTML=ketQua.map(function(p,i){
-          return '<a class="sr-it'+(i===chon?' on':'')+'" href="product.html?p='+p.slug+'">'+
-            '<img src="'+p.img+'" alt="" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" />'+
-            '<div><p class="nm">'+p.name+'</p><p class="mt">'+(p.hang||p.loai)+'</p></div>'+
-            '<span class="pr">'+(p.min?'Từ '+Number(p.min).toLocaleString('vi-VN')+'₫':'')+'</span></a>';
+    (function () {
+      var ov = document.querySelector('#sr-ov'), inp = document.querySelector('#sr-input'),
+        ds = document.querySelector('#sr-list'), nut = document.querySelector('#btn-search');
+      if (!ov || !nut) return;
+      var chon = -1, ketQua = [];
+      function ve() {
+        if (!inp.value.trim()) { ds.innerHTML = '<p class="sr-hint">Gõ tên nước hoa hoặc tên hãng để tìm.</p>'; ketQua = []; return; }
+        var t = khongDau(inp.value).split(/\s+/).filter(Boolean);
+        ketQua = (SP_CACHE || []).filter(function (p) { return t.every(function (k) { return p.key.indexOf(k) > -1; }); }).slice(0, 8);
+        if (!ketQua.length) { ds.innerHTML = '<p class="sr-empty">Không tìm thấy “' + inp.value.replace(/[<>]/g, '') + '”.</p>'; return; }
+        ds.innerHTML = ketQua.map(function (p, i) {
+          return '<a class="sr-it' + (i === chon ? ' on' : '') + '" href="product.html?p=' + p.slug + '">' +
+            '<img src="' + p.img + '" alt="" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" />' +
+            '<div><p class="nm">' + p.name + '</p><p class="mt">' + (p.hang || p.loai) + '</p></div>' +
+            '<span class="pr">' + (p.min ? 'Từ ' + Number(p.min).toLocaleString('vi-VN') + '₫' : '') + '</span></a>';
         }).join('');
       }
-      async function mo(e){ if(e)e.preventDefault();
-        ov.hidden=false; document.body.style.overflow='hidden'; inp.value=''; chon=-1;
-        ds.innerHTML='<p class="sr-hint">Đang tải danh sách…</p>';
-        await taiSanPham(); ve(); inp.focus(); }
-      function dong(){ ov.hidden=true; document.body.style.overflow=''; }
+      async function mo(e) {
+        if (e) e.preventDefault();
+        ov.hidden = false; document.body.style.overflow = 'hidden'; inp.value = ''; chon = -1;
+        ds.innerHTML = '<p class="sr-hint">Đang tải danh sách…</p>';
+        await taiSanPham(); ve(); inp.focus();
+      }
+      function dong() { ov.hidden = true; document.body.style.overflow = ''; }
       nut.addEventListener('click', mo);
       document.querySelector('#sr-close').addEventListener('click', dong);
-      ov.addEventListener('click', function(e){ if(e.target===ov) dong(); });
-      inp.addEventListener('input', function(){ chon=-1; ve(); });
-      inp.addEventListener('keydown', function(e){
-        if(e.key==='Escape') return dong();
-        if(e.key==='ArrowDown'){ e.preventDefault(); chon=Math.min(chon+1, ketQua.length-1); ve(); }
-        if(e.key==='ArrowUp'){ e.preventDefault(); chon=Math.max(chon-1, 0); ve(); }
-        if(e.key==='Enter' && ketQua.length){ e.preventDefault();
-          location.href='product.html?p='+ketQua[Math.max(chon,0)].slug; }
+      ov.addEventListener('click', function (e) { if (e.target === ov) dong(); });
+      inp.addEventListener('input', function () { chon = -1; ve(); });
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') return dong();
+        if (e.key === 'ArrowDown') { e.preventDefault(); chon = Math.min(chon + 1, ketQua.length - 1); ve(); }
+        if (e.key === 'ArrowUp') { e.preventDefault(); chon = Math.max(chon - 1, 0); ve(); }
+        if (e.key === 'Enter' && ketQua.length) {
+          e.preventDefault();
+          location.href = 'product.html?p=' + ketQua[Math.max(chon, 0)].slug;
+        }
       });
-      document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !ov.hidden) dong(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !ov.hidden) dong(); });
     })();
 
     /* ===== VIẾT TRẢI NGHIỆM từ trang chủ ===== */
-    (function(){
-      var ov=document.querySelector('#tn-ov'); if(!ov) return;
-      var form=document.querySelector('#tn-form'), sel=document.querySelector('#tn-sp'),
-          sao=document.querySelector('#tn-stars'), msg=document.querySelector('#tn-msg'),
-          gui=document.querySelector('#tn-gui'), diem=5, hendong=null;
-      function veSao(){ sao.innerHTML=[1,2,3,4,5].map(function(i){
-        return '<button type="button" data-sao="'+i+'" class="'+(i<=diem?'on':'')+'" aria-label="'+i+' sao">★</button>';}).join(''); }
-      veSao();
-      sao.addEventListener('click', function(e){ var b=e.target.closest('[data-sao]'); if(!b) return; diem=+b.dataset.sao; veSao(); });
-      async function mo(){
-        clearTimeout(hendong);
-        ov.hidden=false; document.body.style.overflow='hidden'; msg.textContent=''; msg.className='tn-msg';
-        var list=await taiSanPham();
-        sel.innerHTML='<option value="">— Chọn sản phẩm —</option>'+
-          list.map(function(p){ return '<option value="'+p.slug+'">'+p.name+'</option>'; }).join('');
+    (function () {
+      var ov = document.querySelector('#tn-ov'); if (!ov) return;
+      var form = document.querySelector('#tn-form'), sel = document.querySelector('#tn-sp'),
+        sao = document.querySelector('#tn-stars'), msg = document.querySelector('#tn-msg'),
+        gui = document.querySelector('#tn-gui'), diem = 5, hendong = null;
+      function veSao() {
+        sao.innerHTML = [1, 2, 3, 4, 5].map(function (i) {
+          return '<button type="button" data-sao="' + i + '" class="' + (i <= diem ? 'on' : '') + '" aria-label="' + i + ' sao">★</button>';
+        }).join('');
       }
-      function dong(){ clearTimeout(hendong); ov.hidden=true; document.body.style.overflow=''; }
-      document.addEventListener('click', function(e){ if(e.target.closest('#ugc-cta')){ e.preventDefault(); mo(); } });
+      veSao();
+      sao.addEventListener('click', function (e) { var b = e.target.closest('[data-sao]'); if (!b) return; diem = +b.dataset.sao; veSao(); });
+      async function mo() {
+        clearTimeout(hendong);
+        ov.hidden = false; document.body.style.overflow = 'hidden'; msg.textContent = ''; msg.className = 'tn-msg';
+        var list = await taiSanPham();
+        sel.innerHTML = '<option value="">— Chọn sản phẩm —</option>' +
+          list.map(function (p) { return '<option value="' + p.slug + '">' + p.name + '</option>'; }).join('');
+      }
+      function dong() { clearTimeout(hendong); ov.hidden = true; document.body.style.overflow = ''; }
+      document.addEventListener('click', function (e) { if (e.target.closest('#ugc-cta')) { e.preventDefault(); mo(); } });
       document.querySelector('#tn-close').addEventListener('click', dong);
       document.querySelector('#tn-huy').addEventListener('click', dong);
-      ov.addEventListener('click', function(e){ if(e.target===ov) dong(); });
-      form.addEventListener('submit', async function(e){
-        e.preventDefault(); msg.className='tn-msg'; msg.textContent='';
-        var noi=document.querySelector('#tn-noi').value.trim();
-        if(!sel.value){ msg.className='tn-msg err'; msg.textContent='Bạn chọn giúp mình sản phẩm nhé.'; return; }
-        if(noi.length<10){ msg.className='tn-msg err'; msg.textContent='Cảm nhận cần ít nhất 10 ký tự.'; return; }
-        if(!(window.puvela&&window.puvela.client)){ msg.className='tn-msg err'; msg.textContent='Chưa kết nối cửa hàng, bạn thử lại sau.'; return; }
-        gui.disabled=true; gui.textContent='Đang gửi...';
-        try{
-          var r=await window.puvela.client.from('reviews').insert([{ product_slug:sel.value,
-            author:document.querySelector('#tn-ten').value.trim(), rating:diem, body:noi,
-            is_published:false, verified:false }]);
-          if(r.error) throw new Error(r.error.message);
-          form.reset(); diem=5; veSao();
-          msg.className='tn-msg ok'; msg.textContent='Cảm ơn bạn! Trải nghiệm sẽ hiện sau khi Puvela xem qua.';
+      ov.addEventListener('click', function (e) { if (e.target === ov) dong(); });
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault(); msg.className = 'tn-msg'; msg.textContent = '';
+        var noi = document.querySelector('#tn-noi').value.trim();
+        if (!sel.value) { msg.className = 'tn-msg err'; msg.textContent = 'Bạn chọn giúp mình sản phẩm nhé.'; return; }
+        if (noi.length < 10) { msg.className = 'tn-msg err'; msg.textContent = 'Cảm nhận cần ít nhất 10 ký tự.'; return; }
+        if (!(window.puvela && window.puvela.client)) { msg.className = 'tn-msg err'; msg.textContent = 'Chưa kết nối cửa hàng, bạn thử lại sau.'; return; }
+        gui.disabled = true; gui.textContent = 'Đang gửi...';
+        try {
+          var r = await window.puvela.client.from('reviews').insert([{
+            product_slug: sel.value,
+            author: document.querySelector('#tn-ten').value.trim(), rating: diem, body: noi,
+            is_published: false, verified: false
+          }]);
+          if (r.error) throw new Error(r.error.message);
+          form.reset(); diem = 5; veSao();
+          msg.className = 'tn-msg ok'; msg.textContent = 'Cảm ơn bạn! Trải nghiệm sẽ hiện sau khi Puvela xem qua.';
           // cho khách kịp đọc lời cảm ơn rồi tự đóng
           clearTimeout(hendong);
-          hendong = setTimeout(function(){ if(!ov.hidden) dong(); }, 1800);
-        }catch(err){ msg.className='tn-msg err'; msg.textContent='Chưa gửi được: '+(err.message||'lỗi kết nối'); }
-        gui.disabled=false; gui.textContent='Gửi trải nghiệm';
+          hendong = setTimeout(function () { if (!ov.hidden) dong(); }, 1800);
+        } catch (err) { msg.className = 'tn-msg err'; msg.textContent = 'Chưa gửi được: ' + (err.message || 'lỗi kết nối'); }
+        gui.disabled = false; gui.textContent = 'Gửi trải nghiệm';
       });
     })();
     /* 07 UGC — reviews thật từ Supabase; nếu chưa có → empty state (KHÔNG fake) */
-    (function(){
-      var track=document.querySelector('#ugc-track');
-      if(!track||!(window.puvela&&window.puvela.client))return;
-      window.puvela.client.from('reviews').select('author,rating,body,image_url,verified,product_slug,products(name)').eq('is_published',true).order('created_at',{ascending:false}).limit(4).then(function(r){
-        var rows=(r&&r.data)||[]; if(!rows.length)return;
-        track.innerHTML=rows.map(function(v){
-          var st='★'.repeat(v.rating||5)+'☆'.repeat(5-(v.rating||5));
-          var ten=(v.products&&v.products.name)||'';
-          return '<div class="ucard"><div class="stars">'+st+'</div>'+
-            (ten?'<a class="ucard-sp" href="product.html?p='+(v.product_slug||'')+'">'+ten+'</a>':'')+
-            '<p class="ucard-body">'+(v.body||'')+'</p><div class="ucard-meta"><b>'+(v.author||'Khách hàng')+'</b>'+(v.verified?'<span class="verified">✓ Đã mua</span>':'')+'</div></div>';
+    (function () {
+      var track = document.querySelector('#ugc-track');
+      if (!track || !(window.puvela && window.puvela.client)) return;
+      window.puvela.client.from('reviews').select('author,rating,body,image_url,verified,product_slug,products(name)').eq('is_published', true).order('created_at', { ascending: false }).limit(4).then(function (r) {
+        var rows = (r && r.data) || []; if (!rows.length) return;
+        track.innerHTML = rows.map(function (v) {
+          var st = '★'.repeat(v.rating || 5) + '☆'.repeat(5 - (v.rating || 5));
+          var ten = (v.products && v.products.name) || '';
+          return '<div class="ucard"><div class="stars">' + st + '</div>' +
+            (ten ? '<a class="ucard-sp" href="product.html?p=' + (v.product_slug || '') + '">' + ten + '</a>' : '') +
+            '<p class="ucard-body">' + (v.body || '') + '</p><div class="ucard-meta"><b>' + (v.author || 'Khách hàng') + '</b>' + (v.verified ? '<span class="verified">✓ Đã mua</span>' : '') + '</div></div>';
         }).join('');
-      }).catch(function(e){console.warn('[Puvela] ugc lỗi:',e&&e.message);});
+      }).catch(function (e) { console.warn('[Puvela] ugc lỗi:', e && e.message); });
     })();
-    /* QUIZ (giữ nguyên logic scoring + recommend từ Supabase) */
-    const quiz=[
-      {g:'Phong cách',q:'Bạn tìm nước hoa theo phong cách nào?',a:[['💃 Nữ tính',{gender:'nu'}],['🕴️ Nam tính',{gender:'nam'}],['🌗 Unisex — cả hai đều hợp',{gender:'unisex'}],['🎁 Mua làm quà (chưa rõ)',{gender:null}]]},
-      {g:'Nhóm hương',q:'Nhóm hương nào khiến bạn "đổ" ngay?',a:[['🍋 Tươi mát — cam chanh, biển, the mát',{fam:['tươi','biển','cam','chanh','citrus','bergamot','bưởi','quýt'],w:3}],['🌸 Hoa cỏ — nhài, hồng, hoa trắng',{fam:['hoa','hồng','nhài','mẫu đơn','iris','freesia','diên vĩ'],w:3}],['🌳 Gỗ ấm — đàn hương, tuyết tùng, da thuộc',{fam:['gỗ','đàn hương','tuyết tùng','da thuộc','vetiver','hương bài'],w:3}],['🍮 Ngọt ấm — vani, caramel, gourmand',{fam:['vani','caramel','gourmand','ngọt','tonka','praline','ca cao','cà phê','mật ong'],w:3}],['🖤 Phương Đông — trầm, amber, khói',{fam:['phương đông','amber','hổ phách','trầm','oud','khói','thuốc lá','gia vị','nhựa'],w:3,niche:true}]]},
-      {g:'Dịp dùng',q:'Bạn xức nước hoa nhiều nhất khi nào?',a:[['💼 Đi làm / hằng ngày',{occasion:'day'}],['❤️ Hẹn hò',{occasion:'date',fam:['amber','vani','hồng','gỗ'],w:1}],['🥂 Tiệc / sự kiện',{occasion:'party'}],['🌿 Thư giãn / ở nhà',{occasion:'casual',fam:['tươi','sạch','cam','chanh'],w:1}]]},
-      {g:'Độ tỏa',q:'Bạn muốn mùi tỏa thế nào?',a:[['🤫 Kín đáo — chỉ người gần ngửi thấy',{sillage:2}],['🙂 Vừa phải — đủ tạo ấn tượng',{sillage:3}],['✨ Rõ ràng — để lại dấu',{sillage:4}],['🔥 Mạnh — tỏa xa cả phòng',{sillage:5}]]},
-      {g:'Gu vị',q:'Gu của bạn nghiêng về đâu?',a:[['☀️ Tươi & sạch',{fam:['tươi','sạch','biển','cam','chanh','xanh'],w:2}],['🌹 Ngọt ngào & ấm',{fam:['ngọt','vani','caramel','amber','hồng'],w:2}],['🌫️ Trầm & bí ẩn',{fam:['trầm','gỗ','oud','da thuộc','khói','hổ phách'],w:2,niche:true}],['🍃 Thanh & tự nhiên',{fam:['xanh','trà','hoa','cỏ'],w:2}]]},
-      {g:'Ngân sách',q:'Ngân sách cho một chai chiết 10ml?',a:[['💚 Dưới 200.000₫',{budgetMax:200000}],['💛 200.000 – 400.000₫',{budgetMax:400000}],['💜 Trên 400.000₫ — chơi niche',{budgetMax:null,niche:true}],['🤷 Bao nhiêu cũng được',{budgetMax:null}]]}
+    /* =========================================================
+       PUVELA SCENT MATCHING
+       - Questions describe the person, not perfume taxonomy.
+       - Recommendation uses product metadata only:
+         category + notes + gender + is_niche + sillage + variants.
+       - Product name is NEVER used for scoring.
+       ========================================================= */
+    const SCENT_DIMS = [
+      'fresh', 'clean', 'floral', 'green', 'woody', 'warm',
+      'sweet', 'powdery', 'dark', 'sensual', 'elegant', 'bold'
     ];
-    const PROFILES=[{key:'fresh',kw:['tươi','biển','cam','chanh','citrus','bergamot'],name:'Tươi Mát — Trong Trẻo',tag:'Sạch · Nhẹ · Dễ chịu',desc:'Bạn hợp những mùi tươi sáng, sạch sẽ — cam chanh, hương biển, the mát. Dễ xức, hợp mọi lúc, luôn tạo cảm giác gọn gàng và dễ gần.'},{key:'floral',kw:['hoa','hồng','nhài','iris','mẫu đơn'],name:'Hoa Cỏ — Nữ Tính Tinh Tế',tag:'Dịu dàng · Thanh lịch',desc:'Bạn bị cuốn bởi hoa cỏ — hồng, nhài, hoa trắng. Nữ tính, tinh tế, hợp cả đi làm lẫn hẹn hò.'},{key:'woody',kw:['gỗ','đàn hương','tuyết tùng','da thuộc','vetiver'],name:'Gỗ Ấm — Cuốn Hút Kín Đáo',tag:'Trầm · Sang · Có chiều sâu',desc:'Bạn thuộc nhóm gỗ ấm — đàn hương, tuyết tùng, da thuộc. Dấu ấn kín đáo mà sâu, càng ngửi càng cuốn.'},{key:'sweet',kw:['ngọt','vani','caramel','tonka','gourmand','ca cao'],name:'Ngọt Ấm — Quyến Rũ Gây Nghiện',tag:'Ấm · Ngọt · Ôm ấp',desc:'Bạn mê nhóm ngọt ấm — vani, caramel, gourmand. Ấm áp, quyến rũ, để lại thương nhớ trên da.'},{key:'oriental',kw:['trầm','amber','hổ phách','oud','khói','thuốc lá','phương đông'],name:'Phương Đông — Bí Ẩn Sang Trọng',tag:'Đậm · Bí ẩn · Đắt giá',desc:'Bạn hợp nhóm phương Đông/niche — trầm, amber, khói. Đậm, bí ẩn, sang trọng và rất riêng.'}];
-    function apply(p){if(p.gender!==undefined)score.gender=p.gender;if(p.sillage!==undefined)score.sillage=p.sillage;if(p.occasion!==undefined)score.occasion=p.occasion;if(p.budgetMax!==undefined)score.budgetMax=p.budgetMax;if(p.niche)score.nichePref=true;if(p.fam){score.fam=score.fam||{};p.fam.forEach(function(k){score.fam[k]=(score.fam[k]||0)+(p.w||1);});}}
-    const money=n=>Number(n).toLocaleString('vi-VN')+'₫';
-    function advice(){var s=score.sillage||3,occ=score.occasion;var t='Puvela gợi ý bạn ưu tiên độ tỏa '+(s<=2?'nhẹ, kín đáo':s>=4?'rõ, tỏa xa':'vừa phải')+'. ';t+=occ==='day'?'Hợp đi làm và dùng hằng ngày.':occ==='date'?'Rất hợp cho những buổi hẹn.':occ==='party'?'Nổi bật cho tiệc và sự kiện.':occ==='casual'?'Dễ chịu cho lúc thư giãn.':'';return t+' Hãy bắt đầu bằng chai chiết 5–10ml để thử trước khi mua full.';}
-    async function recommend(){if(!(window.puvela&&window.puvela.client))return [];try{var r=await window.puvela.client.from('products').select('slug,name,category,notes,gender,is_niche,sillage,product_variants(label,price)').eq('is_published',true);var rows=(r&&r.data)||[];if(!rows.length)return [];var fam=score.fam||{};var scored=rows.map(function(p){var txt=((p.category||'')+' '+(p.name||'')+' '+[(p.notes||{}).top,(p.notes||{}).mid,(p.notes||{}).base].join(' ')).toLowerCase();var s=0;if(score.gender){if(p.gender===score.gender)s+=4;else if(p.gender==='unisex')s+=1;else s-=3;}Object.keys(fam).forEach(function(k){if(txt.indexOf(k)>-1)s+=fam[k];});if(score.sillage)s-=Math.abs((p.sillage||3)-score.sillage);var v10=(p.product_variants||[]).find(function(v){return (v.label||'').indexOf('10ml')>-1;});var p10=v10?v10.price:0;if(score.budgetMax&&p10){if(p10<=score.budgetMax)s+=2;else s-=4;}if(score.nichePref&&p.is_niche)s+=1.5;return {p:p,s:s};}).sort(function(a,b){return b.s-a.s;}).slice(0,4);return scored.map(function(x){var n=x.p.notes||{};var notes=[n.top,n.mid,n.base].filter(Boolean).join(' · ');var vs=(x.p.product_variants||[]).map(function(v){return v.price;}).filter(function(y){return y>0;});var min=vs.length?Math.min.apply(null,vs):0;return {slug:x.p.slug,name:x.p.name,notes:notes,price:min?('Từ '+money(min)):''};});}catch(e){console.warn('[Puvela] quiz recommend lỗi:',e&&e.message);return [];}}
-    let step=0,score={};const modal=document.querySelector('#quiz-modal'),question=document.querySelector('#quiz-question'),options=document.querySelector('#quiz-options'),stepLabel=document.querySelector('#quiz-step'),progress=document.querySelector('#quiz-progress'),content=document.querySelector('#quiz-content'),result=document.querySelector('#quiz-result');
-    function render(){const it=quiz[step],pct=Math.round((step/quiz.length)*100);progress.style.width=`${pct}%`;stepLabel.textContent=`${it.g} · Câu ${step+1}/${quiz.length}`;question.textContent=it.q;options.innerHTML=it.a.map(([text],i)=>`<button type="button" data-i="${i}">${text} <span>→</span></button>`).join('');options.querySelectorAll('button').forEach(b=>b.onclick=()=>{apply(it.a[b.dataset.i][1]);step++;step<quiz.length?render():showResult();});}
-    async function showResult(){progress.style.width='100%';content.style.display='none';var fam=score.fam||{};var prof=PROFILES.map(function(p){return {p:p,s:p.kw.reduce(function(a,k){return a+(fam[k]||0);},0)};}).sort(function(a,b){return b.s-a.s;})[0].p;result.innerHTML='<div class="result-top"><p class="quiz-step">Đang tìm mùi hợp bạn…</p><h3>'+prof.name+'</h3><p>'+prof.tag+'</p></div>';result.classList.add('show');var recs=await recommend();var recHTML=recs.length?recs.map(function(r){return '<a href="product.html?p='+r.slug+'"><strong>'+r.name+'</strong><span>'+r.notes+'</span><span class="rp">'+r.price+'</span></a>';}).join(''):'<p style="opacity:.7;font-size:13px;grid-column:1/-1">Chạy dữ liệu sản phẩm (seed-products.sql) trong Supabase để nhận gợi ý mùi thật từ catalog.</p>';result.innerHTML='<div class="result-top"><p class="quiz-step">Gu hương của bạn</p><h3>'+prof.name+'</h3><p>'+prof.tag+'</p></div><div class="consult"><p>'+prof.desc+'</p><p>'+advice()+'</p></div><p class="quiz-step" style="text-align:center">Gợi ý cho bạn</p><div class="recommended rec4">'+recHTML+'</div><form class="quiz-email" id="quiz-email"><input type="email" required placeholder="Email nhận kết quả + ưu đãi 10%" aria-label="Email nhận kết quả" /><button type="submit">Gửi</button></form><div class="result-actions"><button id="quiz-again">Làm lại</button></div>';document.querySelector('#quiz-again').onclick=openQuiz;var ef=document.querySelector('#quiz-email');if(ef)ef.addEventListener('submit',function(e){e.preventDefault();var em=ef.querySelector('input').value;if(window.puvela)window.puvela.saveLead({email:em,source:'quiz',scent_dna:{profile:prof.key,gender:score.gender,sillage:score.sillage,budgetMax:score.budgetMax,recs:recs.map(function(r){return r.slug;})}});ef.innerHTML='<p class="done">Đã gửi! Cảm ơn bạn — ưu đãi 10% sẽ tới email.</p>';});}
-    function openQuiz(){step=0;score={};content.style.display='block';result.classList.remove('show');modal.classList.add('show');render()}document.querySelector('#quiz-open').onclick=openQuiz;document.querySelector('#quiz-close').onclick=()=>modal.classList.remove('show');modal.onclick=e=>{if(e.target===modal)modal.classList.remove('show')};
+
+    const quiz = [
+      {
+        g: 'Ấn tượng',
+        q: 'Nếu người khác nhớ bạn qua mùi hương, bạn muốn họ nhớ điều gì?',
+        hint: 'Chọn cảm giác bạn muốn để lại, không phải tên một nhóm hương.',
+        a: [
+          ['“Người này lúc nào cũng sạch sẽ và dễ chịu.”', { v: { clean: 5, fresh: 3, elegant: 2 } }],
+          ['“Người này có gu, tinh tế mà không cần phô trương.”', { v: { elegant: 5, clean: 2, floral: 2, woody: 2 } }],
+          ['“Người này có gì đó rất cuốn.”', { v: { sensual: 5, warm: 3, sweet: 2, dark: 2 } }],
+          ['“Mùi của người này bước vào phòng là tôi nhớ ngay.”', { v: { bold: 5, dark: 3, sensual: 3, warm: 2 } }]
+        ]
+      },
+      {
+        g: 'Cảm giác',
+        q: 'Một ngày bình thường, bạn muốn mùi hương khiến mình cảm thấy thế nào?',
+        hint: 'Hãy chọn cảm giác bạn muốn mang theo trên da.',
+        a: [
+          ['Nhẹ người, thoáng và tỉnh táo.', { v: { fresh: 5, green: 3, clean: 2 } }],
+          ['Mềm mại, thư thái và dễ gần.', { v: { floral: 4, clean: 4, powdery: 3 } }],
+          ['Ấm áp, được ôm lấy và có chút quyến rũ.', { v: { warm: 5, sensual: 4, sweet: 3 } }],
+          ['Tự tin, sắc nét và có chiều sâu.', { v: { woody: 4, dark: 4, bold: 4, elegant: 2 } }]
+        ]
+      },
+      {
+        g: 'Điều bạn không thích',
+        q: 'Điều gì dễ khiến bạn bỏ một chai nước hoa ngay từ lần đầu thử?',
+        hint: 'Biết mình không thích gì đôi khi quan trọng hơn biết mình thích gì.',
+        a: [
+          ['Quá ngọt — ngửi một lúc là thấy ngấy.', { avoid: { sweet: 6 }, v: { fresh: 2, clean: 2, green: 2 } }],
+          ['Quá nồng — người khác chưa đến gần đã ngửi thấy.', { avoid: { bold: 5 }, v: { clean: 2, elegant: 2 } }],
+          ['Quá trầm — có cảm giác nặng hoặc “già”.', { avoid: { dark: 5, warm: 3 }, v: { fresh: 2, green: 2 } }],
+          ['Quá hoa — tôi không muốn mùi quá nữ tính.', { avoid: { floral: 5 }, v: { woody: 2, clean: 2, green: 2 } }],
+          ['Tôi khá thoải mái — miễn là mùi có cá tính.', { v: { bold: 3, sensual: 3, elegant: 2 } }]
+        ]
+      },
+      {
+        g: 'Đời sống',
+        q: 'Nếu chỉ chọn một kiểu mùi để dùng nhiều nhất, nó sẽ đi cùng bạn ở đâu?',
+        hint: 'Không cần chọn dịp “đẹp nhất”. Hãy chọn nơi bạn thật sự sống cùng mùi.',
+        a: [
+          ['Đi làm, đi học, gặp khách — dùng gần như mỗi ngày.', { v: { clean: 4, elegant: 4, fresh: 3 }, sillage: 2.5 }],
+          ['Cà phê, đi chơi, cuối tuần — thoải mái và có gu.', { v: { fresh: 3, green: 3, elegant: 3, floral: 2 }, sillage: 3 }],
+          ['Hẹn hò, ăn tối — muốn người đối diện muốn ngửi gần hơn.', { v: { sensual: 5, warm: 4, sweet: 2 }, sillage: 3.5 }],
+          ['Tiệc, sự kiện — hôm đó tôi muốn mùi hương có mặt cùng mình.', { v: { bold: 5, dark: 3, sensual: 3, warm: 2 }, sillage: 4.5 }]
+        ]
+      },
+      {
+        g: 'Khoảng cách',
+        q: 'Bạn muốn người khác “phát hiện” mùi hương của mình như thế nào?',
+        hint: 'Đây là cách PUVELA hiểu độ hiện diện bạn mong muốn.',
+        a: [
+          ['Chỉ khi đứng thật gần mới nhận ra.', { sillage: 2, v: { clean: 2, elegant: 2 } }],
+          ['Đứng cạnh là thấy dễ chịu, nhưng không lấn át.', { sillage: 3, v: { clean: 2, elegant: 2, sensual: 2 } }],
+          ['Đi ngang qua vẫn để lại một chút dấu ấn.', { sillage: 4, v: { bold: 2, sensual: 2 } }],
+          ['Tôi muốn mùi hương có sự hiện diện rõ ràng.', { sillage: 5 }]
+        ]
+      },
+      {
+        g: 'Bản sắc',
+        q: 'Nếu tủ quần áo của bạn có một “chất” rất riêng, nó gần với điều nào nhất?',
+        hint: 'Câu này giúp PUVELA hiểu phong cách sống phía sau gu mùi.',
+        a: [
+          ['Áo trắng, denim, đồ tối giản — sạch và gọn.', { v: { clean: 5, fresh: 3, elegant: 2 } }],
+          ['Màu trung tính, chất liệu đẹp — kín đáo nhưng có gu.', { v: { elegant: 5, powdery: 2, woody: 2, clean: 2 } }],
+          ['Đồ mềm, nữ tính hoặc có điểm nhấn — ấm và cuốn.', { v: { floral: 3, sensual: 4, warm: 3, sweet: 2 } }],
+          ['Đồ tối màu, cá tính — tôi thích một chút khác biệt.', { v: { dark: 4, woody: 4, bold: 5, sensual: 2 } }]
+        ]
+      },
+      {
+        g: 'Bắt đầu',
+        q: 'Bạn muốn PUVELA tìm trong khoảng giá nào cho chai chiết?',
+        hint: 'Đây là bộ lọc ngân sách, không làm thay đổi “gu mùi” của bạn.',
+        a: [
+          ['Dưới 300.000₫', { budgetMax: 300000, budgetMaxExclusive: true }],
+          ['300.000 – 500.000₫', { budgetMin: 300000, budgetMax: 500000 }],
+          ['Trên 500.000₫', { budgetMin: 500000, budgetMinExclusive: true, budgetMax: null }],
+          ['Không giới hạn — cứ tìm mùi hợp tôi trước.', { budgetMin: null, budgetMax: null }]
+        ]
+      }
+    ];
+
+    function addVector(target, source, multiplier) {
+      if (!source) return;
+      SCENT_DIMS.forEach(function (k) {
+        var n = Number(source[k] || 0);
+        if (n) target[k] = (target[k] || 0) + n * (multiplier || 1);
+      });
+    }
+
+    function rebuildUserVector() {
+      var vector = {};
+      var avoid = {};
+      var sillageValues = [];
+      var budgetMin = null;
+      var budgetMax = null;
+      var budgetMinExclusive = false;
+      var budgetMaxExclusive = false;
+
+      (score.answers || []).forEach(function (answer) {
+        if (!answer) return;
+
+        if (answer.v) addVector(vector, answer.v, 1);
+
+        if (answer.avoid) {
+          Object.keys(answer.avoid).forEach(function (k) {
+            avoid[k] = (avoid[k] || 0) + Number(answer.avoid[k] || 0);
+          });
+        }
+
+        if (answer.sillage !== undefined) sillageValues.push(Number(answer.sillage));
+        if (answer.budgetMin !== undefined) budgetMin = answer.budgetMin;
+        if (answer.budgetMax !== undefined) budgetMax = answer.budgetMax;
+        if (answer.budgetMinExclusive !== undefined) budgetMinExclusive = !!answer.budgetMinExclusive;
+        if (answer.budgetMaxExclusive !== undefined) budgetMaxExclusive = !!answer.budgetMaxExclusive;
+      });
+
+      score.vector = vector;
+      score.avoid = avoid;
+      score.sillage = sillageValues.length ? sillageValues[sillageValues.length - 1] : null;
+      score.budgetMin = budgetMin;
+      score.budgetMax = budgetMax;
+      score.budgetMinExclusive = budgetMinExclusive;
+      score.budgetMaxExclusive = budgetMaxExclusive;
+    }
+
+    function maxPossibleUserDNA() {
+      var max = {};
+      SCENT_DIMS.forEach(function (k) { max[k] = 0; });
+
+      quiz.forEach(function (question) {
+        var qMax = {};
+        question.a.forEach(function (pair) {
+          var v = pair[1] && pair[1].v;
+          if (!v) return;
+          SCENT_DIMS.forEach(function (k) {
+            qMax[k] = Math.max(qMax[k] || 0, Number(v[k] || 0));
+          });
+        });
+        SCENT_DIMS.forEach(function (k) {
+          max[k] += qMax[k] || 0;
+        });
+      });
+
+      return max;
+    }
+
+    function normalizeUserDNA(v) {
+      var maxRaw = 0;
+
+      SCENT_DIMS.forEach(function (k) {
+        maxRaw = Math.max(maxRaw, Number(v[k] || 0));
+      });
+
+      if (maxRaw <= 0) return {};
+
+      var out = {};
+
+      SCENT_DIMS.forEach(function (k) {
+        var raw = Number(v[k] || 0);
+
+        out[k] = Math.max(
+          0,
+          Math.min(5, (raw / maxRaw) * 5)
+        );
+      });
+
+      return out;
+    }
+
+    function applyAnswer(answer) {
+      score.answers = score.answers || [];
+      score.answers[step] = answer || {};
+      score.answers.length = step + 1;
+      rebuildUserVector();
+    }
+
+    function flattenNotes(notes) {
+      if (!notes) return '';
+      if (typeof notes === 'string') return notes;
+      if (Array.isArray(notes)) return notes.map(function (x) {
+        return typeof x === 'string' ? x : (x && x.name) || JSON.stringify(x);
+      }).join(' ');
+      if (typeof notes === 'object') return Object.keys(notes).map(function (k) {
+        var v = notes[k];
+        if (Array.isArray(v)) return v.join(' ');
+        if (v && typeof v === 'object') return Object.keys(v).map(function (z) { return v[z]; }).join(' ');
+        return String(v || '');
+      }).join(' ');
+      return String(notes);
+    }
+
+    function normalizeText(value) {
+      return String(value || '')
+        .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')
+        .toLowerCase();
+    }
+
+    const PRODUCT_TERMS = {
+      fresh: ['fresh', 'tuoi', 'bien', 'marine', 'aquatic', 'water', 'cam', 'chanh', 'citrus', 'bergamot', 'buoi', 'quit', 'grapefruit', 'lemon', 'orange', 'mint', 'bac ha', 'cool', 'ozonic'],
+      clean: ['sach', 'clean', 'soap', 'xa phong', 'cotton', 'aldehyde', 'musk', 'xay?', 'linen', 'soapy'],
+      floral: ['hoa', 'floral', 'rose', 'hong', 'jasmine', 'nhai', 'tuberose', 'hoa cam', 'orange blossom', 'iris', 'di vien', 'violet', 'mau don', 'freesia', 'ylang', 'magnolia', 'gardenia'],
+      green: ['green', 'xanh', 'tra', 'tea', 'la', 'co', 'grass', 'fig', 'leaf', 'herbal', 'thao moc'],
+      woody: ['go', 'woody', 'sandalwood', 'dan huong', 'cedar', 'tuyet tung', 'vetiver', 'huong bai', 'patchouli', 'hoac huong', 'oud', 'agarwood', 'guaiac', 'cashmere'],
+      warm: ['warm', 'ambr', 'amber', 'ho phach', 'cinnamon', 'que', 'benzoin', 'labdanum', 'tonka', 'vanilla', 'vani', 'resin', 'nhua'],
+      sweet: ['sweet', 'ngot', 'vanilla', 'vani', 'caramel', 'gourmand', 'praline', 'chocolate', 'cacao', 'coffee', 'ca phe', 'honey', 'mat ong', 'sugar', 'kẹo', 'marshmallow'],
+      powdery: ['powder', 'phan', 'iris', 'violet', 'musk', 'suede', 'heliotrope'],
+      dark: ['dark', 'trầm', 'tram', 'smoky', 'smoke', 'khoi', 'tobacco', 'thuoc la', 'leather', 'da thuoc', 'oud', 'incense', 'nhang', 'resin'],
+      sensual: ['sensual', 'amber', 'ho phach', 'vanilla', 'vani', 'musk', 'xạ huong', 'jasmine', 'nhai', 'rose', 'hong', 'tuberose', 'leather', 'da thuoc', 'oud'],
+      elegant: ['elegant', 'sang', 'thanh lich', 'iris', 'bergamot', 'tea', 'tra', 'musk', 'rose', 'hong', 'jasmine', 'nhai', 'woody', 'powder', 'phan', 'clean', 'sach'],
+      bold: ['bold', 'manh', 'power', 'intense', 'strong', 'noisy', 'loud', 'projection', 'truyen?', 'oud', 'leather', 'da thuoc', 'tobacco', 'thuoc la', 'spicy', 'gia vi', 'dark', 'tram']
+    };
+
+    function countTermHits(text, terms) {
+      var hits = 0;
+      terms.forEach(function (term) {
+        if (text.indexOf(normalizeText(term)) > -1) hits++;
+      });
+      return hits;
+    }
+
+    function productProfile(p) {
+      var dna = p.scent_dna || {};
+      var v = {};
+
+      SCENT_DIMS.forEach(function (k) {
+        var n = Number(dna[k]);
+        v[k] = Number.isFinite(n) ? Math.max(0, Math.min(5, n)) : 0;
+      });
+
+      if (p.sillage !== null && p.sillage !== undefined) {
+        v.sillage = Number(p.sillage);
+      } else {
+        v.sillage = null;
+      }
+
+      v.gender = p.gender || null;
+      v.is_niche = !!p.is_niche;
+
+      return v;
+    }
+
+    function vectorDistance(user, product) {
+      var total = 0, weight = 0;
+      SCENT_DIMS.forEach(function (k) {
+        var u = Number(user[k] || 0);
+        if (!u) return;
+        var p = Number(product[k] || 0);
+        var w = Math.max(1, Math.min(5, Math.abs(u)));
+        total += Math.abs(u - p) * w;
+        weight += w;
+      });
+      return weight ? total / weight : 3;
+    }
+
+    function matchingPercent(user, product, userSillage) {
+      var distance = vectorDistance(user, product);
+
+      // DNA là yếu tố cốt lõi của recommendation.
+      var base = 100 - (distance * 12);
+
+      // Sillage chỉ là yếu tố điều chỉnh.
+      // Không để performance lấn át scent DNA.
+      var sill = Number(userSillage || 3);
+      var productSillage = product.sillage == null ? null : Number(product.sillage);
+      var sillDiff = productSillage == null ? 0 : Math.abs(productSillage - sill);
+
+      base -= Math.min(6, sillDiff * 2);
+
+      // Avoid là negative preference.
+      // Giới hạn penalty để một dimension không thể phá toàn bộ DNA match.
+      if (score.avoid) {
+        Object.keys(score.avoid).forEach(function (k) {
+          var av = Number(score.avoid[k] || 0);
+          var productValue = Math.max(0, Number(product[k] || 0));
+
+          var penalty = (av / 6) * productValue * 6;
+
+          base -= Math.min(6, penalty);
+        });
+      }
+
+      return Math.max(0, Math.min(99, base));
+    }
+
+    function productReason(user, product, userSillage, userAvoid) {
+      var pairs = SCENT_DIMS.map(function (k) {
+        var u = Number(user[k] || 0), p = Number(product[k] || 0);
+        return { k: k, d: Math.abs(u - p), u: u, p: p };
+      }).filter(function (x) { return x.u > 0; }).sort(function (a, b) { return a.d - b.d; });
+
+      var labels = {
+        fresh: 'độ tươi thoáng', clean: 'cảm giác sạch', floral: 'nốt hoa',
+        green: 'sắc xanh tự nhiên', woody: 'chiều gỗ', warm: 'độ ấm',
+        sweet: 'độ ngọt', powdery: 'cảm giác mềm phấn', dark: 'chiều sâu',
+        sensual: 'độ cuốn hút', elegant: 'sự tinh tế', bold: 'độ hiện diện'
+      };
+      var good = pairs.slice(0, 2).map(function (x) { return labels[x.k]; }).filter(Boolean);
+      var reasons = [];
+      if (good.length) reasons.push('Hợp với ' + good.join(' và ') + '.');
+      if (userSillage && product.sillage != null &&
+        Math.abs(Number(product.sillage) - Number(userSillage)) <= 1)
+        reasons.push('Độ tỏa gần với mức bạn chọn.');
+      if (userAvoid) {
+        var avoided = Object.keys(userAvoid).filter(function (k) {
+          return Number(product[k] || 0) <= 1;
+        });
+        if (avoided.length) reasons.push('Không nổi bật ở nhóm bạn vừa nói là không thích.');
+      }
+      return reasons.join(' ') || 'Điểm tương đồng tốt với gu mùi PUVELA vừa xây cho bạn.';
+    }
+
+    function productPrice10(p) {
+      var variants = p.product_variants || [];
+      var v = variants.find(function (x) { return normalizeText(x.label).indexOf('10ml') > -1; });
+      return v && Number(v.price) > 0 ? Number(v.price) : 0;
+    }
+
+    const money = n => Number(n).toLocaleString('vi-VN') + '₫';
+
+    function resultProfile(v) {
+      var ranked = SCENT_DIMS.map(function (k) { return { k: k, v: Number(v[k] || 0) }; }).sort(function (a, b) { return b.v - a.v; });
+      var top = ranked[0] && ranked[0].k;
+      var second = ranked[1] && ranked[1].k;
+
+      var profiles = {
+        clean: { name: 'Sạch & tinh tế', tag: 'Gọn gàng · Tự nhiên · Có gu', desc: 'Bạn không cần một mùi hương phải “lên tiếng”. Bạn thích cảm giác sạch, chỉn chu và dễ chịu — càng ở gần càng thấy có gu.' },
+        fresh: { name: 'Thoáng & sáng', tag: 'Tươi · Nhẹ · Dễ gần', desc: 'Bạn bị thu hút bởi cảm giác thoáng, sáng và có sức sống. Mùi hương lý tưởng với bạn là thứ làm ngày thường dễ chịu hơn, không khiến bạn thấy bị “mặc” nước hoa.' },
+        floral: { name: 'Mềm mại có chủ ý', tag: 'Tinh tế · Mềm · Có chiều sâu', desc: 'Bạn thích sự mềm mại nhưng không muốn mùi trở nên một chiều. PUVELA sẽ ưu tiên những mùi có hoa nhưng vẫn có cấu trúc và cá tính.' },
+        green: { name: 'Tự nhiên & thanh', tag: 'Xanh · Thoáng · Bình tĩnh', desc: 'Bạn hợp những mùi có cảm giác gần thiên nhiên, nhẹ đầu và có khoảng thở. Một kiểu mùi không cần cố gắng để trở nên dễ chịu.' },
+        woody: { name: 'Gỗ & chiều sâu', tag: 'Trầm vừa đủ · Chững · Cuốn', desc: 'Bạn thích cảm giác có cấu trúc và chiều sâu. Những mùi gỗ, khô hoặc ấm vừa phải thường dễ trở thành “mùi của riêng bạn”.' },
+        warm: { name: 'Ấm & cuốn hút', tag: 'Ấm · Gần · Có sức hút', desc: 'Bạn muốn mùi hương có nhiệt độ và cảm xúc. Không nhất thiết phải ngọt — quan trọng là nó tạo cảm giác muốn ở gần.' },
+        sweet: { name: 'Ngọt có điểm dừng', tag: 'Ấm · Mềm · Gây nhớ', desc: 'Bạn thích sự ngọt ngào khi nó có kiểm soát: đủ ấm để gây nhớ nhưng không biến thành cảm giác ngấy.' },
+        powdery: { name: 'Mềm & thanh lịch', tag: 'Mịn · Gọn · Tinh tế', desc: 'Bạn có xu hướng thích những mùi mịn, mềm và gần da. Một kiểu thanh lịch không cần phô bày.' },
+        dark: { name: 'Trầm & có cá tính', tag: 'Sâu · Tối · Khó quên', desc: 'Bạn không ngại những mùi có chiều sâu. PUVELA sẽ ưu tiên sự cá tính nhưng vẫn kiểm soát độ nặng để mùi có thể sống được trên da.' },
+        sensual: { name: 'Cuốn hút khi đến gần', tag: 'Gần · Ấm · Gợi nhớ', desc: 'Bạn quan tâm nhiều đến cảm giác người khác nhận được khi ở gần mình. Mùi hương với bạn nên tạo kết nối hơn là chỉ tạo độ tỏa.' },
+        elegant: { name: 'Thanh lịch tự nhiên', tag: 'Tinh · Gọn · Không phô trương', desc: 'Bạn thích những thứ có vẻ đẹp kín đáo. Mùi hương phù hợp thường không cần quá nhiều nốt — chỉ cần cân bằng và đúng chất.' },
+        bold: { name: 'Có sự hiện diện', tag: 'Tự tin · Rõ nét · Khó lẫn', desc: 'Bạn không ngại để mùi hương trở thành một phần nhận diện. PUVELA sẽ tìm những lựa chọn có cá tính nhưng vẫn đúng với những điều bạn không thích.' }
+      };
+      var prof = profiles[top] || profiles.elegant;
+      if (second && second !== top) prof = Object.assign({}, prof, { tag: prof.tag + ' · ' + (profiles[second] ? profiles[second].tag.split(' · ')[0] : '') });
+      return { key: top || 'elegant', name: prof.name, tag: prof.tag, desc: prof.desc, ranked: ranked };
+    }
+
+    async function recommend(userVector) {
+      if (!(window.puvela && window.puvela.client)) return [];
+      try {
+        /*
+          HARD RULE:
+          Product name is DISPLAY ONLY. It is never used for scoring.
+          The recommendation engine scores only product metadata.
+        */
+        var r = await window.puvela.client.from('products')
+          .select('slug,name,category,notes,scent_dna,sillage,gender,is_niche,hero_image,product_variants(label,price,compare_at_price)')
+          .eq('is_published', true);
+        if (r && r.error) throw r.error;
+
+        var rows = (r && r.data) || [];
+        if (!rows.length) return [];
+
+        rows = rows.filter(function (p) {
+          return p.scent_dna && Object.keys(p.scent_dna).length > 0;
+        });
+
+        /* Optional metadata. Missing columns must never break the catalog. */
+        try {
+          var mr = await window.puvela.client.from('products')
+            .select('slug,gender,sillage,is_niche')
+            .eq('is_published', true);
+          if (mr && !mr.error && Array.isArray(mr.data)) {
+            var meta = {};
+            mr.data.forEach(function (m) { meta[m.slug] = m; });
+            rows.forEach(function (p) {
+              var m = meta[p.slug];
+              p.gender = m && m.gender != null ? m.gender : null;
+              p.sillage = m && m.sillage != null ? Number(m.sillage) : null;
+              p.is_niche = !!(m && m.is_niche);
+            });
+          }
+        } catch (metaError) {
+          console.warn('[Puvela] Optional fragrance metadata unavailable:', metaError && metaError.message);
+        }
+
+        var scored = rows.map(function (p) {
+          var profile = productProfile(p);
+          var finalUserVector = normalizeUserDNA(score.vector);
+          var pct = matchingPercent(
+            userVector || normalizeUserDNA(score.vector),
+            profile,
+            score.sillage
+          );
+          var p10 = productPrice10(p);
+
+          /* Budget is a hard constraint, never a personality signal. */
+          var rawScore = Math.max(0, Math.min(99, pct));
+
+          return {
+            p: p,
+            profile: profile,
+            score: Math.round(rawScore),
+            rawScore: rawScore,
+            reason: productReason(finalUserVector, profile, score.sillage, score.avoid),
+            price: p10 ? money(p10) : ''
+          };
+        });
+
+        /* Hard budget filter: bounded Q7 choices never show products outside the selected range.
+           Products without a valid 10ml price are excluded from bounded ranges because their
+           price cannot be verified against the customer's budget. */
+        var hasBudgetFilter = score.budgetMin != null || score.budgetMax != null;
+        if (hasBudgetFilter) {
+          scored = scored.filter(function (x) {
+            var price = productPrice10(x.p);
+            if (!(price > 0)) return false;
+            if (score.budgetMin != null) {
+              var minOk = score.budgetMinExclusive ? price > score.budgetMin : price >= score.budgetMin;
+              if (!minOk) return false;
+            }
+            if (score.budgetMax != null) {
+              var maxOk = score.budgetMaxExclusive ? price < score.budgetMax : price <= score.budgetMax;
+              if (!maxOk) return false;
+            }
+            return true;
+          });
+        }
+        console.table(
+          scored
+            .filter(function (x) {
+              return [
+                'Dior Sauvage Elixir',
+                'Narciso Rodriguez For Her Musc Noir Eau de Parfum',
+                'Yves Saint Laurent Black Opium'
+              ].indexOf(x.p.name) > -1;
+            })
+            .map(function (x) {
+              return {
+                name: x.p.name,
+                score: x.score,
+                sillage: x.p.sillage,
+                profile: x.profile
+              };
+            })
+        );
+        scored.sort(function (a, b) { return b.rawScore - a.rawScore; });
+
+        return scored.slice(0, 3).map(function (x) {
+          var n = x.p.notes || {};
+          var notes = [n.top, n.mid, n.base].filter(Boolean).join(' · ');
+          return {
+            slug: x.p.slug,
+            name: x.p.name,
+            notes: notes,
+            price: x.price ? ('10ml · ' + x.price) : '',
+            score: x.score,
+            reason: x.reason,
+            image: x.p.hero_image || 'assets/placeholder.svg'
+          };
+        });
+      } catch (e) {
+        console.error('[Puvela] scent matching catalog error:', e);
+        return [];
+      }
+    }
+
+    function advice() {
+      var s = Number(score.sillage || 3);
+      var t = s <= 2 ? 'Bạn thiên về một mùi hương gần da, chỉ người ở cạnh mới nhận ra.' :
+        s >= 4 ? 'Bạn muốn mùi hương có sự hiện diện rõ, nhưng vẫn cần đúng với những điều bạn không thích.' :
+          'Bạn hợp với một mùi có khoảng cách vừa phải — đủ để người bên cạnh nhận ra, không lấn át.';
+      return t + ' PUVELA ưu tiên chiết 5–10ml để bạn thử trên da trước khi quyết định fullsize.';
+    }
+
+    const modal = document.querySelector('#quiz-modal');
+    const question = document.querySelector('#quiz-question');
+    const options = document.querySelector('#quiz-options');
+    const stepLabel = document.querySelector('#quiz-step');
+    const progress = document.querySelector('#quiz-progress');
+    const content = document.querySelector('#quiz-content');
+    const flow = document.querySelector('#quiz-flow');
+    const result = document.querySelector('#quiz-result');
+    const quizIntro = document.querySelector('.quiz-intro');
+    const quizBegin = document.querySelector('#quiz-begin');
+    const quizBack = document.querySelector('#quiz-back');
+    const quizOpen = document.querySelector('#quiz-open');
+
+    let step = 0;
+    let score = { vector: {}, avoid: {}, answers: [] };
+
+    function render() {
+      var it = quiz[step];
+      var pct = Math.round((step / quiz.length) * 100);
+      progress.style.width = pct + '%';
+      stepLabel.textContent = it.g + ' · Câu ' + (step + 1) + '/' + quiz.length;
+      question.textContent = it.q;
+      document.querySelector('#quiz-hint').textContent = it.hint || '';
+      options.innerHTML = it.a.map(function (pair, i) {
+        return '<button type="button" data-i="' + i + '">' +
+          '<span class="qo-text">' + pair[0] + '</span><span class="qo-arrow">→</span></button>';
+      }).join('');
+      options.querySelectorAll('button').forEach(function (b) {
+        b.addEventListener('click', function () {
+          applyAnswer(it.a[Number(b.dataset.i)][1]);
+          step++;
+          if (step < quiz.length) render();
+          else showResult();
+        });
+      });
+      quizBack.disabled = step === 0;
+      quizBack.style.visibility = step === 0 ? 'hidden' : 'visible';
+    }
+
+    function resetQuiz() {
+      step = 0;
+      score = { vector: {}, avoid: {}, answers: [] };
+      quizIntro.hidden = false;
+      flow.hidden = true;
+      content.style.display = 'block';
+      result.classList.remove('show');
+      result.innerHTML = '';
+    }
+
+    function openQuiz() {
+      resetQuiz();
+      modal.classList.add('show');
+      document.body.classList.add('quiz-body-locked');
+    }
+
+    function closeQuiz() {
+      modal.classList.remove('show');
+      document.body.classList.remove('quiz-body-locked');
+    }
+
+    async function showResult() {
+      progress.style.width = '100%';
+      content.style.display = 'none';
+      result.classList.add('show');
+      result.innerHTML =
+        '<div class="result-loading">' +
+        '<p class="quiz-kicker">PUVELA đang đối chiếu gu của bạn</p>' +
+        '<h3>Đang tìm những chai hợp nhất…</h3>' +
+        '<p>Không chọn theo tên sản phẩm. PUVELA đang đọc metadata của từng chai trong catalog để tìm độ tương đồng.</p>' +
+        '</div>';
+
+      var userDNA = normalizeUserDNA(score.vector);
+      var recs = await recommend(userDNA);
+      var prof = resultProfile(userDNA);
+
+      var recHTML = recs.length ? recs.map(function (r, i) {
+        return '<a class="rec-card" href="product.html?p=' + encodeURIComponent(r.slug) + '">' +
+          '<div class="rec-media"><img src="' + (r.image || 'assets/placeholder.svg') + '" alt="' + r.name.replace(/"/g, '&quot;') + '" loading="lazy" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'"></div>' +
+          '<div class="rec-rank">0' + (i + 1) + ' · PHÙ HỢP ' + r.score + '%</div>' +
+          '<strong>' + r.name + '</strong>' +
+          '<span class="rec-notes">' + (r.notes || '') + '</span>' +
+          '<em>' + r.reason + '</em>' +
+          '<b>' + r.price + '</b>' +
+          '</a>';
+      }).join('') :
+        '<div class="rec-empty"><p>PUVELA chưa tìm được dữ liệu sản phẩm phù hợp để chấm điểm.</p><small>Hãy kiểm tra catalog Supabase và metadata của sản phẩm.</small></div>';
+
+      var dna = SCENT_DIMS.reduce(function (o, k) {
+        o[k] = Math.round((Number(userDNA[k] || 0)) * 10) / 10;
+        return o;
+      }, {});
+
+      result.innerHTML =
+        '<div class="result-top">' +
+        '<p class="quiz-kicker">GU MÙI CỦA BẠN</p>' +
+        '<h3>' + prof.name + '</h3>' +
+        '<p class="result-tag">' + prof.tag + '</p>' +
+        '</div>' +
+        '<div class="result-story">' +
+        '<p>' + prof.desc + '</p>' +
+        '<p>' + advice() + '</p>' +
+        '</div>' +
+        '<div class="result-divider"></div>' +
+        '<div class="match-head">' +
+        '<div><p class="quiz-step">PUVELA CHỌN TỪ CATALOG</p><h4>3 mùi đáng thử nhất</h4></div>' +
+        '<span>Đối chiếu theo gu mùi · không theo tên chai</span>' +
+        '</div>' +
+        '<div class="recommended rec3">' + recHTML + '</div>' +
+        '<div class="result-note"><strong>Vì sao kết quả này khác?</strong><p>PUVELA không gán bạn vào một “nhóm hương” cố định. Câu trả lời được chuyển thành hồ sơ cảm giác của riêng bạn, sau đó so khớp với metadata của từng sản phẩm.</p></div>' +
+        '<form class="quiz-email" id="quiz-email">' +
+        '<input type="email" required placeholder="Email nhận hồ sơ gu mùi + ưu đãi 10%" aria-label="Email nhận kết quả" />' +
+        '<button type="submit">Nhận kết quả →</button>' +
+        '</form>' +
+        '<div class="result-actions"><button id="quiz-again" type="button">Làm lại</button><button id="quiz-close-result" type="button">Xong</button></div>';
+
+      var again = document.querySelector('#quiz-again');
+      if (again) again.onclick = openQuiz;
+      var done = document.querySelector('#quiz-close-result');
+      if (done) done.onclick = closeQuiz;
+
+      var ef = document.querySelector('#quiz-email');
+      if (ef) ef.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var em = ef.querySelector('input').value.trim();
+        if (window.puvela && window.puvela.saveLead) {
+          window.puvela.saveLead({
+            email: em,
+            source: 'quiz',
+            scent_dna: {
+              version: 'puvela-scent-matching-v2',
+              profile: prof.key,
+              vector: dna,
+              avoid: score.avoid,
+              sillage: score.sillage || null,
+              budgetMin: score.budgetMin,
+              budgetMax: score.budgetMax,
+              budgetMinExclusive: score.budgetMinExclusive,
+              budgetMaxExclusive: score.budgetMaxExclusive,
+              recs: recs.map(function (r) { return { slug: r.slug, score: r.score }; })
+            }
+          });
+        }
+        ef.innerHTML = '<p class="done">Đã gửi hồ sơ gu mùi. Cảm ơn bạn.</p>';
+      });
+    }
+
+    quizOpen.onclick = openQuiz;
+    quizBegin.onclick = function () {
+      quizIntro.hidden = true;
+      flow.hidden = false;
+      render();
+    };
+    quizBack.onclick = function () {
+      if (step <= 0) return;
+      step--;
+      render();
+    };
+    document.querySelector('#quiz-close').onclick = closeQuiz;
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeQuiz();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('show')) closeQuiz();
+    });
   </script>
 </body>
+
 </html>

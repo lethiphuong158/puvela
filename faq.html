@@ -4,7 +4,7 @@
   <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <meta name="description" content="Nước hoa chính hãng nhập khẩu — full bottle & chiết 5–10ml. Chọn theo Nữ, Nam, Unisex & Niche tại Puvela." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/png" href="assets/favicon-puvela.png"><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root{--ink:#2b2621;--paper:#f5f0e7;--line:rgba(43,38,33,.15);--clay:#9c5a41;--sand:#e7ddce}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",sans-serif;font-weight:400}a{color:inherit;text-decoration:none}.announcement{padding:10px 20px;background:var(--ink);color:#fff;text-align:center;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}nav{height:78px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(20px,4vw,60px);border-bottom:1px solid var(--line)}.back,.bag{font-size:11px;letter-spacing:.08em;text-transform:uppercase}.bag{justify-self:end}.brand{display:inline-flex;align-items:center;line-height:0}.brand img{height:38px;width:auto;display:block}.collection-head{padding:clamp(46px,6vw,86px) clamp(20px,5vw,78px) 36px}.eyebrow{margin:0 0 16px;font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase}.collection-head h1{margin:0;font:600 clamp(50px,6vw,86px)/.98 "Cormorant Garamond",serif;letter-spacing:-.01em}.collection-head p:not(.eyebrow){max-width:460px;margin:18px 0 0;font-size:15px;line-height:1.6}.filters{display:flex;gap:24px;overflow:auto;white-space:nowrap;padding:0 clamp(20px,5vw,78px) 18px;border-bottom:1px solid var(--line)}.filters button{border:0;border-bottom:1px solid transparent;background:none;padding:0 0 13px;cursor:pointer;font:12px "Be Vietnam Pro",sans-serif;color:#635d57}.filters button.active{color:var(--ink);border-color:var(--ink)}
@@ -30,12 +30,13 @@
     .doc-head{padding:clamp(46px,6vw,86px) clamp(20px,5vw,78px) 26px}
     .doc-head h1{margin:0;font:600 clamp(38px,5vw,64px)/1.02 "Cormorant Garamond",serif;letter-spacing:-.01em}
     .doc-head p.sub{max-width:620px;margin:16px 0 0;font-size:15px;line-height:1.7;color:#544e48}
-    .doc-wrap{display:grid;grid-template-columns:220px minmax(0,1fr);gap:44px;
+    .doc-wrap{display:grid;grid-template-columns:1fr;gap:24px;
       padding:10px clamp(20px,5vw,78px) 90px;align-items:start}
-    .doc-nav{position:sticky;top:24px;display:grid;gap:2px}
-    .doc-nav a{padding:9px 12px;font-size:13.5px;color:#635d57;border-left:2px solid transparent}
+    .doc-nav{position:static;display:flex;overflow:auto;white-space:nowrap;gap:18px;margin-left:-2px;
+      padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:4px}
+    .doc-nav a{padding:8px 2px;font-size:13.5px;color:#635d57;border-bottom:2px solid transparent;flex:none}
     .doc-nav a:hover{color:var(--ink)}
-    .doc-nav a.on{color:var(--ink);border-left-color:var(--ink);background:rgba(43,38,33,.04)}
+    .doc-nav a.on{color:var(--ink);border-bottom-color:var(--ink);background:none}
     .doc-body{max-width:720px;font-size:15px;line-height:1.85;color:#3d3833}
     .doc-body h2{margin:34px 0 12px;font:600 24px/1.25 "Cormorant Garamond",serif;letter-spacing:0}
     .doc-body h2:first-child{margin-top:0}
@@ -80,29 +81,37 @@
   </section>
   <div class="doc-wrap">
     <nav class="doc-nav" aria-label="Các trang thông tin">
-          <a href="cam-ket-chinh-hang.html" class="">Cam kết chính hãng</a>
-          <a href="kiem-tra-that-gia.html" class="">Kiểm tra thật/giả</a>
-          <a href="van-chuyen.html" class="">Vận chuyển</a>
-          <a href="bao-mat.html" class="">Chính sách bảo mật</a>
-          <a href="dieu-khoan.html" class="">Điều khoản sử dụng</a>
+          <a href="van-chuyen.html">Vận chuyển &amp; đổi trả</a>
+          <a href="bao-mat.html">Chính sách bảo mật</a>
+          <a href="dieu-khoan.html">Điều khoản sử dụng</a>
           <a href="faq.html" class="on">Câu hỏi thường gặp</a>
     </nav>
     <div class="doc-body">
-<h2>Nước hoa chiết là gì?</h2>
-<p>Là nước hoa được sang từ chai fullsize chính hãng vào lọ nhỏ 5ml hoặc 10ml. Bạn dùng thử một mùi với chi phí thấp trước khi quyết định mua cả chai.</p>
-<h2>Hàng chiết có khác hàng full không?</h2>
-<p>Cùng một chai, cùng một mùi. Khác duy nhất là dung tích và vỏ đựng.</p>
-<h2>Lọ chiết 10ml dùng được bao lâu?</h2>
-<p>Trung bình khoảng 80–100 lần xịt, tương đương một đến hai tháng nếu bạn xịt hằng ngày.</p>
-<h2>Làm sao chọn mùi khi chưa ngửi thử?</h2>
-<p>Bạn có thể làm <a href="index.html#scent-finder">quiz tìm mùi</a> trên trang chủ, hoặc nhắn tin để Puvela tư vấn theo phong cách và dịp dùng của bạn.</p>
-<h2>Thanh toán thế nào?</h2>
-<p>Bạn chọn thanh toán khi nhận hàng, hoặc chuyển khoản trước. Thông tin chuyển khoản hiện ở bước cuối khi đặt đơn.</p>
-<h2>Bao lâu thì nhận được hàng?</h2>
-<p>Xem chi tiết ở trang <a href="van-chuyen.html">Vận chuyển</a>.</p>
-      <div class="doc-note">Nội dung trang này là bản nháp để bạn thay bằng chính sách thật của cửa hàng.
-        Sửa trực tiếp trong file <b>faq.html</b>, phần nằm giữa thẻ <b>&lt;div class="doc-body"&gt;</b>.</div>
-      <p class="doc-updated">Cập nhật lần cuối: [ngày/tháng/năm]</p>
+<h2>Sản phẩm tại Puvela</h2>
+<h2>Chiết là gì, có phải hàng giả pha loãng không?</h2><p>Không. Nếu được chiết trực tiếp từ chai nước hoa chính hãng và không pha thêm thành phần khác, nước chiết có cùng dung dịch nước hoa với chai gốc; chỉ khác ở dung tích và chai chứa.</p>
+<h2>Nên mua chiết hay full size?</h2><p>Nếu bạn chưa chắc có hợp mùi lâu dài hay muốn thử trước, chiết là lựa chọn hợp lý. Full size phù hợp khi bạn đã xác định đây là mùi hương mình yêu thích và muốn sử dụng thường xuyên.</p>
+<h2>Dùng và giữ nước hoa</h2>
+<h2>Làm sao để hương lưu lâu hơn trên người?</h2><p>Da được dưỡng ẩm thường giữ hương tốt hơn da khô. Bạn có thể dưỡng ẩm không mùi trước khi xịt và ưu tiên các vùng như cổ, sau gáy, cổ tay. Tránh chà xát vùng da ngay sau khi xịt.</p>
+<h2>Cất giữ chai nước hoa thế nào cho bền?</h2><p>Bảo quản ở nơi mát, khô, tránh ánh nắng trực tiếp và nhiệt độ thay đổi liên tục. Không nên để nước hoa trong xe hơi, gần cửa sổ hoặc nơi quá ẩm như phòng tắm.</p>
+<h2>Vị trí xịt nào cho hiệu quả nhất?</h2><p>Bạn có thể xịt ở cổ, sau gáy, cổ tay hoặc khuỷu tay trong. Quan trọng nhất là chọn vị trí bạn cảm thấy thoải mái và phù hợp với cách sử dụng của mình.</p>
+<h2>Ngoài da ra còn xịt được chỗ nào?</h2><p>Có thể xịt nhẹ lên tóc hoặc quần áo. Với quần áo, nên thử trước ở một vùng khuất vì một số chất liệu có thể bị ảnh hưởng bởi nước hoa.</p>
+<h2>Xịt cùng lúc hai loại nước hoa được không?</h2><p>Được. Đây gọi là layering — kết hợp nhiều mùi để tạo ra một trải nghiệm hương riêng. Nếu mới thử, hãy bắt đầu với lượng nhỏ để cảm nhận sự kết hợp.</p>
+<h2>Một chai nước hoa dùng được bao lâu thì nên bỏ?</h2><p>Không có một mốc thời gian cố định. Nếu được bảo quản tốt, nước hoa có thể sử dụng trong nhiều năm. Khi mùi, màu sắc hoặc trạng thái dung dịch thay đổi rõ rệt so với ban đầu, bạn nên cân nhắc thay chai mới.</p>
+<h2>Tìm mùi hương hợp với mình</h2>
+<h2>Chọn nước hoa dựa vào đâu là chuẩn nhất?</h2><p>Hãy thử trên da và để mùi phát triển một lúc thay vì đánh giá ngay sau khi xịt. Nước hoa thường thay đổi theo từng giai đoạn, vì vậy hãy cho mùi đủ thời gian trước khi quyết định.</p>
+<h2>Một lần thử nên giới hạn bao nhiêu mùi?</h2><p>Khoảng 2–3 mùi là hợp lý để bạn dễ phân biệt và đánh giá từng mùi rõ hơn.</p>
+<h2>Ngửi qua nắp chai có đủ để quyết định mua không?</h2><p>Chưa đủ. Cách tốt nhất vẫn là thử trực tiếp trên da và theo dõi mùi trong một khoảng thời gian.</p>
+<h2>Không muốn thử trực tiếp lên da thì làm sao?</h2><p>Bạn có thể dùng giấy thử mùi (blotter). Đây là cách thuận tiện để tham khảo mùi, nhưng trải nghiệm trên da vẫn có thể khác.</p>
+<h2>Mua nước hoa thật ở đâu cho yên tâm?</h2>
+<h2>Có cách nào nhận biết nước hoa thật không?</h2><p>Không có một dấu hiệu đơn lẻ nào có thể xác định chính xác nước hoa thật hay giả. Bao bì, mã sản phẩm và diễn biến mùi chỉ nên được xem là những yếu tố tham khảo. Quan trọng nhất là nguồn gốc sản phẩm và độ uy tín của nơi bán.</p>
+<h2>Nước hoa bám mùi không lâu nghĩa là hàng dởm?</h2><p>Chưa chắc. Độ lưu hương phụ thuộc vào công thức nước hoa, nồng độ, môi trường và đặc tính làn da. Vì vậy, không nên kết luận sản phẩm thật hay giả chỉ dựa vào thời gian lưu hương.</p>
+<h2>Làm sao để yên tâm khi mua nước hoa chiết?</h2><p>Hãy ưu tiên nơi bán công khai nguồn gốc chai dùng để chiết và có chính sách rõ ràng về sản phẩm. Với Puvela, nước chiết được lấy từ chai nước hoa chính hãng và chia thành các dung tích nhỏ để khách hàng dễ trải nghiệm.</p>
+<h2>Góc chuyện mùi hương</h2>
+<h2>Mũi người phân biệt được bao nhiêu mùi khác nhau?</h2><p>Không có một con số chính xác được thống nhất. Khả năng nhận biết mùi rất phức tạp và khác nhau giữa mỗi người.</p>
+<h2>Vì sao cùng một chai, người thích người không?</h2><p>Cảm nhận mùi hương mang tính cá nhân cao. Gu thẩm mỹ, trải nghiệm và ký ức riêng đều có thể ảnh hưởng đến cách mỗi người cảm nhận một mùi hương.</p>
+<h2>Vì sao ngửi một mùi quen lại gợi nhớ chuyện cũ?</h2><p>Mùi hương có mối liên hệ rất gần với các vùng não liên quan đến cảm xúc và trí nhớ, nên một mùi quen thuộc đôi khi có thể gợi lại rất nhanh một người, một nơi hoặc một kỷ niệm.</p>
+    </div>
+      <p class="doc-updated">Cập nhật lần cuối: 10/09/2026</p>
     </div>
   </div>
 <footer aria-label="Chân trang">
@@ -112,8 +121,8 @@
         <p>Nước hoa chính hãng nhập khẩu — full &amp; chiết. Thử trước. Yêu rồi hãy mua cả chai.</p>
       </div>
       <div class="foot-col"><h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp; Niche</a><a href="index.html#bestsellers">Best sellers</a></div>
-      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a href="van-chuyen.html">Vận chuyển</a><a href="faq.html">FAQ</a></div>
-      <div class="foot-col"><h4>Chính sách</h4><a href="cam-ket-chinh-hang.html">Cam kết chính hãng</a><a href="kiem-tra-that-gia.html">Kiểm tra thật/giả</a><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
+      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a href="van-chuyen.html">Vận chuyển &amp; đổi trả</a><a href="faq.html">FAQ</a></div>
+      <div class="foot-col"><h4>Chính sách</h4><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 PUVELA</span>
