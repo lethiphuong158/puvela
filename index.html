@@ -199,7 +199,7 @@
     }
 
     .brand img {
-      height: 34px;
+      height: 26px;
       width: auto;
       display: block;
     }
@@ -307,50 +307,7 @@
       color: var(--clay);
     }
 
-    /* 02 TRUST BAR */
-    .trustbar {
-      background: var(--paper2);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .trustbar-in {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .tb {
-      padding: 30px clamp(18px, 3vw, 40px);
-      border-left: 1px solid var(--line);
-      display: flex;
-      gap: 16px;
-      align-items: baseline;
-    }
-
-    .tb:first-child {
-      border-left: 0;
-    }
-
-    .tb i {
-      font: 500 12px "IBM Plex Mono", monospace;
-      color: var(--clay);
-      font-style: normal;
-      letter-spacing: .05em;
-    }
-
-    .tb b {
-      font-weight: 400;
-      font-size: 15px;
-      letter-spacing: .01em;
-    }
-
-    .tb small {
-      display: block;
-      margin-top: 3px;
-      font-size: 11.5px;
-      color: #6b6459;
-    }
-
-    /* section head */
+/* section head */
     .shead {
       display: flex;
       justify-content: space-between;
@@ -391,37 +348,50 @@
     .pcard {
       display: flex;
       flex-direction: column;
+      background: #fff;
+      border: 1px solid var(--line);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .pcard:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(39, 35, 31, .13);
     }
 
     .pcard-body {
       display: flex;
       flex-direction: column;
       flex: 1 1 auto;
+      padding: 0 16px 16px;
     }
 
+    /* khung ảnh 3:4 cố định; ảnh PHỦ KÍN khung (cover) — chai nằm giữa nên chỉ cắt nền hai bên */
     .pcard-media {
       position: relative;
       display: block;
-      aspect-ratio: 1/1;
+      aspect-ratio: 3/4;
       overflow: hidden;
-      background: var(--sand);
+      background: #f3ede2;
+      border-bottom: 1px solid var(--line);
     }
 
     .pcard-media img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       transition: transform .8s ease;
     }
 
     .pcard:hover .pcard-media img {
-      transform: scale(1.05);
+      transform: scale(1.04);
     }
 
     .pcard .badge {
       position: absolute;
       top: 12px;
       left: 12px;
+      z-index: 1;
       padding: 6px 10px;
       background: var(--paper);
       font: 500 9px "IBM Plex Mono", monospace;
@@ -429,19 +399,26 @@
       text-transform: uppercase;
     }
 
-    .pcard-fam {
-      margin: 16px 0 6px;
-      font: 500 9.5px "IBM Plex Mono", monospace;
-      letter-spacing: .07em;
+    .badge-oos {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(245, 240, 231, .78);
+      font: 500 10.5px "IBM Plex Mono", monospace;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--clay);
+      color: var(--ink);
     }
 
     .pcard h3 {
-      font-size: 22px;
-      line-height: 1.15;
+      margin-top: 14px;
+      font-size: 20px;
+      line-height: 1.18;
       font-weight: 500;
-      height: 2.3em;
+      height: 2.4em;
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -454,36 +431,55 @@
 
     .pstar {
       min-height: 1.5em;
-      margin: 8px 0 0;
-    }
-
-    .pcard-notes {
       margin: 6px 0 0;
-      font-size: 12.5px;
-      line-height: 1.5;
-      color: #6b6459;
-      height: 4.5em;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
     }
 
+    /* giá: dòng chính to (chiết 10ml) + dòng phụ nhỏ (full) — số dùng mono cho thẳng hàng */
     .pcard-price {
-      margin: 0 0 14px;
-      font-size: 13px;
-      line-height: 1.5;
-      letter-spacing: .01em;
-      height: 3em;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      margin: 10px 0 14px;
     }
 
-    .pcard-price b {
+    .pcard-price .pr-lb {
+      display: block;
+      margin-bottom: 3px;
+      font: 500 9px "IBM Plex Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
       color: var(--clay);
-      font-weight: 500;
+    }
+
+    .pcard-price .pr-main {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pcard-price .pr-main b {
+      font: 600 19px/1 "IBM Plex Mono", monospace;
+      color: var(--clay);
+      letter-spacing: -0.01em;
+    }
+
+    .pcard-price .pr-main s {
+      font: 500 12px "IBM Plex Mono", monospace;
+      color: #8a8279;
+    }
+
+    .pcard-price .pct {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: var(--clay);
+      color: #fff;
+      font: 500 9.5px "IBM Plex Mono", monospace;
+      letter-spacing: .04em;
+    }
+
+    .pcard-price .pr-sub {
+      display: block;
+      margin-top: 4px;
+      font: 500 12px "IBM Plex Mono", monospace;
+      color: #5b544c;
     }
 
     .pcard-cta {
@@ -498,6 +494,11 @@
       padding: 13px 12px;
       font-size: 10px;
       letter-spacing: .05em;
+    }
+
+    .pcard-cta .btn[disabled] {
+      opacity: .45;
+      pointer-events: none;
     }
 
     /* 04 MOOD */
@@ -1281,7 +1282,7 @@
     }
 
     .foot-brand img {
-      height: 30px;
+      height: 22px;
       margin-bottom: 16px;
       filter: brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg);
     }
@@ -1862,26 +1863,6 @@
       color: #6f675e;
     }
 
-    .result-note {
-      margin: 24px auto 0;
-      padding: 18px 20px;
-      background: #eee5d8;
-      color: #5c554d;
-      font-size: 12px;
-      line-height: 1.65;
-    }
-
-    .result-note strong {
-      color: var(--ink);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-    }
-
-    .result-note p {
-      margin: 7px 0 0;
-    }
-
     .result-actions {
       display: flex;
       justify-content: center;
@@ -2030,15 +2011,17 @@
 
     .rowcard .m {
       position: relative;
-      aspect-ratio: 1/1;
+      aspect-ratio: 3/4;
       overflow: hidden;
-      background: var(--sand);
+      background: #f3ede2;
+      border: 1px solid var(--line);
     }
 
     .rowcard img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: center;
     }
 
     .rowcard .bdg {
@@ -2131,27 +2114,6 @@
 
       .brand {
         justify-self: start;
-      }
-
-      .trustbar-in {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .tb {
-        padding: 20px 12px;
-      }
-
-      .tb i {
-        display: none;
-      }
-
-      .tb b {
-        font-size: 13px;
-      }
-
-      .tb small {
-        font-size: 11px;
-        line-height: 1.4;
       }
 
       .pgrid {
@@ -2269,11 +2231,6 @@
         line-height: 1.5;
       }
 
-      .quiz-modal .result-note {
-        margin-top: 18px;
-        padding: 15px 16px;
-      }
-
       .quiz-modal .quiz-email {
         margin-top: 18px;
       }
@@ -2320,7 +2277,8 @@
         justify-content: center;
       }
     }
-  </style>
+  .floating-quiz-cta.is-visible { opacity:1; visibility:visible; pointer-events:auto; transform:translateY(0); }
+</style>
   <style>
     /* giá sale — thêm khi bỏ giá cứng, dùng chung cho 3 trang */
     s {
@@ -2339,10 +2297,68 @@
       color: #fff !important
     }
   </style>
+
+<style>
+/* Mobile conversion refinements */
+.btn-solid, .quiz-open, .offer-form button { min-height: 46px; }
+.hero-primary { background: #b86f57 !important; border-color: #b86f57 !important; color: #fff !important; }
+.hero-tag2 { margin: 18px 0 14px; font-size: 15px; }
+.mtile-cta { display:inline-flex; margin-top:12px; padding:9px 14px; border:1px solid currentColor; border-radius:999px; font-size:12px; text-decoration:none; }
+@media (max-width: 800px) {
+  .hero-cta .btn { min-height:48px; font-size:12px; }
+  .shead .rownav button { width:38px; height:38px; }
+  .bs-all-link { display:inline-flex !important; font-size:12px; }
+  .pgrid .btn, .pgrid a, .product-card button { min-height:40px; font-size:12px !important; }
+}
+@media (max-width: 600px) {
+  .quiz-options, .recommended, .recommended.rec4 { grid-template-columns:1fr !important; }
+  .hero-cta { flex-direction:column; }
+  .hero-cta .btn { width:100%; }
+}
+.floating-quiz-cta { opacity:0; visibility:hidden; pointer-events:none; transform:translateY(10px); transition:opacity .25s ease, transform .25s ease, visibility .25s ease; position:fixed; right:16px; bottom:18px; z-index:50; background:#b86f57; color:#fff; padding:13px 17px; border-radius:999px; box-shadow:0 8px 24px rgba(0,0,0,.18); font-size:12px; letter-spacing:.04em; text-decoration:none; }
+
+<style>
+/* ============ UX UPGRADES: trust bar · cart badge · nav search · contrast · spacing ============ */
+
+
+/* --- icon giỏ + badge số lượng --- */
+.cart-ic { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 6px; }
+.cart-badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--act, #b86f57);
+  color: #fff;
+  font: 600 10px/16px "IBM Plex Mono", monospace;
+  text-align: center;
+  transform: scale(0);
+  transition: transform .2s ease;
+}
+.cart-badge.has-items { transform: scale(1); }
+
+/* --- contrast: chữ phụ đậm hơn, cỡ tối thiểu lớn hơn trên mobile --- */
+.lead { color: #4a443d; }
+.pcard-price .pr-sub { color: #4a443d; }
+.pcard-price .pr-sub { color: #5b544c; }
+@media (max-width: 600px) {
+  .lead { font-size: 15px; }
+  .micro { font-size: 12.5px; }
+  .pcard h3 { font-size: 19px; }
+}
+
+/* --- spacing scale thống nhất 56/88 các section --- */
+section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 7vw, 88px); }
+.shead { margin-bottom: 36px; }
+</style>
 </head>
 
 <body>
-  <div class="announcement">Chính hãng 100% · Full &amp; Chiết 5–10ml · Freeship đơn từ 1.500.000₫</div>
+  <a class="floating-quiz-cta" href="#scent-finder">Tìm mùi của bạn →</a>
+  <div class="announcement">Chính hãng 100% · Full &amp; Chiết 5–10ml · Freeship đơn từ 1.000.000₫</div>
   <header class="site-nav" id="siteNav">
     <div class="nav-in">
       <nav class="nav-links" aria-label="Điều hướng chính">
@@ -2351,16 +2367,16 @@
         <a href="collection.html?c=unisex">Unisex &amp; Niche</a>
         <a href="#scent-finder">Tìm mùi hương</a>
       </nav>
-      <a class="brand" href="#top" aria-label="PUVELA"><img src="assets/logo-nav.png" alt="PUVELA" /></a>
+      <a class="brand" href="#top" aria-label="PUVELA"><img src="assets/logo-nav.png?v=2" alt="PUVELA" /></a>
       <div class="nav-tools">
         <a href="#" id="btn-search" class="navsearch" aria-label="Tìm nước hoa"><svg viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="7" />
             <path d="m20 20-3.5-3.5" />
           </svg><span>Tìm nước hoa</span></a>
-        <a href="#" data-cart-toggle aria-label="Giỏ hàng"><svg viewBox="0 0 24 24">
+        <a href="#" data-cart-toggle class="cart-ic" aria-label="Giỏ hàng"><svg viewBox="0 0 24 24">
             <path d="M5 8h14l-1 12H6L5 8Z" />
             <path d="M9 9V6a3 3 0 0 1 6 0v3" />
-          </svg><span data-cart-count style="font-size:11px;margin-left:5px">0</span></a>
+          </svg><span class="cart-badge" data-cart-count>0</span></a>
         <button class="menu-button" aria-label="Mở menu"
           onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
       </div>
@@ -2380,11 +2396,11 @@
         <p class="eyebrow" style="color:rgba(255,255,255,.85)">PUVELA · Authentic Fragrance</p>
         <h1>Tìm đúng mùi theo cách của bạn.</h1>
         <p class="hero-sub">Nước hoa chính hãng · Fullsize &amp; Chiết 5–10ml</p>
-        <div class="hero-cta">
-          <a class="btn btn-ghost" href="#bestsellers">Tìm mùi của bạn →</a>
-          <a class="btn btn-ghost" href="#scent-finder">Khám phá mùi hương →</a>
-        </div>
         <p class="hero-tag2">“Thử trước. Yêu rồi hãy mua cả chai.”</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid hero-primary" href="#scent-finder">Tìm mùi của bạn →</a>
+          <a class="btn btn-ghost" href="#bestsellers">Khám phá mùi hương →</a>
+        </div>
         <div class="hero-checks"><span>Chính hãng</span><span>Chiết trực tiếp từ chai fullsize</span></div>
       </div>
     </section>
@@ -2392,7 +2408,7 @@
     <!-- 02 SCENT FINDER (QUIZ) -->
     <section class="finder wrap reveal" id="scent-finder" aria-label="Trắc nghiệm tìm mùi">
       <p class="eyebrow">Không biết mình hợp mùi nào?</p>
-      <h2>Tìm mùi hương phù hợp với bạn trong 2 phút.</h2>
+      <h2>Tìm mùi hương phù hợp với bạn qua 6 câu hỏi.</h2>
       <p class="lead">Không cần biết tên nước hoa. Chỉ cần cho PUVELA biết bạn thích gì, cần gì và muốn mang mùi hương
         ấy khi nào.</p>
       <button class="quiz-open" id="quiz-open" type="button">Bắt đầu Quiz →</button>
@@ -2407,9 +2423,9 @@
           <h2>Những mùi hương được yêu thích nhất</h2>
         </div>
         <div style="display:flex;align-items:center;gap:18px">
+          <a class="link-u bs-all-link" href="collection.html?c=all">Xem tất cả →</a>
           <div class="rownav"><button type="button" data-row="bs" data-dir="-1" aria-label="Lùi">←</button><button
               type="button" data-row="bs" data-dir="1" aria-label="Tiến">→</button></div>
-          <a class="link-u" href="collection.html?c=all">Xem tất cả →</a>
         </div>
       </div>
       <p class="lead" style="margin:-24px 0 40px">Những chai được khách PUVELA chọn nhiều nhất — từ những mùi dễ dùng
@@ -2527,7 +2543,7 @@
   <footer aria-label="Chân trang">
     <div class="foot-grid">
       <div class="foot-brand">
-        <img src="assets/logo-nav.png" alt="PUVELA" />
+        <img src="assets/logo-nav.png?v=2" alt="PUVELA" />
         <p>Nước hoa chính hãng nhập khẩu — full &amp; chiết. Thử trước. Yêu rồi hãy mua cả chai.</p>
       </div>
       <div class="foot-col">
@@ -2537,10 +2553,11 @@
       </div>
       <div class="foot-col">
         <h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a
-          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a>
+          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a
+          href="https://www.facebook.com/profile.php?id=61594343787166" target="_blank" rel="noopener">Nhắn tin Facebook</a>
       </div>
       <div class="foot-col">
-        <h4>Chính sách</h4><a href="van-chuyen.html" class="on">Vận chuyển &amp; đổi trả</a>
+        <h4>Chính sách</h4><a href="van-chuyen.html">Vận chuyển &amp; đổi trả</a>
         <a href="bao-mat.html" class="">Chính sách bảo mật</a>
         <a href="dieu-khoan.html" class="">Điều khoản sử dụng</a>
         <a href="faq.html" class="">Câu hỏi thường gặp</a>
@@ -2549,7 +2566,8 @@
     <div class="foot-bottom">
       <span>© 2026 PUVELA</span>
       <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a
-          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a></div>
+          href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a><a
+          href="https://www.facebook.com/profile.php?id=61594343787166" target="_blank" rel="noopener">Facebook</a></div>
       <span>Việt Nam</span>
     </div>
   </footer>
@@ -2628,7 +2646,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/supabase.js"></script>
-  <script src="assets/cart.js"></script>
+  <script src="assets/cart.js?v=4"></script>
   <script>
     /* sticky nav shadow */
     (function () {
@@ -2779,31 +2797,37 @@
         });
       }).catch(function () { }).then(function () {
         window.puvela.client.from('products')
-          .select('slug,name,notes,badge,category,hero_image,product_variants(label,price,compare_at_price)')
+          .select('slug,name,notes,badge,category,hero_image,product_variants(label,price,compare_at_price,stock)')
           .eq('badge', 'Best seller').then(function (r) {
             if (!r || r.error) { trong('Không tải được sản phẩm. Kiểm tra kết nối rồi tải lại trang.'); return; }
             if (!r.data || !r.data.length) { trong('Chưa có sản phẩm nào được đánh dấu “Best seller”.'); return; }
             grid.innerHTML = r.data.map(function (p) {
               var vs = (p.product_variants || []);
-              var v10 = vs.find(function (v) { return (v.label || '').indexOf('10ml') > -1; });
-              var vFull = vs.find(function (v) { return (v.label || '').indexOf('Full') > -1; });
-              var prices = vs.map(function (v) { return v.price; }).filter(function (x) { return x > 0; });
-              var min = prices.length ? Math.min.apply(null, prices) : 0;
-              var fam = (p.category || '').split(' · ')[0] || 'Eau de Parfum';
-              var n = p.notes || {}; var notes = [n.top, n.mid, n.base].filter(Boolean).join(' · ');
-              var vMin = vs.filter(function (v) { return v.price > 0; }).sort(function (a, b) { return a.price - b.price; })[0] || null;
-              var goc = vMin && vMin.compare_at_price > vMin.price ? vMin.compare_at_price : 0;
-              var priceLine = 'Chiết từ ' + (goc ? '<s>' + money(goc) + '</s> <b class="sale">' + money(min) + '</b>' : '<b>' + money(min) + '</b>')
-                + (vFull ? ' · Full ' + money(vFull.price) : '');
-              var giam = goc ? Math.round((1 - vMin.price / goc) * 100) : 0;
-              return '<article class="pcard"><a class="pcard-media" href="product.html?p=' + p.slug + '">' + (giam ? '<span class="badge badge-sale">-' + giam + '%</span>' : (p.badge ? '<span class="badge">' + p.badge + '</span>' : '')) + '<img src="' + (p.hero_image || '') + '" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" alt="' + p.name + '" loading="lazy" /></a>' +
-                '<div class="pcard-body"><p class="pcard-fam">' + fam + '</p><a href="product.html?p=' + p.slug + '"><h3>' + p.name + '</h3></a>' +
+              var priced = vs.filter(function (v) { return v.price > 0; });
+              var v10 = priced.find(function (v) { return (v.label || '').indexOf('10ml') > -1; });
+              var vFull = priced.find(function (v) { return (v.label || '').indexOf('Full') > -1; });
+              var main = v10 || priced.sort(function (a, b) { return a.price - b.price; })[0] || null;
+              var min = priced.length ? Math.min.apply(null, priced.map(function (v) { return v.price; })) : 0;
+              // hết hàng = mọi mức có giá đều stock 0, và chỉ tin khi catalog này có chỗ stock > 0
+              // (toàn bộ stock = 0 nghĩa là shop chưa theo dõi tồn kho — không được gán "hết hàng" bừa)
+              var dungStock = vs.some(function (v) { return (v.stock || 0) > 0; });
+              var het = dungStock && priced.length > 0 && priced.every(function (v) { return v.stock === 0; });
+              var goc = main && main.compare_at_price > main.price ? main.compare_at_price : 0;
+              var giam = goc ? Math.round((1 - main.price / goc) * 100) : 0;
+              var priceHtml = !main ? '' :
+                '<p class="pcard-price"><span class="pr-lb">' + (v10 ? 'Chiết 10ml' : 'Giá từ') + '</span>' +
+                '<span class="pr-main">' + (goc ? '<s>' + money(goc) + '</s>' : '') + '<b>' + money(main.price) + '</b>' +
+                (giam ? ' <span class="pct">-' + giam + '%</span>' : '') + '</span>' +
+                (vFull ? '<span class="pr-sub">Full ' + (vFull.label || '').replace('Full ', '') + ' · ' + money(vFull.price) + '</span>' : '') +
+                '</p>';
+              return '<article class="pcard"><a class="pcard-media" href="product.html?p=' + p.slug + '">' + (giam ? '<span class="badge badge-sale">-' + giam + '%</span>' : (p.badge ? '<span class="badge">' + p.badge + '</span>' : '')) + (het ? '<span class="badge-oos">Hết hàng</span>' : '') + '<img src="' + (p.hero_image || '') + '" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'" alt="' + p.name + '" loading="lazy" /></a>' +
+                '<div class="pcard-body"><a href="product.html?p=' + p.slug + '"><h3>' + p.name + '</h3></a>' +
                 (function () { var d = DGX[p.slug]; return d && d.n ? '<p class="pstar">★ ' + (d.tong / d.n).toFixed(1) + ' <i>(' + d.n + ')</i></p>' : '<p class="pstar" aria-hidden="true"></p>'; })() +
-                '<p class="pcard-notes">' + notes + '</p><p class="pcard-price">' + priceLine + '</p>' +
-                '<div class="pcard-cta"><button class="btn btn-solid" data-add data-slug="' + p.slug + '" data-name="' + p.name.replace(/"/g, '&quot;') + '" data-price="' + (v10 ? v10.price : min) + '" data-img="' + (p.hero_image || '') + '">Thử 10ml</button>' +
+                priceHtml +
+                '<div class="pcard-cta"><button class="btn btn-solid" data-add data-slug="' + p.slug + '" data-name="' + p.name.replace(/"/g, '&quot;') + '" data-price="' + ((v10 || main) ? (v10 || main).price : 0) + '" data-label="' + ((v10 || main) ? (v10 || main).label : 'Chiết') + '" data-img="' + (p.hero_image || '') + '"' + (het ? ' disabled' : '') + '>' + (het ? 'Hết hàng' : (v10 ? 'Thử 10ml' : 'Thử ngay')) + '</button>' +
                 '<a class="btn btn-line" href="product.html?p=' + p.slug + '">Chi tiết</a></div></div></article>';
             }).join('');
-            grid.querySelectorAll('[data-add]').forEach(function (b) { b.addEventListener('click', function () { window.puvelaCart && window.puvelaCart.add({ slug: b.dataset.slug, name: b.dataset.name, label: 'Chiết 10ml', price: Number(b.dataset.price), image: b.dataset.img }); }); });
+            grid.querySelectorAll('[data-add]').forEach(function (b) { b.addEventListener('click', function () { window.puvelaCart && window.puvelaCart.add({ slug: b.dataset.slug, name: b.dataset.name, label: b.dataset.label, price: Number(b.dataset.price), image: b.dataset.img }); }); });
           }).catch(function (e) { console.warn('[Puvela] bestsellers lỗi:', e && e.message); trong('Không tải được sản phẩm. Thử tải lại trang.'); });
       });
     })();
@@ -2850,9 +2874,9 @@
             '<span class="pr">' + (p.min ? 'Từ ' + Number(p.min).toLocaleString('vi-VN') + '₫' : '') + '</span></a>';
         }).join('');
       }
-      async function mo(e) {
-        if (e) e.preventDefault();
-        ov.hidden = false; document.body.style.overflow = 'hidden'; inp.value = ''; chon = -1;
+      async function mo(e, q) {
+        if (e && e.preventDefault) e.preventDefault();
+        ov.hidden = false; document.body.style.overflow = 'hidden'; inp.value = q || ''; chon = -1;
         ds.innerHTML = '<p class="sr-hint">Đang tải danh sách…</p>';
         await taiSanPham(); ve(); inp.focus();
       }
@@ -2943,6 +2967,15 @@
          category + notes + gender + is_niche + sillage + variants.
        - Product name is NEVER used for scoring.
        ========================================================= */
+    /* =========================================================
+       PUVELA SCENT MATCHING ENGINE v4
+       - Q1 Scent DNA là yếu tố chính (~85% điểm).
+       - Q2 avoid = penalty riêng, có giới hạn tuyệt đối.
+       - Q3 uniqueness / Q4 sillage / Q5 context = modifier nhỏ.
+       - Q6 ngân sách = HARD FILTER, không tham gia scent score.
+       - Sản phẩm chỉ được chấm bằng scent_dna + metadata
+         (sillage, is_niche). Tên / thương hiệu / slug không tham gia.
+       ========================================================= */
     const SCENT_DIMS = [
       'fresh', 'clean', 'floral', 'green', 'woody', 'warm',
       'sweet', 'powdery', 'dark', 'sensual', 'elegant', 'bold'
@@ -2950,84 +2983,85 @@
 
     const quiz = [
       {
-        g: 'Ấn tượng',
-        q: 'Nếu người khác nhớ bạn qua mùi hương, bạn muốn họ nhớ điều gì?',
-        hint: 'Chọn cảm giác bạn muốn để lại, không phải tên một nhóm hương.',
+        g: 'Sức hút',
+        q: 'Bạn thường thích kiểu mùi nào ngay từ lần ngửi đầu tiên?',
+        hint: 'Chọn cảm giác gần với gu của bạn nhất.',
+        weight: 1.5,
         a: [
-          ['“Người này lúc nào cũng sạch sẽ và dễ chịu.”', { v: { clean: 5, fresh: 3, elegant: 2 } }],
-          ['“Người này có gu, tinh tế mà không cần phô trương.”', { v: { elegant: 5, clean: 2, floral: 2, woody: 2 } }],
-          ['“Người này có gì đó rất cuốn.”', { v: { sensual: 5, warm: 3, sweet: 2, dark: 2 } }],
-          ['“Mùi của người này bước vào phòng là tôi nhớ ngay.”', { v: { bold: 5, dark: 3, sensual: 3, warm: 2 } }]
+          ['Sạch sẽ, nhẹ nhàng, giống cảm giác vừa tắm xong.', { v: { clean: 5, fresh: 2, powdery: 1 } }],
+          ['Tươi mát, dễ chịu, ngửi vào thấy tỉnh táo.', { v: { fresh: 5, green: 3 } }],
+          ['Ngọt ngào, mềm mại, có chút dễ thương và cuốn hút.', { v: { sweet: 4, floral: 3, warm: 1 } }],
+          ['Ấm áp, quyến rũ, càng ngửi càng muốn lại gần.', { v: { sensual: 4, warm: 3, dark: 1 } }],
+          ['Có gỗ, gia vị hoặc cảm giác trầm — nghe rất có cá tính.', { v: { woody: 5, dark: 2, bold: 1 } }]
         ]
       },
       {
-        g: 'Cảm giác',
-        q: 'Một ngày bình thường, bạn muốn mùi hương khiến mình cảm thấy thế nào?',
-        hint: 'Hãy chọn cảm giác bạn muốn mang theo trên da.',
+        g: 'Không hợp gu',
+        q: 'Kiểu mùi nào bạn thường không thích?',
+        hint: 'Chọn kiểu khiến bạn dễ thấy khó chịu nhất.',
+        weight: 1,
         a: [
-          ['Nhẹ người, thoáng và tỉnh táo.', { v: { fresh: 5, green: 3, clean: 2 } }],
-          ['Mềm mại, thư thái và dễ gần.', { v: { floral: 4, clean: 4, powdery: 3 } }],
-          ['Ấm áp, được ôm lấy và có chút quyến rũ.', { v: { warm: 5, sensual: 4, sweet: 3 } }],
-          ['Tự tin, sắc nét và có chiều sâu.', { v: { woody: 4, dark: 4, bold: 4, elegant: 2 } }]
+          ['Quá ngọt, ngửi lâu thấy ngấy.', { avoid: { sweet: 1 } }],
+          ['Quá nồng, vừa xịt đã thấy choáng.', { avoid: { bold: 1 } }],
+          ['Quá trầm hoặc hơi già, không hợp với mình.', { avoid: { dark: 1 } }],
+          ['Quá giống xà phòng, nước giặt hoặc mùi sạch đơn thuần.', { avoid: { clean: 1 } }],
+          ['Mình chưa biết rõ, phải ngửi thử mới biết.', {}]
         ]
       },
       {
-        g: 'Điều bạn không thích',
-        q: 'Điều gì dễ khiến bạn bỏ một chai nước hoa ngay từ lần đầu thử?',
-        hint: 'Biết mình không thích gì đôi khi quan trọng hơn biết mình thích gì.',
+        g: 'Nét riêng',
+        q: 'Bạn muốn mùi nước hoa của mình phổ biến hay có nét riêng?',
+        hint: 'Không có đúng hay sai, chỉ là bạn thích kiểu nào hơn.',
+        weight: 1,
         a: [
-          ['Quá ngọt — ngửi một lúc là thấy ngấy.', { avoid: { sweet: 6 }, v: { fresh: 2, clean: 2, green: 2 } }],
-          ['Quá nồng — người khác chưa đến gần đã ngửi thấy.', { avoid: { bold: 5 }, v: { clean: 2, elegant: 2 } }],
-          ['Quá trầm — có cảm giác nặng hoặc “già”.', { avoid: { dark: 5, warm: 3 }, v: { fresh: 2, green: 2 } }],
-          ['Quá hoa — tôi không muốn mùi quá nữ tính.', { avoid: { floral: 5 }, v: { woody: 2, clean: 2, green: 2 } }],
-          ['Tôi khá thoải mái — miễn là mùi có cá tính.', { v: { bold: 3, sensual: 3, elegant: 2 } }]
+          ['Dễ dùng, dễ được yêu thích là quan trọng nhất.', { uniqueness: 'mass' }],
+          ['Có nét riêng một chút nhưng vẫn dễ dùng hằng ngày.', { uniqueness: 'signature' }],
+          ['Không muốn dùng mùi quá phổ biến.', { uniqueness: 'niche' }],
+          ['Càng khác biệt, càng ít đụng hàng càng tốt.', { uniqueness: 'extreme' }]
         ]
       },
       {
-        g: 'Đời sống',
-        q: 'Nếu chỉ chọn một kiểu mùi để dùng nhiều nhất, nó sẽ đi cùng bạn ở đâu?',
-        hint: 'Không cần chọn dịp “đẹp nhất”. Hãy chọn nơi bạn thật sự sống cùng mùi.',
+        g: 'Độ tỏa',
+        q: 'Bạn muốn người khác cảm nhận mùi của mình như thế nào?',
+        hint: 'Hãy nghĩ đến khoảng cách người khác có thể ngửi thấy mùi.',
+        weight: 1,
         a: [
-          ['Đi làm, đi học, gặp khách — dùng gần như mỗi ngày.', { v: { clean: 4, elegant: 4, fresh: 3 }, sillage: 2.5 }],
-          ['Cà phê, đi chơi, cuối tuần — thoải mái và có gu.', { v: { fresh: 3, green: 3, elegant: 3, floral: 2 }, sillage: 3 }],
-          ['Hẹn hò, ăn tối — muốn người đối diện muốn ngửi gần hơn.', { v: { sensual: 5, warm: 4, sweet: 2 }, sillage: 3.5 }],
-          ['Tiệc, sự kiện — hôm đó tôi muốn mùi hương có mặt cùng mình.', { v: { bold: 5, dark: 3, sensual: 3, warm: 2 }, sillage: 4.5 }]
+          ['Chỉ khi đứng thật gần mới ngửi thấy.', { sillage: 1 }],
+          ['Đứng nói chuyện gần là có thể cảm nhận được.', { sillage: 2 }],
+          ['Đi ngang qua vẫn để lại một chút hương.', { sillage: 3 }],
+          ['Mùi tỏa rõ, bước qua vẫn khiến người khác chú ý.', { sillage: 4 }]
         ]
       },
       {
-        g: 'Khoảng cách',
-        q: 'Bạn muốn người khác “phát hiện” mùi hương của mình như thế nào?',
-        hint: 'Đây là cách PUVELA hiểu độ hiện diện bạn mong muốn.',
+        g: 'Hoàn cảnh dùng',
+        q: 'Bạn sẽ dùng nước hoa chủ yếu vào dịp nào?',
+        hint: 'Chọn hoàn cảnh bạn sử dụng thường xuyên nhất.',
+        weight: 1,
         a: [
-          ['Chỉ khi đứng thật gần mới nhận ra.', { sillage: 2, v: { clean: 2, elegant: 2 } }],
-          ['Đứng cạnh là thấy dễ chịu, nhưng không lấn át.', { sillage: 3, v: { clean: 2, elegant: 2, sensual: 2 } }],
-          ['Đi ngang qua vẫn để lại một chút dấu ấn.', { sillage: 4, v: { bold: 2, sensual: 2 } }],
-          ['Tôi muốn mùi hương có sự hiện diện rõ ràng.', { sillage: 5 }]
+          ['Đi làm, đi học hoặc dùng mỗi ngày.', { context: 'daily' }],
+          ['Đi cà phê, đi chơi hoặc gặp bạn bè.', { context: 'casual' }],
+          ['Hẹn hò hoặc những buổi tối riêng tư.', { context: 'date' }],
+          ['Đi tiệc, sự kiện hoặc những dịp muốn nổi bật.', { context: 'event' }],
+          ['Muốn một mùi dùng được trong hầu hết mọi dịp.', { context: 'versatile' }]
         ]
       },
       {
-        g: 'Bản sắc',
-        q: 'Nếu tủ quần áo của bạn có một “chất” rất riêng, nó gần với điều nào nhất?',
-        hint: 'Câu này giúp PUVELA hiểu phong cách sống phía sau gu mùi.',
+        g: 'Ngân sách',
+        q: 'Bạn muốn dành khoảng bao nhiêu để thử một chai chiết?',
+        hint: 'Chọn mức ngân sách bạn thấy thoải mái nhất.',
+        weight: 1,
         a: [
-          ['Áo trắng, denim, đồ tối giản — sạch và gọn.', { v: { clean: 5, fresh: 3, elegant: 2 } }],
-          ['Màu trung tính, chất liệu đẹp — kín đáo nhưng có gu.', { v: { elegant: 5, powdery: 2, woody: 2, clean: 2 } }],
-          ['Đồ mềm, nữ tính hoặc có điểm nhấn — ấm và cuốn.', { v: { floral: 3, sensual: 4, warm: 3, sweet: 2 } }],
-          ['Đồ tối màu, cá tính — tôi thích một chút khác biệt.', { v: { dark: 4, woody: 4, bold: 5, sensual: 2 } }]
-        ]
-      },
-      {
-        g: 'Bắt đầu',
-        q: 'Bạn muốn PUVELA tìm trong khoảng giá nào cho chai chiết?',
-        hint: 'Đây là bộ lọc ngân sách, không làm thay đổi “gu mùi” của bạn.',
-        a: [
-          ['Dưới 300.000₫', { budgetMax: 300000, budgetMaxExclusive: true }],
-          ['300.000 – 500.000₫', { budgetMin: 300000, budgetMax: 500000 }],
+          ['Dưới 300.000₫', { budgetMin: null, budgetMax: 300000, budgetMaxExclusive: true }],
+          ['Từ 300.000₫ đến 500.000₫', { budgetMin: 300000, budgetMax: 500000, budgetMinExclusive: false, budgetMaxExclusive: false }],
           ['Trên 500.000₫', { budgetMin: 500000, budgetMinExclusive: true, budgetMax: null }],
-          ['Không giới hạn — cứ tìm mùi hợp tôi trước.', { budgetMin: null, budgetMax: null }]
+          ['Không giới hạn, miễn là tìm được mùi thật sự hợp.', { budgetMin: null, budgetMax: null }]
         ]
       }
     ];
+
+
+    /* ---------- helpers ---------- */
+    function clampNum(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
 
     function addVector(target, source, multiplier) {
       if (!source) return;
@@ -3037,228 +3071,177 @@
       });
     }
 
+    /* ---------- USER STATE ----------
+       Q1 → scent DNA (weight 1.5; giữ nguyên tỷ lệ tương đối, KHÔNG normalize theo dim lớn nhất)
+       Q2 → avoid (negative preference)
+       Q3 → uniqueness | Q4 → sillage | Q5 → context
+       Q6 → budget (chỉ dùng làm hard filter) */
+    function buildUserState(answers) {
+      var st = {
+        dna: {}, avoid: {}, sillage: null, uniqueness: null, context: null,
+        budgetMin: null, budgetMax: null, budgetMinExclusive: false, budgetMaxExclusive: false
+      };
+      (answers || []).forEach(function (a) {
+        if (!a) return;
+        if (a.v) addVector(st.dna, a.v, Number(a._w || 1));
+        if (a.avoid) Object.keys(a.avoid).forEach(function (k) {
+          st.avoid[k] = (st.avoid[k] || 0) + Number(a.avoid[k] || 0);
+        });
+        if (a.uniqueness) st.uniqueness = a.uniqueness;
+        if (a.sillage !== undefined) st.sillage = Number(a.sillage);
+        if (a.context) st.context = a.context;
+        if (a.budgetMin !== undefined) st.budgetMin = a.budgetMin;
+        if (a.budgetMax !== undefined) st.budgetMax = a.budgetMax;
+        if (a.budgetMinExclusive !== undefined) st.budgetMinExclusive = !!a.budgetMinExclusive;
+        if (a.budgetMaxExclusive !== undefined) st.budgetMaxExclusive = !!a.budgetMaxExclusive;
+      });
+      return st;
+    }
+
     function rebuildUserVector() {
-      var vector = {};
-      var avoid = {};
-      var sillageValues = [];
-      var budgetMin = null;
-      var budgetMax = null;
-      var budgetMinExclusive = false;
-      var budgetMaxExclusive = false;
-
-      (score.answers || []).forEach(function (answer) {
-        if (!answer) return;
-
-        if (answer.v) addVector(vector, answer.v, 1);
-
-        if (answer.avoid) {
-          Object.keys(answer.avoid).forEach(function (k) {
-            avoid[k] = (avoid[k] || 0) + Number(answer.avoid[k] || 0);
-          });
-        }
-
-        if (answer.sillage !== undefined) sillageValues.push(Number(answer.sillage));
-        if (answer.budgetMin !== undefined) budgetMin = answer.budgetMin;
-        if (answer.budgetMax !== undefined) budgetMax = answer.budgetMax;
-        if (answer.budgetMinExclusive !== undefined) budgetMinExclusive = !!answer.budgetMinExclusive;
-        if (answer.budgetMaxExclusive !== undefined) budgetMaxExclusive = !!answer.budgetMaxExclusive;
-      });
-
-      score.vector = vector;
-      score.avoid = avoid;
-      score.sillage = sillageValues.length ? sillageValues[sillageValues.length - 1] : null;
-      score.budgetMin = budgetMin;
-      score.budgetMax = budgetMax;
-      score.budgetMinExclusive = budgetMinExclusive;
-      score.budgetMaxExclusive = budgetMaxExclusive;
+      var st = buildUserState(score.answers || []);
+      score.dna = st.dna;
+      score.avoid = st.avoid;
+      score.sillage = st.sillage;
+      score.uniqueness = st.uniqueness;
+      score.context = st.context;
+      score.budgetMin = st.budgetMin;
+      score.budgetMax = st.budgetMax;
+      score.budgetMinExclusive = st.budgetMinExclusive;
+      score.budgetMaxExclusive = st.budgetMaxExclusive;
     }
 
-    function maxPossibleUserDNA() {
-      var max = {};
-      SCENT_DIMS.forEach(function (k) { max[k] = 0; });
-
-      quiz.forEach(function (question) {
-        var qMax = {};
-        question.a.forEach(function (pair) {
-          var v = pair[1] && pair[1].v;
-          if (!v) return;
-          SCENT_DIMS.forEach(function (k) {
-            qMax[k] = Math.max(qMax[k] || 0, Number(v[k] || 0));
-          });
-        });
-        SCENT_DIMS.forEach(function (k) {
-          max[k] += qMax[k] || 0;
-        });
-      });
-
-      return max;
-    }
-
-    function normalizeUserDNA(v) {
-      var maxRaw = 0;
-
-      SCENT_DIMS.forEach(function (k) {
-        maxRaw = Math.max(maxRaw, Number(v[k] || 0));
-      });
-
-      if (maxRaw <= 0) return {};
-
-      var out = {};
-
-      SCENT_DIMS.forEach(function (k) {
-        var raw = Number(v[k] || 0);
-
-        out[k] = Math.max(
-          0,
-          Math.min(5, (raw / maxRaw) * 5)
-        );
-      });
-
-      return out;
-    }
-
-    function applyAnswer(answer) {
+    function applyAnswer(answer, weight) {
       score.answers = score.answers || [];
-      score.answers[step] = answer || {};
+      score.answers[step] = Object.assign({}, answer || {}, { _w: Number(weight || 1) });
       score.answers.length = step + 1;
       rebuildUserVector();
     }
 
-    function flattenNotes(notes) {
-      if (!notes) return '';
-      if (typeof notes === 'string') return notes;
-      if (Array.isArray(notes)) return notes.map(function (x) {
-        return typeof x === 'string' ? x : (x && x.name) || JSON.stringify(x);
-      }).join(' ');
-      if (typeof notes === 'object') return Object.keys(notes).map(function (k) {
-        var v = notes[k];
-        if (Array.isArray(v)) return v.join(' ');
-        if (v && typeof v === 'object') return Object.keys(v).map(function (z) { return v[z]; }).join(' ');
-        return String(v || '');
-      }).join(' ');
-      return String(notes);
-    }
-
     function normalizeText(value) {
       return String(value || '')
-        .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '')
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
         .toLowerCase();
     }
 
-    const PRODUCT_TERMS = {
-      fresh: ['fresh', 'tuoi', 'bien', 'marine', 'aquatic', 'water', 'cam', 'chanh', 'citrus', 'bergamot', 'buoi', 'quit', 'grapefruit', 'lemon', 'orange', 'mint', 'bac ha', 'cool', 'ozonic'],
-      clean: ['sach', 'clean', 'soap', 'xa phong', 'cotton', 'aldehyde', 'musk', 'xay?', 'linen', 'soapy'],
-      floral: ['hoa', 'floral', 'rose', 'hong', 'jasmine', 'nhai', 'tuberose', 'hoa cam', 'orange blossom', 'iris', 'di vien', 'violet', 'mau don', 'freesia', 'ylang', 'magnolia', 'gardenia'],
-      green: ['green', 'xanh', 'tra', 'tea', 'la', 'co', 'grass', 'fig', 'leaf', 'herbal', 'thao moc'],
-      woody: ['go', 'woody', 'sandalwood', 'dan huong', 'cedar', 'tuyet tung', 'vetiver', 'huong bai', 'patchouli', 'hoac huong', 'oud', 'agarwood', 'guaiac', 'cashmere'],
-      warm: ['warm', 'ambr', 'amber', 'ho phach', 'cinnamon', 'que', 'benzoin', 'labdanum', 'tonka', 'vanilla', 'vani', 'resin', 'nhua'],
-      sweet: ['sweet', 'ngot', 'vanilla', 'vani', 'caramel', 'gourmand', 'praline', 'chocolate', 'cacao', 'coffee', 'ca phe', 'honey', 'mat ong', 'sugar', 'kẹo', 'marshmallow'],
-      powdery: ['powder', 'phan', 'iris', 'violet', 'musk', 'suede', 'heliotrope'],
-      dark: ['dark', 'trầm', 'tram', 'smoky', 'smoke', 'khoi', 'tobacco', 'thuoc la', 'leather', 'da thuoc', 'oud', 'incense', 'nhang', 'resin'],
-      sensual: ['sensual', 'amber', 'ho phach', 'vanilla', 'vani', 'musk', 'xạ huong', 'jasmine', 'nhai', 'rose', 'hong', 'tuberose', 'leather', 'da thuoc', 'oud'],
-      elegant: ['elegant', 'sang', 'thanh lich', 'iris', 'bergamot', 'tea', 'tra', 'musk', 'rose', 'hong', 'jasmine', 'nhai', 'woody', 'powder', 'phan', 'clean', 'sach'],
-      bold: ['bold', 'manh', 'power', 'intense', 'strong', 'noisy', 'loud', 'projection', 'truyen?', 'oud', 'leather', 'da thuoc', 'tobacco', 'thuoc la', 'spicy', 'gia vi', 'dark', 'tram']
-    };
-
-    function countTermHits(text, terms) {
-      var hits = 0;
-      terms.forEach(function (term) {
-        if (text.indexOf(normalizeText(term)) > -1) hits++;
+    /* ---------- DNA SCORE — yếu tố chính ----------
+       Đo KHOẢNG CÁCH THỰC giữa DNA user (đơn vị gốc, đã có weight 1.5)
+       và scent_dna sản phẩm (thang 0–5). Không normalize, không cap 99.
+       100 = trùng DNA · 90 = rất hợp · 80 = hợp · 70 = có thể hợp · <60 = khá xa */
+    function dnaDistance(dna, p) {
+      var wSum = 0, errSum = 0;
+      SCENT_DIMS.forEach(function (k) {
+        var u = Number(dna[k] || 0);
+        if (!u) return;
+        wSum += u;
+        errSum += u * Math.abs(u - Number(p[k] || 0));
       });
-      return hits;
+      return wSum ? errSum / wSum : 5;
     }
 
-    function productProfile(p) {
-      var dna = p.scent_dna || {};
-      var v = {};
-
+    /* dim sản phẩm mạnh (>2) mà user không hề nhắc → trừ nhẹ ("character ngoài mong muốn") */
+    function extraDistance(dna, p) {
+      var over = 0, n = 0;
       SCENT_DIMS.forEach(function (k) {
-        var n = Number(dna[k]);
-        v[k] = Number.isFinite(n) ? Math.max(0, Math.min(5, n)) : 0;
+        if (Number(dna[k] || 0)) return;
+        over += Math.max(0, Number(p[k] || 0) - 2);
+        n++;
       });
+      return n ? over / n : 0;
+    }
 
-      if (p.sillage !== null && p.sillage !== undefined) {
-        v.sillage = Number(p.sillage);
-      } else {
-        v.sillage = null;
-      }
+    var DNA_MATCH_SCALE = 12;   // mỗi đơn vị khoảng cách DNA = trừ 12 điểm
+    var DNA_EXTRA_SCALE = 2.5;  // character ngoài mong muốn: nhẹ, chỉ tách các mức gần nhau
 
-      v.gender = p.gender || null;
+    function dnaScoreOf(dna, p) {
+      return clampNum(100 - dnaDistance(dna, p) * DNA_MATCH_SCALE - extraDistance(dna, p) * DNA_EXTRA_SCALE, 0, 100);
+    }
+
+    /* ---------- MODIFIERS — nhỏ, không được lấn át DNA ---------- */
+    /* Q4 độ tỏa: ±5 tối đa. Sản phẩm thiếu sillage → modifier 0 (KHÔNG thưởng). */
+    var SILLAGE_MOD = { 0: 5, 1: 2, 2: 0, 3: -4, 4: -5 };
+
+    function sillageModifier(userSillage, dna) {
+      if (userSillage == null || dna.sillage == null) return 0;
+      return SILLAGE_MOD[Math.min(4, Math.abs(Number(dna.sillage) - Number(userSillage)))];
+    }
+
+    /* Q5 hoàn cảnh: ±3 tối đa */
+    var CONTEXT_FIT = {
+      daily:     { like: { clean: 2, fresh: 2 }, dislike: { dark: 1.5, bold: 1.5 } },
+      casual:    { like: { fresh: 2, green: 1.5, elegant: 1.5 }, dislike: {} },
+      date:      { like: { sensual: 2, warm: 1.5, sweet: 1.5 }, dislike: {} },
+      event:     { like: { bold: 2, dark: 1.5, sensual: 1.5 }, dislike: {} },
+      versatile: null
+    };
+
+    function contextModifier(context, dna) {
+      var ctx = CONTEXT_FIT[context];
+      if (!ctx) return 0;
+      var adj = 0;
+      Object.keys(ctx.like).forEach(function (k) {
+        adj += ctx.like[k] * (Number(dna[k] || 0) / 5);
+      });
+      Object.keys(ctx.dislike).forEach(function (k) {
+        adj -= ctx.dislike[k] * (Math.max(0, Number(dna[k] || 0) - 2) / 3);
+      });
+      return clampNum(adj, -3, 3);
+    }
+
+    /* Q3 nét riêng: ±3 tối đa. Không bao giờ ép chọn niche khi DNA lệch. */
+    var UNIQUENESS_FIT = {
+      mass:      { designer:  2, niche: -2 },
+      signature: { designer:  1, niche:  1 },
+      niche:     { designer: -1, niche:  2 },
+      extreme:   { designer: -2, niche:  3 }
+    };
+
+    function uniquenessModifier(uniqueness, dna) {
+      var u = UNIQUENESS_FIT[uniqueness];
+      return u ? u[dna.is_niche ? 'niche' : 'designer'] : 0;
+    }
+
+    /* Q2 avoid: penalty riêng, giới hạn tuyệt đối 15 điểm để không phá DNA match. */
+    var AVOID_CAP = 15;
+    var AVOID_SCALE = 3;
+
+    function avoidPenaltyOf(avoid, dna) {
+      var pen = 0;
+      Object.keys(avoid || {}).forEach(function (k) {
+        pen += Number(avoid[k] || 0) * Number(dna[k] || 0) * AVOID_SCALE;
+      });
+      return Math.min(AVOID_CAP, pen);
+    }
+
+    /* ---------- PRODUCT DNA ---------- */
+    function productDNA(p) {
+      var src = p.scent_dna || {};
+      var v = {};
+      SCENT_DIMS.forEach(function (k) { v[k] = clampNum(Number(src[k]) || 0, 0, 5); });
+      v.sillage = p.sillage == null ? null : Number(p.sillage);
       v.is_niche = !!p.is_niche;
-
       return v;
     }
 
-    function vectorDistance(user, product) {
-      var total = 0, weight = 0;
-      SCENT_DIMS.forEach(function (k) {
-        var u = Number(user[k] || 0);
-        if (!u) return;
-        var p = Number(product[k] || 0);
-        var w = Math.max(1, Math.min(5, Math.abs(u)));
-        total += Math.abs(u - p) * w;
-        weight += w;
-      });
-      return weight ? total / weight : 3;
-    }
-
-    function matchingPercent(user, product, userSillage) {
-      var distance = vectorDistance(user, product);
-
-      // DNA là yếu tố cốt lõi của recommendation.
-      var base = 100 - (distance * 12);
-
-      // Sillage chỉ là yếu tố điều chỉnh.
-      // Không để performance lấn át scent DNA.
-      var sill = Number(userSillage || 3);
-      var productSillage = product.sillage == null ? null : Number(product.sillage);
-      var sillDiff = productSillage == null ? 0 : Math.abs(productSillage - sill);
-
-      base -= Math.min(6, sillDiff * 2);
-
-      // Avoid là negative preference.
-      // Giới hạn penalty để một dimension không thể phá toàn bộ DNA match.
-      if (score.avoid) {
-        Object.keys(score.avoid).forEach(function (k) {
-          var av = Number(score.avoid[k] || 0);
-          var productValue = Math.max(0, Number(product[k] || 0));
-
-          var penalty = (av / 6) * productValue * 6;
-
-          base -= Math.min(6, penalty);
-        });
-      }
-
-      return Math.max(0, Math.min(99, base));
-    }
-
-    function productReason(user, product, userSillage, userAvoid) {
-      var pairs = SCENT_DIMS.map(function (k) {
-        var u = Number(user[k] || 0), p = Number(product[k] || 0);
-        return { k: k, d: Math.abs(u - p), u: u, p: p };
-      }).filter(function (x) { return x.u > 0; }).sort(function (a, b) { return a.d - b.d; });
-
-      var labels = {
-        fresh: 'độ tươi thoáng', clean: 'cảm giác sạch', floral: 'nốt hoa',
-        green: 'sắc xanh tự nhiên', woody: 'chiều gỗ', warm: 'độ ấm',
-        sweet: 'độ ngọt', powdery: 'cảm giác mềm phấn', dark: 'chiều sâu',
-        sensual: 'độ cuốn hút', elegant: 'sự tinh tế', bold: 'độ hiện diện'
+    /* ---------- FINAL SCORE ----------
+       finalScore = dnaScore + sillageMod + contextMod + uniquenessMod − avoidPenalty */
+    function scoreProduct(p, st) {
+      var dna = productDNA(p);
+      var b = {
+        dnaScore: round1(dnaScoreOf(st.dna, dna)),
+        avoidPenalty: round1(avoidPenaltyOf(st.avoid, dna)),
+        sillageModifier: sillageModifier(st.sillage, dna),
+        contextModifier: round1(contextModifier(st.context, dna)),
+        uniquenessModifier: uniquenessModifier(st.uniqueness, dna)
       };
-      var good = pairs.slice(0, 2).map(function (x) { return labels[x.k]; }).filter(Boolean);
-      var reasons = [];
-      if (good.length) reasons.push('Hợp với ' + good.join(' và ') + '.');
-      if (userSillage && product.sillage != null &&
-        Math.abs(Number(product.sillage) - Number(userSillage)) <= 1)
-        reasons.push('Độ tỏa gần với mức bạn chọn.');
-      if (userAvoid) {
-        var avoided = Object.keys(userAvoid).filter(function (k) {
-          return Number(product[k] || 0) <= 1;
-        });
-        if (avoided.length) reasons.push('Không nổi bật ở nhóm bạn vừa nói là không thích.');
-      }
-      return reasons.join(' ') || 'Điểm tương đồng tốt với gu mùi PUVELA vừa xây cho bạn.';
+      b.finalScore = round1(clampNum(
+        b.dnaScore + b.sillageModifier + b.contextModifier + b.uniquenessModifier - b.avoidPenalty, 0, 100));
+      return { p: p, dna: dna, breakdown: b };
     }
 
+    function round1(n) { return Math.round(n * 10) / 10; }
+
+    /* ---------- BUDGET — HARD FILTER, không chạm scent score ---------- */
     function productPrice10(p) {
       var variants = p.product_variants || [];
       var v = variants.find(function (x) { return normalizeText(x.label).indexOf('10ml') > -1; });
@@ -3267,8 +3250,97 @@
 
     const money = n => Number(n).toLocaleString('vi-VN') + '₫';
 
-    function resultProfile(v) {
-      var ranked = SCENT_DIMS.map(function (k) { return { k: k, v: Number(v[k] || 0) }; }).sort(function (a, b) { return b.v - a.v; });
+    function applyBudgetFilter(scored, st) {
+      var bounded = st.budgetMin != null || st.budgetMax != null;
+      if (!bounded) return scored;
+      return scored.filter(function (x) {
+        var price = productPrice10(x.p);
+        if (!(price > 0)) return false;
+        if (st.budgetMin != null) {
+          var minOk = st.budgetMinExclusive ? price > st.budgetMin : price >= st.budgetMin;
+          if (!minOk) return false;
+        }
+        if (st.budgetMax != null) {
+          var maxOk = st.budgetMaxExclusive ? price < st.budgetMax : price <= st.budgetMax;
+          if (!maxOk) return false;
+        }
+        return true;
+      });
+    }
+
+    /* ---------- RANKING — Q2 avoid gate + Q3 uniqueness dominance ----------
+       Một nơi duy nhất xếp hạng, dùng chung cho recommend() và debug.
+       - Q2 gate: sản phẩm chạm dim user vừa "không thích" (>=4, nặng nếu >=5) không được
+         đứng trên candidate không vi phạm. Cả pool cùng vi phạm → fallback scoring thường.
+       - Q3 dominance: uniqueness chỉ được quyết khi DNA trong tầm 5 điểm của ứng viên tốt
+         nhất; thấp hơn >=5 điểm thì thành phần uniqueness bị trung lập trong rankScore. */
+    function rankScored(scored, st) {
+      var avoidDims = Object.keys((st && st.avoid) || {});
+      scored.forEach(function (x) {
+        x.violate = 0;
+        avoidDims.forEach(function (k) {
+          var v = Number(x.dna[k] || 0);
+          if (v >= 5) x.violate = 2;
+          else if (v >= 4) x.violate = Math.max(x.violate, 1);
+        });
+      });
+      var clean = scored.filter(function (x) { return !x.violate; });
+      var pool = clean.length ? clean : scored;
+
+      var bestDna = 0;
+      pool.forEach(function (x) { bestDna = Math.max(bestDna, x.breakdown.dnaScore); });
+      scored.forEach(function (x) {
+        /* Q3 dominance (hai chiều): uniqueness chỉ được GIỮ phần dương và chỉ với sản phẩm
+           trong tầm 5 điểm DNA của ứng viên tốt nhất. Phần dương của sản phẩm xa bị trung
+           lập (không thể dùng để leo lên); phạt âm bị trung lập ở mọi nơi (không thể kéo
+           sản phẩm DNA cao xuống để sản phẩm DNA thấp vượt qua). */
+        var far = bestDna - x.breakdown.dnaScore >= 5;
+        var u = x.breakdown.uniquenessModifier;
+        var keep = far ? 0 : Math.max(0, u);
+        x.rankScore = round1(x.breakdown.finalScore - u + keep);
+      });
+
+      return scored.slice().sort(function (a, b) {
+        if (a.violate !== b.violate) return a.violate - b.violate;
+        return b.rankScore - a.rankScore || b.breakdown.dnaScore - a.breakdown.dnaScore;
+      });
+    }
+
+    /* ---------- REASON — dựa trên dimension đóng góp lớn nhất vào similarity ---------- */
+    var DIM_LABELS = {
+      fresh: 'độ tươi thoáng', clean: 'cảm giác sạch', floral: 'nốt hoa',
+      green: 'sắc xanh tự nhiên', woody: 'chiều gỗ', warm: 'độ ấm',
+      sweet: 'độ ngọt', powdery: 'cảm giác mềm phấn', dark: 'chiều sâu',
+      sensual: 'độ cuốn hút', elegant: 'sự tinh tế', bold: 'độ hiện diện'
+    };
+    var AVOID_LABELS = {
+      sweet: 'ngọt ngấy', bold: 'quá nồng', dark: 'trầm nặng',
+      clean: 'sạch/xà phòng'
+    };
+
+    function productReason(st, dna) {
+      var pairs = SCENT_DIMS.map(function (k) {
+        var u = Number(st.dna[k] || 0), p = Number(dna[k] || 0);
+        return { k: k, contrib: u * Math.max(0, 5 - Math.abs(u - p)) };
+      }).filter(function (x) { return x.contrib > 0 && Number(dna[x.k] || 0) >= 2; })
+        .sort(function (a, b) { return b.contrib - a.contrib; });
+
+      var reasons = [];
+      var good = pairs.slice(0, 2).map(function (x) { return DIM_LABELS[x.k]; }).filter(Boolean);
+      if (good.length) reasons.push('Hợp với ' + good.join(' và ') + '.');
+
+      Object.keys(st.avoid || {}).forEach(function (k) {
+        if (Number(dna[k] || 0) <= 1.5)
+          reasons.push('Không nổi bật ở nhóm mùi ' + (AVOID_LABELS[k] || DIM_LABELS[k] || k) + ' bạn vừa nói là không thích.');
+      });
+      if (st.sillage != null && dna.sillage != null && Math.abs(dna.sillage - st.sillage) <= 1)
+        reasons.push('Độ tỏa cũng khá sát mức bạn chọn.');
+      return reasons.join(' ') || 'Điểm tương đồng tốt với gu mùi PUVELA vừa xây cho bạn.';
+    }
+
+    /* ---------- RESULT PROFILE (UI — chỉ dựa trên Q1 DNA) ---------- */
+    function resultProfile(dna) {
+      var ranked = SCENT_DIMS.map(function (k) { return { k: k, v: Number(dna[k] || 0) }; }).sort(function (a, b) { return b.v - a.v; });
       var top = ranked[0] && ranked[0].k;
       var second = ranked[1] && ranked[1].k;
 
@@ -3291,118 +3363,38 @@
       return { key: top || 'elegant', name: prof.name, tag: prof.tag, desc: prof.desc, ranked: ranked };
     }
 
-    async function recommend(userVector) {
+    /* ---------- CATALOG + RECOMMEND ---------- */
+    async function fetchCatalog() {
       if (!(window.puvela && window.puvela.client)) return [];
+      var r = await window.puvela.client.from('products')
+        .select('slug,name,category,notes,scent_dna,sillage,gender,is_niche,hero_image,product_variants(label,price,compare_at_price)')
+        .eq('is_published', true);
+      if (r && r.error) throw r.error;
+      return ((r && r.data) || []).filter(function (p) {
+        return p.scent_dna && Object.keys(p.scent_dna).length > 0;
+      });
+    }
+
+    /* FILTER (budget) đã xong mới xếp hạng — budget không đổi scent score. */
+    async function recommend(st) {
       try {
-        /*
-          HARD RULE:
-          Product name is DISPLAY ONLY. It is never used for scoring.
-          The recommendation engine scores only product metadata.
-        */
-        var r = await window.puvela.client.from('products')
-          .select('slug,name,category,notes,scent_dna,sillage,gender,is_niche,hero_image,product_variants(label,price,compare_at_price)')
-          .eq('is_published', true);
-        if (r && r.error) throw r.error;
-
-        var rows = (r && r.data) || [];
+        var rows = await fetchCatalog();
         if (!rows.length) return [];
-
-        rows = rows.filter(function (p) {
-          return p.scent_dna && Object.keys(p.scent_dna).length > 0;
-        });
-
-        /* Optional metadata. Missing columns must never break the catalog. */
-        try {
-          var mr = await window.puvela.client.from('products')
-            .select('slug,gender,sillage,is_niche')
-            .eq('is_published', true);
-          if (mr && !mr.error && Array.isArray(mr.data)) {
-            var meta = {};
-            mr.data.forEach(function (m) { meta[m.slug] = m; });
-            rows.forEach(function (p) {
-              var m = meta[p.slug];
-              p.gender = m && m.gender != null ? m.gender : null;
-              p.sillage = m && m.sillage != null ? Number(m.sillage) : null;
-              p.is_niche = !!(m && m.is_niche);
-            });
-          }
-        } catch (metaError) {
-          console.warn('[Puvela] Optional fragrance metadata unavailable:', metaError && metaError.message);
-        }
-
-        var scored = rows.map(function (p) {
-          var profile = productProfile(p);
-          var finalUserVector = normalizeUserDNA(score.vector);
-          var pct = matchingPercent(
-            userVector || normalizeUserDNA(score.vector),
-            profile,
-            score.sillage
-          );
-          var p10 = productPrice10(p);
-
-          /* Budget is a hard constraint, never a personality signal. */
-          var rawScore = Math.max(0, Math.min(99, pct));
-
-          return {
-            p: p,
-            profile: profile,
-            score: Math.round(rawScore),
-            rawScore: rawScore,
-            reason: productReason(finalUserVector, profile, score.sillage, score.avoid),
-            price: p10 ? money(p10) : ''
-          };
-        });
-
-        /* Hard budget filter: bounded Q7 choices never show products outside the selected range.
-           Products without a valid 10ml price are excluded from bounded ranges because their
-           price cannot be verified against the customer's budget. */
-        var hasBudgetFilter = score.budgetMin != null || score.budgetMax != null;
-        if (hasBudgetFilter) {
-          scored = scored.filter(function (x) {
-            var price = productPrice10(x.p);
-            if (!(price > 0)) return false;
-            if (score.budgetMin != null) {
-              var minOk = score.budgetMinExclusive ? price > score.budgetMin : price >= score.budgetMin;
-              if (!minOk) return false;
-            }
-            if (score.budgetMax != null) {
-              var maxOk = score.budgetMaxExclusive ? price < score.budgetMax : price <= score.budgetMax;
-              if (!maxOk) return false;
-            }
-            return true;
-          });
-        }
-        console.table(
-          scored
-            .filter(function (x) {
-              return [
-                'Dior Sauvage Elixir',
-                'Narciso Rodriguez For Her Musc Noir Eau de Parfum',
-                'Yves Saint Laurent Black Opium'
-              ].indexOf(x.p.name) > -1;
-            })
-            .map(function (x) {
-              return {
-                name: x.p.name,
-                score: x.score,
-                sillage: x.p.sillage,
-                profile: x.profile
-              };
-            })
-        );
-        scored.sort(function (a, b) { return b.rawScore - a.rawScore; });
-
-        return scored.slice(0, 3).map(function (x) {
+        var scored = rows.map(function (p) { return scoreProduct(p, st); });
+        scored = applyBudgetFilter(scored, st);
+        var ranked = rankScored(scored, st);
+        return ranked.slice(0, 3).map(function (x) {
           var n = x.p.notes || {};
-          var notes = [n.top, n.mid, n.base].filter(Boolean).join(' · ');
+          var p10 = productPrice10(x.p);
           return {
             slug: x.p.slug,
             name: x.p.name,
-            notes: notes,
-            price: x.price ? ('10ml · ' + x.price) : '',
-            score: x.score,
-            reason: x.reason,
-            image: x.p.hero_image || 'assets/placeholder.svg'
+            notes: [n.top, n.mid, n.base].filter(Boolean).join(' · '),
+            price: p10 ? ('10ml · ' + money(p10)) : '',
+            score: Math.round(x.breakdown.finalScore),
+            reason: productReason(st, x.dna),
+            image: x.p.hero_image || 'assets/placeholder.svg',
+            breakdown: x.breakdown
           };
         });
       } catch (e) {
@@ -3419,6 +3411,36 @@
       return t + ' PUVELA ưu tiên chiết 5–10ml để bạn thử trên da trước khi quyết định fullsize.';
     }
 
+    /* ---------- DEBUG — test scoring không cần click UI ----------
+       VD: PUVELA_DEBUG_MATCH({q1:1, q2:4, q3:1, q4:2, q5:1, q6:3}) — chỉ số lựa chọn 0-based */
+    window.PUVELA_DEBUG_MATCH = async function (answers) {
+      var def = { q1: 0, q2: 4, q3: 1, q4: 2, q5: 4, q6: 3 };
+      var picks = Object.assign({}, def, answers || {});
+      var records = [0, 1, 2, 3, 4, 5].map(function (i) {
+        return Object.assign({}, quiz[i].a[picks['q' + (i + 1)]][1], { _w: quiz[i].weight });
+      });
+      var st = buildUserState(records);
+      var rows = await fetchCatalog();
+      var table = rankScored(rows.map(function (p) { return scoreProduct(p, st); }), st).map(function (x) {
+        return {
+          name: x.p.name,
+          price10: productPrice10(x.p),
+          dnaScore: x.breakdown.dnaScore,
+          avoidPenalty: x.breakdown.avoidPenalty,
+          sillageModifier: x.breakdown.sillageModifier,
+          contextModifier: x.breakdown.contextModifier,
+          uniquenessModifier: x.breakdown.uniquenessModifier,
+          finalScore: x.breakdown.finalScore,
+          avoidGate: x.violate === 2 ? 'hard' : (x.violate === 1 ? 'soft' : ''),
+          userDNA: JSON.stringify(st.dna),
+          productDNA: JSON.stringify(x.dna)
+        };
+      });
+      console.log('User state:', st);
+      console.table(table);
+      return table;
+    };
+
     const modal = document.querySelector('#quiz-modal');
     const question = document.querySelector('#quiz-question');
     const options = document.querySelector('#quiz-options');
@@ -3433,7 +3455,7 @@
     const quizOpen = document.querySelector('#quiz-open');
 
     let step = 0;
-    let score = { vector: {}, avoid: {}, answers: [] };
+    let score = { answers: [], dna: {}, avoid: {}, sillage: null, uniqueness: null, context: null, budgetMin: null, budgetMax: null, budgetMinExclusive: false, budgetMaxExclusive: false };
 
     function render() {
       var it = quiz[step];
@@ -3448,7 +3470,7 @@
       }).join('');
       options.querySelectorAll('button').forEach(function (b) {
         b.addEventListener('click', function () {
-          applyAnswer(it.a[Number(b.dataset.i)][1]);
+          applyAnswer(it.a[Number(b.dataset.i)][1], it.weight);
           step++;
           if (step < quiz.length) render();
           else showResult();
@@ -3460,7 +3482,7 @@
 
     function resetQuiz() {
       step = 0;
-      score = { vector: {}, avoid: {}, answers: [] };
+      score = { answers: [], dna: {}, avoid: {}, sillage: null, uniqueness: null, context: null, budgetMin: null, budgetMax: null, budgetMinExclusive: false, budgetMaxExclusive: false };
       quizIntro.hidden = false;
       flow.hidden = true;
       content.style.display = 'block';
@@ -3490,9 +3512,9 @@
         '<p>Không chọn theo tên sản phẩm. PUVELA đang đọc metadata của từng chai trong catalog để tìm độ tương đồng.</p>' +
         '</div>';
 
-      var userDNA = normalizeUserDNA(score.vector);
-      var recs = await recommend(userDNA);
-      var prof = resultProfile(userDNA);
+      var st = buildUserState(score.answers || []);
+      var recs = await recommend(st);
+      var prof = resultProfile(st.dna);
 
       var recHTML = recs.length ? recs.map(function (r, i) {
         return '<a class="rec-card" href="product.html?p=' + encodeURIComponent(r.slug) + '">' +
@@ -3507,7 +3529,7 @@
         '<div class="rec-empty"><p>PUVELA chưa tìm được dữ liệu sản phẩm phù hợp để chấm điểm.</p><small>Hãy kiểm tra catalog Supabase và metadata của sản phẩm.</small></div>';
 
       var dna = SCENT_DIMS.reduce(function (o, k) {
-        o[k] = Math.round((Number(userDNA[k] || 0)) * 10) / 10;
+        o[k] = Math.round((Number(st.dna[k] || 0)) * 10) / 10;
         return o;
       }, {});
 
@@ -3527,11 +3549,13 @@
         '<span>Đối chiếu theo gu mùi · không theo tên chai</span>' +
         '</div>' +
         '<div class="recommended rec3">' + recHTML + '</div>' +
-        '<div class="result-note"><strong>Vì sao kết quả này khác?</strong><p>PUVELA không gán bạn vào một “nhóm hương” cố định. Câu trả lời được chuyển thành hồ sơ cảm giác của riêng bạn, sau đó so khớp với metadata của từng sản phẩm.</p></div>' +
-        '<form class="quiz-email" id="quiz-email">' +
-        '<input type="email" required placeholder="Email nhận hồ sơ gu mùi + ưu đãi 10%" aria-label="Email nhận kết quả" />' +
-        '<button type="submit">Nhận kết quả →</button>' +
-        '</form>' +
+        /* ô email chỉ hiện khi hệ thống lưu được lead — không gửi được thì khỏi hiện */
+        ((window.puvela && window.puvela.configured)
+          ? '<form class="quiz-email" id="quiz-email">' +
+            '<input type="email" required placeholder="Email nhận hồ sơ gu mùi + ưu đãi 10%" aria-label="Email nhận kết quả" />' +
+            '<button type="submit">Nhận kết quả →</button>' +
+            '</form>'
+          : '') +
         '<div class="result-actions"><button id="quiz-again" type="button">Làm lại</button><button id="quiz-close-result" type="button">Xong</button></div>';
 
       var again = document.querySelector('#quiz-again');
@@ -3540,18 +3564,21 @@
       if (done) done.onclick = closeQuiz;
 
       var ef = document.querySelector('#quiz-email');
-      if (ef) ef.addEventListener('submit', function (e) {
+      if (ef) ef.addEventListener('submit', async function (e) {
         e.preventDefault();
         var em = ef.querySelector('input').value.trim();
+        var res = null;
         if (window.puvela && window.puvela.saveLead) {
-          window.puvela.saveLead({
+          res = await window.puvela.saveLead({
             email: em,
             source: 'quiz',
             scent_dna: {
-              version: 'puvela-scent-matching-v2',
+              version: 'puvela-scent-matching-v4',
               profile: prof.key,
               vector: dna,
               avoid: score.avoid,
+              uniqueness: score.uniqueness || null,
+              context: score.context || null,
               sillage: score.sillage || null,
               budgetMin: score.budgetMin,
               budgetMax: score.budgetMax,
@@ -3561,9 +3588,19 @@
             }
           });
         }
-        ef.innerHTML = '<p class="done">Đã gửi hồ sơ gu mùi. Cảm ơn bạn.</p>';
+        ef.innerHTML = res && res.ok
+          ? '<p class="done">Đã gửi hồ sơ gu mùi. Cảm ơn bạn.</p>'
+          : '<p class="done">Chưa gửi được — bạn thử lại sau chút nhé.</p>';
       });
     }
+
+    var floatingQuizCta = document.querySelector('.floating-quiz-cta');
+    function toggleFloatingQuizCta() {
+      if (!floatingQuizCta) return;
+      floatingQuizCta.classList.toggle('is-visible', window.scrollY > 260);
+    }
+    window.addEventListener('scroll', toggleFloatingQuizCta, { passive: true });
+    toggleFloatingQuizCta();
 
     quizOpen.onclick = openQuiz;
     quizBegin.onclick = function () {

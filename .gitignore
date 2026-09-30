@@ -23,3 +23,7 @@ node_modules/
 
 # Supabase local
 supabase/.temp/
+# --- nội bộ: script SQL vận hành + source Edge Function (không thuộc website) ---
+sql/
+supabase/
+*.original.png

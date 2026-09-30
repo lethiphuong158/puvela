@@ -7,7 +7,7 @@
    ============================================================ */
 (function () {
   var KEY = "puvela-cart";
-  var FREESHIP = 1500000, SHIP = 30000;
+  var FREESHIP = 1000000, SHIP = 30000;
   var BANK = { bank: "Vietcombank", stk: "0123456789", ten: "CONG TY PUVELA" },
       LIENHE = { zalo: "0123456789", hotline: "0123456789" }   // TODO: điền số thật; // TODO: thay số thật
 
@@ -52,12 +52,12 @@
     ".pv-it img{width:64px;height:78px;object-fit:cover;background:#e8e0d5;flex:none}"+
     ".pv-it .nm{font-size:14px;font-weight:600;line-height:1.3}"+
     ".pv-it .lb{font-size:12px;color:#8a827a;margin:3px 0 8px}"+
-    ".pv-it .pr{font-size:13px}"+
+    ".pv-it .pr{font:600 13px \"IBM Plex Mono\",monospace}"+
     ".pv-qty{display:inline-flex;align-items:center;gap:12px;margin-top:8px;border:1px solid rgba(45,41,38,.25);padding:3px 10px}"+
     ".pv-qty button{border:0;background:none;cursor:pointer;font-size:15px;line-height:1;color:inherit}"+
     ".pv-rm{margin-left:14px;background:none;border:0;color:#8a827a;cursor:pointer;font-size:11px;text-decoration:underline}"+
     ".pv-foot{padding:20px 24px;border-top:1px solid rgba(45,41,38,.15)}"+
-    ".pv-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px;color:#5e5853}"+
+    ".pv-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px;color:#5e5853}.pv-row b{font-family:\"IBM Plex Mono\",monospace}"+
     ".pv-row.tot{font-size:16px;color:#2b2621;font-weight:600;margin:14px 0 0;padding-top:12px;border-top:1px solid rgba(45,41,38,.15)}"+
     ".pv-btn{width:100%;margin-top:16px;padding:16px;border:1px solid #9c5a41;background:#9c5a41;color:#fff;cursor:pointer;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;transition:.2s}"+
     ".pv-btn:hover{background:transparent;color:#2b2621}"+
@@ -139,10 +139,15 @@
   }
 
   function render(){
-    // cập nhật số lượng trên nav
-    document.querySelectorAll("[data-cart-count]").forEach(function(e){ e.textContent = count(); });
+    // cập nhật số lượng trên nav — ẩn khi giỏ trống, hiện chip số khi có hàng
+    var n = count();
+    document.querySelectorAll("[data-cart-count]").forEach(function(e){
+      e.textContent = n;
+      e.classList.toggle("has-items", n > 0);
+    });
     document.querySelectorAll(".bag[data-cart-toggle]").forEach(function(e){
-      if (!e.querySelector("[data-cart-count]")) e.textContent = "Túi (" + count() + ")";
+      var sp = e.querySelector("[data-cart-count]");
+      if (!sp) e.textContent = "Túi" + (n ? " (" + n + ")" : "");
     });
     if (!root) return;
     var c = load(), items = root.querySelector("[data-items]");
@@ -214,6 +219,8 @@
         '<p style="font-size:12px;color:#7a7268">Lý do kỹ thuật: '+String(loi).replace(/[<>]/g,'')+'</p>'+
         '<button class="pv-btn" data-doneclose style="margin-top:14px;background:transparent;color:inherit;border:1px solid currentColor">Quay lại giỏ hàng</button>';
       showView("done");
+      /* thất bại thì tiêu đề phải nói thật — không được ghi "Đặt hàng thành công" */
+      root.querySelector("[data-title]").textContent = "Chưa gửi được đơn";
       d.querySelector("[data-doneclose]").onclick = function(){ showView("cart"); };
       return;
     }

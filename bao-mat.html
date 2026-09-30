@@ -62,7 +62,7 @@
     footer[aria-label="Chân trang"] a{color:inherit;text-decoration:none}
     .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;padding-bottom:44px;
       border-bottom:1px solid rgba(255,255,255,.16)}
-    .foot-brand img{height:30px;margin-bottom:16px;filter:brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg)}
+    .foot-brand img{height:22px;margin-bottom:16px;filter:brightness(0) invert(.82) sepia(.3) saturate(3) hue-rotate(330deg)}
     .foot-brand p{max-width:34ch;font-size:13.5px;line-height:1.7;color:rgba(233,225,213,.66);margin:0}
     .foot-col h4{font:500 10px "IBM Plex Mono",monospace;letter-spacing:.07em;text-transform:uppercase;margin:0 0 16px;color:#fff}
     .foot-col a{display:block;margin:9px 0;font-size:13.5px;color:rgba(233,225,213,.7)}
@@ -77,7 +77,7 @@
 </head>
 <body>
 <div class="announcement">Chính hãng 100% · Full &amp; Chiết · Freeship đơn từ 1.500.000₫</div>
-  <nav><a class="back" href="index.html#collections">← Quay lại</a><a class="brand" href="index.html" aria-label="Puvela"><img src="assets/logo-nav.png" alt="Puvela" /></a><a class="bag" href="#" data-cart-toggle>Túi (<span data-cart-count>0</span>)</a></nav>
+  <nav><a class="back" href="index.html#collections">← Quay lại</a><a class="brand" href="index.html" aria-label="Puvela"><img src="assets/logo-nav.png?v=2" alt="Puvela" /></a><a class="bag" href="#" data-cart-toggle>Túi (<span data-cart-count>0</span>)</a></nav>
   <section class="doc-head">
     <p class="eyebrow">Puvela · Thông tin</p>
     <h1>Chính sách bảo mật</h1>
@@ -308,21 +308,22 @@
 <footer aria-label="Chân trang">
     <div class="foot-grid">
       <div class="foot-brand">
-        <img src="assets/logo-nav.png" alt="PUVELA" />
+        <img src="assets/logo-nav.png?v=2" alt="PUVELA" />
         <p>Nước hoa chính hãng nhập khẩu — full &amp; chiết. Thử trước. Yêu rồi hãy mua cả chai.</p>
       </div>
       <div class="foot-col"><h4>Cửa hàng</h4><a href="collection.html?c=all">Tất cả nước hoa</a><a href="collection.html?c=nu">Nước hoa Nữ</a><a href="collection.html?c=nam">Nước hoa Nam</a><a href="collection.html?c=unisex">Unisex &amp; Niche</a><a href="index.html#bestsellers">Best sellers</a></div>
-      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a></div>
-      <div class="foot-col"><h4>Chính sách</h4><a href="bao-mat.html">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản</a></div>
+      <div class="foot-col"><h4>Hỗ trợ</h4><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">Nhắn tin TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Nhắn tin Instagram</a><a
+          href="https://www.facebook.com/profile.php?id=61594343787166" target="_blank" rel="noopener">Nhắn tin Facebook</a></div>
+      <div class="foot-col"><h4>Chính sách</h4><a href="van-chuyen.html">Vận chuyển &amp; đổi trả</a><a href="bao-mat.html" class="on">Chính sách bảo mật</a><a href="dieu-khoan.html">Điều khoản sử dụng</a><a href="faq.html">Câu hỏi thường gặp</a></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 PUVELA</span>
-      <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a></div>
+      <div class="foot-social"><a href="https://www.tiktok.com/@puvela.vn" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/puvela.vn/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/profile.php?id=61594343787166" target="_blank" rel="noopener">Facebook</a></div>
       <span>Việt Nam</span>
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/supabase.js"></script>
-  <script src="assets/cart.js"></script>
+  <script src="assets/cart.js?v=4"></script>
 </body>
 </html>
