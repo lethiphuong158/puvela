@@ -8,8 +8,17 @@
 (function () {
   var KEY = "puvela-cart";
   var FREESHIP = 1000000, SHIP = 30000;
-  var BANK = { bank: "Vietcombank", stk: "0123456789", ten: "CONG TY PUVELA" },
-      LIENHE = { zalo: "0123456789", hotline: "0123456789" }   // TODO: điền số thật; // TODO: thay số thật
+  /* BANK: CHƯA có số tài khoản thật → để trống, khách chọn chuyển khoản sẽ được báo
+     "PUVELA nhắn Zalo số tài khoản". Điền đủ 3 ô thì thông tin chuyển khoản hiện ngay.
+     KHÔNG để số giả: khách có thể chuyển nhầm tiền vào tài khoản người lạ. */
+  var BANK = { bank: "", stk: "", ten: "" },
+      LIENHE = { zalo: "0368574940", hotline: "0368574940" };
+  function bankHTML(noiDung){
+    if (BANK.bank && BANK.stk && BANK.ten)
+      return "Chuyển khoản tới:<br><b>"+BANK.bank+"</b> · "+BANK.stk+"<br>"+BANK.ten+"<br>Nội dung: <b>"+noiDung+"</b>";
+    return "PUVELA sẽ nhắn Zalo / gọi cho bạn số tài khoản và số tiền cần chuyển khi xác nhận đơn. "+
+           "Cần gấp? Nhắn Zalo <b>"+LIENHE.zalo+"</b>.";
+  }
 
   function money(n){ return (n||0).toLocaleString("vi-VN") + "₫"; }
   function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } }
@@ -109,7 +118,7 @@
     root.querySelectorAll('input[name="pay"]').forEach(function(r){
       r.onchange = function(){
         var b = root.querySelector("[data-bank]");
-        if (this.value === "bank"){ b.hidden = false; b.innerHTML = "Chuyển khoản tới:<br><b>"+BANK.bank+"</b> · "+BANK.stk+"<br>"+BANK.ten+"<br>Nội dung: <b>[SĐT của bạn]</b>"; }
+        if (this.value === "bank"){ b.hidden = false; b.innerHTML = bankHTML("[SĐT của bạn]"); }
         else b.hidden = true;
       };
     });
@@ -230,7 +239,7 @@
       '<p style="font-size:14px;line-height:1.6;color:#5e5853">Đơn của bạn đã được ghi nhận. Puvela sẽ gọi điện/nhắn tin xác nhận trong thời gian sớm nhất.</p>'+
       '<div class="code">Mã đơn: '+order.code+'</div>'+
       '<p style="font-size:13px;color:#5e5853">Tổng thanh toán: <b>'+money(tot)+'</b> · '+(order.payment_method==="cod"?"Thanh toán khi nhận hàng":"Chuyển khoản")+'</p>'+
-      (order.payment_method==="bank"?'<div class="pv-bank" style="text-align:left;margin-top:14px">Chuyển khoản tới:<br><b>'+BANK.bank+'</b> · '+BANK.stk+'<br>'+BANK.ten+'<br>Nội dung: <b>'+order.code+'</b></div>':'')+
+      (order.payment_method==="bank"?'<div class="pv-bank" style="text-align:left;margin-top:14px">'+bankHTML(order.code)+'</div>':'')+
       '<button class="pv-btn" data-doneclose style="margin-top:22px">Tiếp tục mua sắm</button>';
     showView("done");
     d.querySelector("[data-doneclose]").onclick = close;
