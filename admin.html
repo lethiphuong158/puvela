@@ -285,31 +285,6 @@ function toast(msg, ms){ const t=$('#toast'); t.textContent=msg; t.classList.add
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'), ms||1900); }
 console.log('[PUVELA ADMIN] build 250928e — realtime đơn web + toast xác nhận chuông đã bật');
 
-/* ---------- dữ liệu mẫu (lấy từ bảng Excel của bạn) ---------- */
-function seedProducts(){
-  const r = (name,brand,sizeMl,refFull,costDecant,priceDecant,refDecant)=>({
-    id:uid(), name, brand, sizeMl, costFull:'', priceFull:{}, refFull,
-    costDecant, priceDecant: priceDecant?{tiktok:priceDecant}:{}, refDecant, refSource:'', note:'',
-    stockFull:0, openMl:0, updatedAt:today(), sample:true
-  });
-  return [
-    r('Le Labo Another 13','Le Labo','', '', 760, 820, 830),
-    r('Chanel Coco Mademoiselle','Chanel', 100, 4800, 330, 450, 450),
-    r('Prada Paradoxe Intense','Prada', 90, 3200, '', '', 360),
-    r('Parfums de Marly Delina Exclusif','Parfums de Marly','', '', 810, '', ''),
-    r('Delina EDP','Parfums de Marly', 90, '', 630, '', 780),
-    r('Nar hồng','Narciso Rodriguez','', 2250, 190, '', 280),
-    r('Nar trắng','Narciso Rodriguez', 100, 2250, 190, '', 280),
-    r('Nar trắng cao','Narciso Rodriguez','', '', 170, '', 350),
-    r('Nar tím','Narciso Rodriguez','', 1700, '', '', ''),
-    r('Nar cam','Narciso Rodriguez','', 2200, '', '', 280),
-    r('YSL Libre Berry Crush EDP','YSL','', '', '', '', 480),
-    r('YSL Libre Flowers & Flames EDP','YSL','', '', 320, '', ''),
-    r('YSL Libre EDP','YSL','', '', 310, '', ''),
-    r('YSL Libre Vanille Couture','YSL','', '', '', '', 690),
-    r('Miss Dior','Dior', 90, 4100, '', '', '')
-  ];
-}
 const DEFAULTS = {
   version:1,
   settings:{ markupFull:1.30, markupDecant:1.45, decantSize:10, bottleCost:15,
@@ -319,7 +294,7 @@ const DEFAULTS = {
                {id:'tiktok', name:'TikTok',  markupFull:1.30, markupDecant:1.45},
                {id:'web',    name:'Website', markupFull:1.45, markupDecant:1.70}
              ] },
-  products: seedProducts(),
+  products: [],
   orders: [],
   purchases: [],
   history: []
@@ -332,6 +307,8 @@ catch(e){ DB = structuredClone(DEFAULTS); }
 /* chuẩn hoá dữ liệu — chạy cả lúc mở app lẫn lúc kéo bản mới từ Supabase về */
 function normalizeDB(){
   for(const k in DEFAULTS) if(DB[k]===undefined) DB[k]=structuredClone(DEFAULTS[k]);
+  /* bỏ dòng dữ liệu mẫu còn sót từ bản cũ — dòng nào chủ shop đã sửa thì đã mất cờ sample nên được giữ */
+  DB.products = (DB.products||[]).filter(p=>!p.sample);
   for(const k in DEFAULTS.settings) if(DB.settings[k]===undefined) DB.settings[k]=DEFAULTS.settings[k];
   if(!DB.purchases) DB.purchases = [];
   if(!Array.isArray(DB.settings.channels) || !DB.settings.channels.length)
@@ -646,14 +623,9 @@ function filtered(){
 </script>
 <script>
 /* ============================ RENDER ============================ */
-/* Chạy trên tên miền công khai thì phải đăng nhập mới thấy gì.
-   Mở bằng file trên máy hoặc localhost thì không khoá — máy riêng của bạn. */
-function canKhoa(){
-  if(location.protocol === 'file:') return false;
-  const h = location.hostname;
-  if(h==='localhost' || h==='127.0.0.1' || h==='' || h.endsWith('.local')) return false;
-  return true;
-}
+/* Chưa đăng nhập thì không thấy gì — ở MỌI nơi: tên miền công khai, file trên máy, localhost
+   (chủ shop yêu cầu 2026-10-02: không để màn hình quản lý hiện ra khi chưa đăng nhập). */
+function canKhoa(){ return true; }
 /* Lần vẽ đầu (cuối khối RENDER) chạy TRƯỚC khối đồng bộ Supabase định nghĩa sbSess/sbCfg.
    Chưa có sbSess thì coi như chưa đăng nhập; khối đồng bộ sẽ vẽ lại khi đã nạp xong. */
 function dangKhoa(){ return !!(UI.locked || (canKhoa() && !(typeof sbSess==='function' && sbSess()))); }
@@ -1417,7 +1389,6 @@ function viewSettings(){
       <button class="btn" data-act="exportcsv">⇩ Xuất CSV</button>
       <button class="btn" data-act="backup">⇩ Sao lưu toàn bộ (.json)</button>
       <button class="btn" data-act="restore">⇪ Phục hồi từ .json</button>
-      <button class="btn danger" data-act="clearsample">Xoá 15 dòng dữ liệu mẫu</button>
       <button class="btn danger" data-act="wipe">Xoá sạch tất cả</button>
     </div>
     <p class="hint" style="margin-top:12px">Xuất CSV giữ đúng thứ tự cột như file Excel của bạn, mở lại bằng Excel hoặc Google Sheets được ngay.</p>
@@ -1839,9 +1810,6 @@ document.addEventListener('click', e=>{
         ask(`Phục hồi <b>${d.products.length} sản phẩm</b> và ghi đè toàn bộ dữ liệu hiện tại?`, ()=>{
           DB=d; if(!DB.purchases) DB.purchases=[]; save(); toast('Đã phục hồi');
         },'Phục hồi',true); }); },
-    clearsample(){ const n=DB.products.filter(p=>p.sample).length;
-      if(!n){ toast('Không còn dòng mẫu nào'); return; }
-      ask(`Xoá ${n} dòng dữ liệu mẫu?`, ()=>{ DB.products=DB.products.filter(p=>!p.sample); save(); },'Xoá',true); },
     wipe(){ ask('Xoá SẠCH sản phẩm, đơn hàng, lịch sử nhập kho và lịch sử giá.<br><b>Không khôi phục được nếu bạn chưa bấm Sao lưu.</b>', ()=>{
         DB = { version:1, settings:DB.settings, products:[], orders:[], purchases:[], history:[] }; save();
       },'Xoá sạch tất cả',true); }
