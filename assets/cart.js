@@ -2,7 +2,7 @@
    PUVELA — Giỏ hàng + Checkout (COD / chuyển khoản)
    - Lưu giỏ ở localStorage, dùng chung 3 trang.
    - Tự chèn drawer + form. Ghi đơn vào Supabase `orders` (cần cột items jsonb).
-   - Freeship đơn từ 1.500.000₫, phí ship 30.000₫ nếu dưới ngưỡng.
+   - Freeship đơn từ 1.000.000₫, phí ship 30.000₫ nếu dưới ngưỡng.
    Yêu cầu: nạp SAU assets/supabase.js. Nút mở giỏ: [data-cart-toggle].
    ============================================================ */
 (function () {
