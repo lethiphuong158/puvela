@@ -1998,6 +1998,36 @@
       font: 500 10px "IBM Plex Mono", monospace;
     }
 
+    /* chai chưa có giá chiết: thẻ (→ trang sản phẩm) + nút hỏi giá Zalo tách riêng, không lồng link */
+    .rec-item {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rec-item .rec-card {
+      flex: 1;
+    }
+
+    .recommended a.rec-ask {
+      display: block;
+      margin-top: -1px;
+      padding: 12px 10px;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      color: #fff;
+      font: 500 10px "IBM Plex Mono", monospace;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .recommended a.rec-ask:hover {
+      background: var(--clay);
+      border-color: var(--clay);
+    }
+
     .rec-empty {
       grid-column: 1/-1;
       text-align: center;
@@ -3702,7 +3732,8 @@ section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 
             slug: x.p.slug,
             name: x.p.name,
             notes: [n.top, n.mid, n.base].filter(Boolean).join(' · '),
-            price: p10 ? ('10ml · ' + money(p10)) : '10ml · nhắn PUVELA báo giá',
+            price: p10 ? ('10ml · ' + money(p10)) : '',
+            hasPrice: p10 > 0,
             outside: !!x.outside,
             score: Math.round(x.breakdown.finalScore),
             reason: productReason(st, x.dna),
@@ -3835,14 +3866,19 @@ section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 
       /* nhãn theo thứ hạng thay cho % — khách không bao giờ thấy "PHÙ HỢP 36%" */
       var RANK_LABELS = ['Hợp nhất', 'Rất hợp', 'Đáng thử'];
       var recHTML = recs.length ? recs.map(function (r, i) {
-        return '<a class="rec-card" href="product.html?p=' + encodeURIComponent(r.slug) + '">' +
+        /* chưa có giá chiết → thêm nút hỏi giá qua Zalo (link riêng, không nằm trong link sản phẩm) */
+        var ask = r.hasPrice ? '' :
+          '<a class="rec-ask" href="https://zalo.me/0368574940" target="_blank" rel="noopener" data-ask="' +
+          r.name.replace(/"/g, '&quot;') + '">Hỏi giá 10ml qua Zalo →</a>';
+        return (ask ? '<div class="rec-item">' : '') +
+          '<a class="rec-card" href="product.html?p=' + encodeURIComponent(r.slug) + '">' +
           '<div class="rec-media"><img src="' + (r.image || 'assets/placeholder.svg') + '" alt="' + r.name.replace(/"/g, '&quot;') + '" loading="lazy" onerror="this.onerror=null;this.src=\'assets/placeholder.svg\'"></div>' +
           '<div class="rec-rank">0' + (i + 1) + ' · ' + (r.outside ? 'Ngoài ngân sách một chút' : RANK_LABELS[i]) + '</div>' +
           '<strong>' + r.name + '</strong>' +
           '<span class="rec-notes">' + (r.notes || '') + '</span>' +
           '<em>' + r.reason + '</em>' +
-          '<b>' + r.price + '</b>' +
-          '</a>';
+          (r.hasPrice ? '<b>' + r.price + '</b>' : '') +
+          '</a>' + (ask ? ask + '</div>' : '');
       }).join('') :
         '<div class="rec-empty"><p>PUVELA chưa tìm được mùi thật sự hợp với những lựa chọn này.</p>' +
         '<small>Nhắn PUVELA để được gợi ý trực tiếp, miễn phí: ' +
@@ -3879,6 +3915,17 @@ section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 
       if (again) again.onclick = openQuiz;
       var done = document.querySelector('#quiz-close-result');
       if (done) done.onclick = closeQuiz;
+      /* link Zalo cá nhân không điền sẵn tin nhắn được → chép sẵn câu hỏi kèm tên chai để khách dán vào */
+      result.querySelectorAll('.rec-ask').forEach(function (a) {
+        a.addEventListener('click', function () {
+          var msg = 'Chào PUVELA, mình muốn hỏi giá chiết 10ml ' + a.dataset.ask;
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(msg).then(function () {
+              a.textContent = 'Đã chép tên chai — dán vào Zalo';
+            }).catch(function () { });
+          }
+        });
+      });
 
     }
 
