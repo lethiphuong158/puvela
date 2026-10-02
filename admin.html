@@ -654,10 +654,12 @@ function canKhoa(){
   if(h==='localhost' || h==='127.0.0.1' || h==='' || h.endsWith('.local')) return false;
   return true;
 }
-function dangKhoa(){ return !!(UI.locked || (canKhoa() && !sbSess())); }
+/* Lần vẽ đầu (cuối khối RENDER) chạy TRƯỚC khối đồng bộ Supabase định nghĩa sbSess/sbCfg.
+   Chưa có sbSess thì coi như chưa đăng nhập; khối đồng bộ sẽ vẽ lại khi đã nạp xong. */
+function dangKhoa(){ return !!(UI.locked || (canKhoa() && !(typeof sbSess==='function' && sbSess()))); }
 
 function viewGate(){
-  const c = sbCfg();
+  const c = (typeof sbCfg==='function') ? sbCfg() : {url:'', key:''};
   return `
   <div class="card" style="max-width:430px;margin:8vh auto 0">
     <h2>Khu vực quản lý</h2>
@@ -2349,7 +2351,7 @@ document.addEventListener('click', async e=>{
   const act = b.dataset.act;
   if(act==='sblogin'){
     e.preventDefault();
-    lsSet(SB_CFG, {url:$('#sbUrl').value.trim(), key:$('#sbKey').value.trim()});
+    lsSet(SB_CFG, {url:$('#sbUrl').value.trim() || SB_MAC_DINH.url, key:$('#sbKey').value.trim() || SB_MAC_DINH.key});
     try{
       await sbLogin($('#sbEmail').value.trim(), $('#sbPw').value);
       UI.locked = false;
@@ -2390,6 +2392,7 @@ document.addEventListener('click', async e=>{
 window.addEventListener('online', ()=>{ if(sbOn() && syncDirty()) syncNow(true); });
 if(sbOn()){ setSync(syncDirty()?'pending':'ok'); syncNow(true); }
 else setSync('off','Chưa bật đồng bộ');
+render();   // vẽ lại khi sbSess/sbCfg đã có — trên tên miền công khai đây là lúc màn hình đăng nhập có đủ cấu hình
 </script>
 <script>
 /* ============================================================
