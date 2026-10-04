@@ -2422,14 +2422,18 @@ document.addEventListener('click', async e=>{
   if(act==='sbundo'){ e.preventDefault();
     const b = lsGet('pm_backup_truoc_dong_bo', null);
     if(!b){ toast('Không còn bản sao lưu nào'); return; }
-    ask('Khôi phục bản của máy này trước lần lấy dữ liệu gần nhất?<br>Bản đang dùng sẽ được cất lại để đổi ngược nếu cần.', ()=>{
+    ask('Khôi phục bản của máy này trước lần lấy dữ liệu gần nhất?<br>Sẽ <b>gộp</b> với dữ liệu trên máy chủ (giữ cả hai, không xoá gì). Bản đang dùng được cất lại để đổi ngược nếu cần.', async ()=>{
       try{
         const cu = JSON.stringify(DB);
         DB = JSON.parse(b.data); normalizeDB();
         localStorage.setItem(KEY, JSON.stringify(DB));
         lsSet('pm_backup_truoc_dong_bo', {at:new Date().toISOString(), data:cu});
-        lsSet(SB_DIRTY, true); setSync('pending','Đã khôi phục — bấm Đồng bộ ngay để đẩy lên');
-        toast('Đã khôi phục bản cũ');
+        /* bản sao lưu KHÔNG xuất phát từ bản gốc hiện tại → bỏ bản gốc + đặt về 0 để lần đồng bộ sau
+           GỘP kiểu hợp nhất (không xoá gì) thay vì đẩy đè lên, làm mất thay đổi của máy khác */
+        localStorage.removeItem(SB_BASE_DATA); lsSet(SB_BASE, 0);
+        lsSet(SB_DIRTY, true); render();
+        toast('Đã khôi phục bản cũ — đang gộp với máy chủ…');
+        await syncNow(); render();
       }catch(err){ toast('Bản sao lưu hỏng: '+err.message); }
     }, 'Khôi phục'); }
   if(act==='sblogout'){ e.preventDefault();
