@@ -2083,7 +2083,86 @@ function adopt(remote){
   lsSet('pm_backup_truoc_dong_bo', {at:new Date().toISOString(), data:backup});
   DB = remote.data; normalizeDB();
   localStorage.setItem(KEY, JSON.stringify(DB));
-  lsSet(SB_BASE, remote.version); lsSet(SB_DIRTY, false);
+  lsSet(SB_BASE, remote.version); lsSet(SB_DIRTY, false); luuBanGoc(DB);
+}
+
+/* ---------- GỘP khi máy chủ và máy này cùng có thay đổi ----------
+   Trước đây chỉ có 2 lựa chọn: "Lấy bản máy chủ" (mất sản phẩm vừa tạo ở máy này) hoặc
+   "Không" (giữ nhưng không bao giờ đẩy lên được). Giờ gộp 3 chiều theo từng món:
+   bản gốc = lần đồng bộ thành công gần nhất (pm_sb_base_data).
+   - món chỉ một bên sửa → lấy bên đã sửa; cả hai cùng sửa → lấy máy này (máy đang dùng)
+   - món mới ở bên nào → giữ
+   - món bị xoá ở một bên → chỉ xoá khi bên kia KHÔNG sửa món đó
+   Không có bản gốc (máy cũ, vừa đăng nhập lại) → hợp nhất, KHÔNG xoá gì: thà sót một món
+   đã xoá còn hơn mất dữ liệu. */
+const SB_BASE_DATA = 'pm_sb_base_data';
+function luuBanGoc(data){ try{ localStorage.setItem(SB_BASE_DATA, JSON.stringify(data)); }catch(e){ localStorage.removeItem(SB_BASE_DATA); } }
+const GOP_KHOA = {                  // [khoá nhận diện từng món, món mới từ máy khác đặt lên đầu?]
+  products:  [x => x.id, true],
+  orders:    [x => x.id, false],
+  purchases: [x => x.id || ((x.ts||'') + '|' + (x.pid||'')), true],
+  history:   [x => (x.ts||'') + '|' + (x.pid||'') + '|' + (x.field||''), true]
+};
+const giong = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const moc = x => String((x && (x.updatedAt || x.ts || x.date)) || '');
+function gopDanhSach(goc, may, chu, khoa, coGoc, dauDanh){
+  const G = new Map((goc||[]).map(x=>[khoa(x), x]));
+  const M = new Map((may||[]).map(x=>[khoa(x), x]));
+  const C = new Map((chu||[]).map(x=>[khoa(x), x]));
+  const chon = k => {
+    const inG = G.has(k), inM = M.has(k), inC = C.has(k);
+    const m = M.get(k), c = C.get(k), g = G.get(k);
+    if(inM && inC){
+      if(giong(m, c)) return m;
+      if(coGoc && inG){ if(giong(m, g)) return c; if(giong(c, g)) return m; return m; }
+      return moc(c) > moc(m) ? c : m;                       // không rõ gốc: bản mới hơn, hoà thì máy này
+    }
+    if(inM){                                                // máy chủ không có
+      if(coGoc && inG && giong(m, g)) return null;          // máy khác đã xoá, máy này không sửa → xoá
+      return m;                                             // món mới / đã sửa sau khi bị xoá → giữ
+    }
+    if(coGoc && inG && giong(c, g)) return null;            // máy này đã xoá, máy chủ không sửa → xoá
+    return c;                                               // món mới từ máy khác → giữ
+  };
+  // giữ thứ tự của máy đang dùng; món chỉ máy khác có: lên đầu (danh sách "mới nhất ở trên") hoặc xuống cuối
+  const out = [], da = new Set();
+  (may||[]).forEach(x=>{ const k=khoa(x); if(da.has(k)) return; da.add(k); const v=chon(k); if(v) out.push(v); });
+  const moi = [];
+  (chu||[]).forEach(x=>{ const k=khoa(x); if(da.has(k)) return; da.add(k); const v=chon(k); if(v) moi.push(v); });
+  return dauDanh ? moi.concat(out) : out.concat(moi);
+}
+function gopDB(goc, may, chu){
+  const coGoc = !!goc;
+  const kq = JSON.parse(JSON.stringify(chu || {}));
+  for(const ten in GOP_KHOA){
+    kq[ten] = gopDanhSach(goc && goc[ten], may[ten], chu && chu[ten], GOP_KHOA[ten][0], coGoc, GOP_KHOA[ten][1]);
+  }
+  // cài đặt: máy này đổi so với gốc thì giữ của máy này, còn lại theo máy chủ
+  const s = Object.assign({}, (chu && chu.settings) || {});
+  const ms = may.settings || {}, gs = (goc && goc.settings) || null;
+  for(const k in ms){ if(!(k in s) || (gs && !giong(ms[k], gs[k]))) s[k] = ms[k]; }
+  kq.settings = s;
+  for(const k in may){ if(!(k in kq)) kq[k] = may[k]; }
+  return kq;
+}
+async function gopVaDay(remote){
+  lsSet('pm_backup_truoc_dong_bo', {at:new Date().toISOString(), data:JSON.stringify(DB)});
+  for(let lan = 0; lan < 3 && remote; lan++){
+    const goc = lsGet(SB_BASE_DATA, null);
+    DB = gopDB(goc, DB, remote.data); normalizeDB();
+    localStorage.setItem(KEY, JSON.stringify(DB));
+    const uid = (sbSess()||{}).user_id;
+    const out = await sbFetch(`${ROW}?user_id=eq.${uid}&version=eq.${remote.version}`, {
+      method:'PATCH', headers:{Prefer:'return=representation'},
+      body: JSON.stringify({data:DB, version:remote.version+1, updated_at:new Date().toISOString()})});
+    if(out && out.length){
+      lsSet(SB_BASE, remote.version+1); lsSet(SB_DIRTY, false); luuBanGoc(DB);
+      setSync('ok','Đã gộp thay đổi của máy này với máy chủ'); render();
+      return true;
+    }
+    remote = await sbRow();                                  // máy khác vừa ghi chen → gộp lại lần nữa
+  }
+  return false;
 }
 async function syncNow(silent){
   if(SYNC.busy || !sbOn()) return;
@@ -2096,15 +2175,15 @@ async function syncNow(silent){
     if(!remote){                                   // lần đầu: tạo bản ghi
       await sbFetch(ROW, {method:'POST', headers:{Prefer:'return=minimal'},
         body: JSON.stringify({user_id:uid, data:DB, version:1})});
-      lsSet(SB_BASE,1); lsSet(SB_DIRTY,false); setSync('ok','Đã tạo bản trên máy chủ');
+      lsSet(SB_BASE,1); lsSet(SB_DIRTY,false); luuBanGoc(DB); setSync('ok','Đã tạo bản trên máy chủ');
     }
     else if(remote.version > syncBase() && syncDirty() && syncBase()===0 && laMayMoi()){
       adopt(remote); render(); setSync('ok','Đã tải dữ liệu về máy này');
       if(!silent) toast('Đã tải toàn bộ dữ liệu từ máy chủ về');
     }
     else if(remote.version > syncBase() && syncDirty()){
-      SYNC.busy=false; setSync('conflict','Máy khác đã sửa trong lúc máy này cũng sửa');
-      askConflict(remote); return;
+      if(await gopVaDay(remote)){ if(!silent) toast('Đã gộp thay đổi của máy này với dữ liệu trên máy chủ'); }
+      else { SYNC.busy=false; setSync('conflict','Máy khác đã sửa trong lúc máy này cũng sửa'); askConflict(await sbRow()); return; }
     }
     else if(remote.version > syncBase()){          // máy khác mới hơn, máy này chưa sửa
       adopt(remote); render(); setSync('ok','Đã lấy bản mới từ máy khác');
@@ -2115,8 +2194,11 @@ async function syncNow(silent){
       const out = await sbFetch(`${ROW}?user_id=eq.${uid}&version=eq.${exp}`, {
         method:'PATCH', headers:{Prefer:'return=representation'},
         body: JSON.stringify({data:DB, version:exp+1, updated_at:new Date().toISOString()})});
-      if(out && out.length){ lsSet(SB_BASE, exp+1); lsSet(SB_DIRTY,false); setSync('ok','Đã lưu lên máy chủ'); }
-      else { SYNC.busy=false; const r2=await sbRow(); setSync('conflict','Bản trên máy chủ đã đổi'); askConflict(r2); return; }
+      if(out && out.length){ lsSet(SB_BASE, exp+1); lsSet(SB_DIRTY,false); luuBanGoc(DB); setSync('ok','Đã lưu lên máy chủ'); }
+      else {
+        const r2 = await sbRow();
+        if(!(await gopVaDay(r2))){ SYNC.busy=false; setSync('conflict','Bản trên máy chủ đã đổi'); askConflict(await sbRow()); return; }
+      }
     }
     else setSync('ok','Không có gì thay đổi');
   }catch(e){
@@ -2358,6 +2440,12 @@ document.addEventListener('click', async e=>{
 });
 
 window.addEventListener('online', ()=>{ if(sbOn() && syncDirty()) syncNow(true); });
+/* mở admin ở 2 tab cùng trình duyệt: tab kia vừa lưu thì nạp lại ngay, tránh tab cũ ghi đè
+   (vd tab cũ chưa có sản phẩm vừa tạo ở tab mới rồi lưu đè lên → mất sản phẩm, không báo gì) */
+window.addEventListener('storage', e=>{
+  if(e.key !== KEY || !e.newValue) return;
+  try{ DB = JSON.parse(e.newValue); normalizeDB(); if(!$('#modalRoot').innerHTML) render(); }catch(err){}
+});
 if(sbOn()){ setSync(syncDirty()?'pending':'ok'); syncNow(true); }
 else setSync('off','Chưa bật đồng bộ');
 render();   // vẽ lại khi sbSess/sbCfg đã có — trên tên miền công khai đây là lúc màn hình đăng nhập có đủ cấu hình
