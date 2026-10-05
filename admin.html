@@ -262,8 +262,16 @@ const $  = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
 const norm = s => (s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
                     .replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().trim();
-const num  = v => { if(v===null||v===undefined||v==='') return 0;
-                    const n = parseFloat(String(v).replace(/[^\d.,-]/g,'').replace(/\.(?=\d{3}\b)/g,'').replace(',','.'));
+/* đọc số kiểu Việt: "3.200" = 3200, "1,5" = 1.5, "1.234,5" = 1234.5; "350,000" (kiểu Anh) = 350000.
+   Số đã lưu (kiểu number) trả nguyên — đọc lại như chuỗi sẽ biến 10.625 thành 10625. */
+const num  = v => { if(typeof v==='number') return isFinite(v)?v:0;
+                    if(v===null||v===undefined||v==='') return 0;
+                    let s = String(v).replace(/[^\d.,-]/g,'');
+                    const d = s.lastIndexOf('.'), c = s.lastIndexOf(',');
+                    if(d>=0 && c>=0) s = c>d ? s.replace(/\./g,'').replace(',','.') : s.replace(/,/g,'');
+                    else if(/^-?\d{1,3}([.,]\d{3})+$/.test(s)) s = s.replace(/[.,]/g,'');
+                    else s = s.replace(/,/g,'.');
+                    const n = parseFloat(s);
                     return isFinite(n)?n:0; };
 const has  = v => v!==null && v!==undefined && v!=='' && num(v)>0;
 const fmt  = (n,d=0)=> (n===null||n===undefined||!isFinite(n)) ? '' :
@@ -290,6 +298,7 @@ const DEFAULTS = {
   settings:{ markupFull:1.30, markupDecant:1.45, decantSize:10, bottleCost:15,
              minMargin:15, roundTo:10, lowMl:20, theme:'auto',
              unit:'k', deriveFullFromDecant:false, webChannel:'web', decantSizes:'5, 10',
+             webDomain:'https://puvela.store',
              channels:[
                {id:'tiktok', name:'TikTok',  markupFull:1.30, markupDecant:1.45},
                {id:'web',    name:'Website', markupFull:1.45, markupDecant:1.70}
@@ -314,7 +323,10 @@ function normalizeDB(){
   if(!Array.isArray(DB.settings.channels) || !DB.settings.channels.length)
     DB.settings.channels = structuredClone(DEFAULTS.settings.channels);
   const ch0 = DB.settings.channels[0].id;
+  /* dọn rác của bản cũ: chọn Lưu/Tỏa ở tab Đăng web từng ghi p["undefined"] + dòng lịch sử không có tên trường */
+  if(Array.isArray(DB.history)) DB.history = DB.history.filter(h=>h && h.field && h.field!=='undefined');
   DB.products.forEach(p=>{
+    delete p['undefined'];
     if(p.stockFull===undefined)p.stockFull=0; if(p.openMl===undefined)p.openMl=0;
     ['priceFull','priceDecant'].forEach(k=>{
       if(p[k]===null || p[k]===undefined) p[k] = {};
@@ -903,28 +915,48 @@ function orderTotals(o){
   cost += num(o.shipFee);
   return { rev, cost, profit:rev-cost, qty, margin: rev? (rev-cost)/rev*100 : 0 };
 }
+/* món chưa nhập tồn kho (ô tồn để trống — vd món vừa "Đưa vào bảng giá" từ web): không trừ/hoàn kho,
+   nếu không tồn thành số âm → web bị đẩy "hết hàng" dù thực tế vẫn bán được */
+const chuaTheoDoiTon = p => String(p.stockFull??'')==='' && String(p.openMl??'')==='';
 function applyStock(order, sign){           // sign=+1 trừ kho, -1 hoàn kho
-  const warn=[];
+  const warn=[], chuaTheoDoi=[];
   (order.items||[]).forEach(it=>{
     const p = productById(it.pid); if(!p) return;
+    if(sign>0 && chuaTheoDoiTon(p)){ it.khongTru = true; chuaTheoDoi.push(p.name); return; }
+    if(sign<0 && it.khongTru){ delete it.khongTru; return; }      // lúc chốt không trừ thì lúc hoàn cũng không cộng
+    delete it.khongTru;
     const size = num(p.sizeMl);
     if(it.type==='full'){
       p.stockFull = num(p.stockFull) - sign*num(it.qty);
     }else{
       const need = sign*num(it.ml)*num(it.qty);
-      if(sign>0 && size>0){
-        while(num(p.openMl) < need && num(p.stockFull) > 0){
-          p.stockFull = num(p.stockFull)-1; p.openMl = num(p.openMl)+size;
+      if(sign>0){
+        let boc = 0;
+        if(size>0) while(num(p.openMl) < need && num(p.stockFull) > 0){
+          p.stockFull = num(p.stockFull)-1; p.openMl = num(p.openMl)+size; boc++;
         }
+        it.opened = boc;                      // nhớ đơn này đã bóc mấy chai, để hoàn kho thì đóng lại đúng số đó
+        p.openMl = num(p.openMl) - need;
+      }else{
+        p.openMl = num(p.openMl) - need;      // need âm → trả ml về
+        // chai do chính đơn này bóc mà ml lẻ vẫn đủ nguyên chai (chưa bị đơn khác dùng) → tính lại là chai nguyên
+        const dong = size>0 ? Math.min(num(it.opened), Math.floor(num(p.openMl)/size)) : 0;
+        if(dong>0){ p.stockFull = num(p.stockFull)+dong; p.openMl = num(p.openMl) - dong*size; }
+        delete it.opened;
       }
-      p.openMl = num(p.openMl) - need;
     }
     if(num(p.openMl)<0 || num(p.stockFull)<0) warn.push(p.name);
   });
-  return [...new Set(warn)];
+  // kho đổi → số còn hàng trên web cũng phải đổi theo (chỉ món đang đăng; im lặng nếu thành công)
+  if(typeof webAutoSync==='function')
+    [...new Set((order.items||[]).map(it=>it.pid))].forEach(pid=>webAutoSync(pid, {quiet:true}));
+  const kq = [...new Set(warn)]; kq.chuaTheoDoi = [...new Set(chuaTheoDoi)];
+  return kq;
 }
 function stockWarn(list, okMsg){
-  toast(list.length ? '⚠ Bán quá tồn kho: '+list.join(', ')+' — nhớ nhập thêm' : okMsg);
+  const ctd = (list && list.chuaTheoDoi) || [];
+  toast(list.length ? '⚠ Bán quá tồn kho: '+list.join(', ')+' — nhớ nhập thêm'
+      : ctd.length ? okMsg+' · chưa trừ kho '+ctd.join(', ')+' (chưa nhập tồn kho)' : okMsg, ctd.length ? 4000 : undefined);
 }
 function setOrderStatus(id, status){
   const o = DB.orders.find(x=>x.id===id); if(!o) return;
@@ -932,7 +964,7 @@ function setOrderStatus(id, status){
   if(status==='done' && !o.applied){ w=applyStock(o,+1); o.applied=true; }
   if(status!=='done' && o.applied){ applyStock(o,-1); o.applied=false; }
   o.status = status; save(); render();
-  stockWarn(w, status==='done' ? 'Đã chốt đơn, kho đã trừ' : 'Đã mở lại đơn, kho đã hoàn');
+  stockWarn(w, status==='done' ? 'Đã chốt đơn, kho đã trừ' : status==='cancel' ? 'Đã huỷ đơn, hàng đã hoàn về kho' : 'Đã mở lại đơn, kho đã hoàn');
 }
 
 function viewOrders(){
@@ -947,7 +979,7 @@ function viewOrders(){
     return `<tr>
       <td class="l nm" data-l="Khách">
         <b>${esc(o.customer||'Khách lẻ')}</b>
-        <div class="tiny muted">${esc(o.date||'')}${o.channel?' · '+esc(chName(o.channel)):''} · ${(o.items||[]).length} món</div>
+        <div class="tiny muted">${esc(o.date||'')}${o.channel?' · '+esc(chName(o.channel)):''} · ${(o.items||[]).length} món${o.webCode?' · đơn web '+esc(o.webCode):''}</div>
         <div class="tiny muted">${esc((o.items||[]).map(i=>i.name+(i.type==='decant'?` ${num(i.ml)}ml`:' full')+(num(i.qty)>1?` ×${num(i.qty)}`:'')).join(', '))}</div>
       </td>
       <td data-l="Doanh thu"><b class="num">${fmt(Math.round(t.rev))}</b></td>
@@ -1122,15 +1154,21 @@ function saveDraft(confirmIt){
   save(); closeModal(); render();
   stockWarn(w, confirmIt ? 'Đã chốt đơn và trừ kho' : 'Đã lưu nháp');
 }
-function closeModal(){ $('#modalRoot').innerHTML=''; DRAFT=null; REFS=null; ANH=null; }
+/* đóng hộp nào cũng xoá luôn câu hỏi đang chờ — nếu không, Esc ở hộp hỏi để lại CONFIRM_NO
+   và lần đóng hộp kế tiếp (vd chi tiết sản phẩm) sẽ chạy nó */
+function closeModal(){ $('#modalRoot').innerHTML=''; DRAFT=null; REFS=null; ANH=null; CONFIRM_CB=null; CONFIRM_NO=null; }
 
 /* quy đổi mọi con số tiền khi đổi đơn vị — bỏ sót chỗ nào là sai 1000 lần */
 function convertUnit(f){
   const MF = ['costFull','refFull','costDecant','refDecant'];
+  const doi = o => { if(!o || typeof o!=='object') return;            // {khoá: số} → nhân f
+    Object.keys(o).forEach(k=>{ if(o[k]!=='' && o[k]!=null) o[k] = +(num(o[k])*f).toFixed(4); }); };
   DB.products.forEach(p=>{
     MF.forEach(k=>{ if(p[k]!=='' && p[k]!=null) p[k] = +(num(p[k])*f).toFixed(4); });
-    ['priceFull','priceDecant'].forEach(k=>{ const o=p[k]||{};
-      Object.keys(o).forEach(ch=>{ o[ch] = +(num(o[ch])*f).toFixed(4); }); });
+    ['priceFull','priceDecant'].forEach(k=>doi(p[k]));
+    doi(p.salePrice);                                                  // giá sale chiết / full
+    doi(p.costDecantBySize);                                           // vốn riêng lọ cỡ phụ
+    Object.values(p.priceDecantBySize||{}).forEach(doi);               // giá lọ cỡ phụ theo kênh
     [...(p.refsFull||[]),...(p.refsDecant||[])].forEach(r=>{ if(r.price!=='' && r.price!=null) r.price = +(num(r.price)*f).toFixed(4); });
     if(p.realPerMl) p.realPerMl = p.realPerMl*f;
   });
@@ -1185,7 +1223,7 @@ function paintRefs(){ const el=$('#refsBody'); if(el) el.innerHTML = refsBodyHTM
 /* ---------- hộp xác nhận tự làm (confirm() bị chặn ở một số trình duyệt) ---------- */
 let CONFIRM_CB = null, CONFIRM_NO = null;
 function ask(msg, onYes, yesLabel='Đồng ý', danger=false){
-  CONFIRM_CB = onYes;
+  CONFIRM_CB = onYes; CONFIRM_NO = null;
   $('#modalRoot').innerHTML = `
   <div class="overlay" data-close="1"><div class="modal" style="max-width:440px">
     <header><h3>Xác nhận</h3><button class="close" data-close="1">✕</button></header>
@@ -1228,7 +1266,8 @@ function openRestock(id){
     $('#rkPriceLbl').textContent = isFull ? `Giá mua mỗi chai (${U()})` : `Giá mua mỗi ml (${U()})`;
     const q = num($('#rkQty').value), pr = num($('#rkPrice').value);
     const addMl = isFull ? q*size : q, addCost = q*pr;
-    const oldMl = c.totalMl, oldVal = oldMl*num(p.realPerMl);
+    // hàng đang tồn chưa từng nhập qua đây (gõ tay / CSV) thì định giá theo giá vốn, không phải 0
+    const oldMl = c.totalMl, oldVal = oldMl*c.valuePerMl;
     const newPerMl = (oldMl+addMl) ? (oldVal+addCost)/(oldMl+addMl) : 0;
     $('#rkPreview').innerHTML = `
       <div class="stat-row"><span>Thêm vào kho</span><b>${fmt(addMl)}ml</b></div>
@@ -1246,13 +1285,14 @@ function doRestock(id){
   if(q<=0){ toast('Số lượng phải lớn hơn 0'); return; }
   if(isFull && !size){ toast('Cần điền dung tích chai trước'); return; }
   const addMl = isFull ? q*size : q, addCost = q*pr;
-  const c = calc(p), oldMl = c.totalMl, oldVal = oldMl*num(p.realPerMl);
+  const c = calc(p), oldMl = c.totalMl, oldVal = oldMl*c.valuePerMl;     // xem openRestock
   p.realPerMl = (oldMl+addMl) ? (oldVal+addCost)/(oldMl+addMl) : 0;
   if(isFull) p.stockFull = num(p.stockFull)+q; else p.openMl = num(p.openMl)+q;
   DB.purchases.unshift({ ts:new Date().toISOString(), date:$('#rkDate').value||today(), pid:id,
     name:p.name, kind:isFull?'full':'ml', qty:q, unitPrice:pr, total:addCost, ml:addMl, note:$('#rkNote').value||'' });
   save(); closeModal(); render();
   toast(`Đã nhập ${fmt(addMl)}ml · ${fmt(Math.round(addCost))}${U()}`);
+  if(typeof webAutoSync==='function') webAutoSync(id, {quiet:true});     // web hiện lại "còn hàng"
 }
 </script>
 <script>
@@ -1371,8 +1411,8 @@ function viewSettings(){
       ${f('roundTo',`Làm tròn giá bán tới (${U()})`,'Làm tròn giá bán gợi ý cho đẹp số.','1')}
       ${f('lowMl','Cảnh báo sắp hết khi còn dưới (ml)','Tính cả chai full chưa bóc.','1')}
       <label class="fld"><span>Địa chỉ website (để tạo link gửi khách)</span>
-        <input class="inp" data-web-domain="1" value="${esc(S.webDomain||'')}" placeholder="https://puvela.vn">
-        <span class="tiny muted">Dùng khi soạn tin xin đánh giá. Bỏ trống thì link sẽ thiếu tên miền.</span></label>
+        <input class="inp" data-web-domain="1" value="${esc(S.webDomain||'')}" placeholder="https://puvela.store">
+        <span class="tiny muted">Dùng khi soạn tin xin đánh giá. Bỏ trống thì dùng https://puvela.store.</span></label>
     </div>
     <label class="fld" style="margin-top:6px"><span>Suy giá vốn chai full từ giá lọ chiết</span>
       <select class="inp" data-s2="deriveFullFromDecant" style="max-width:340px">
@@ -1441,7 +1481,7 @@ function openDetail(id){
       ${p.webSlug ? `<div class="card" style="box-shadow:none;background:var(--panel2);margin-top:12px"><div class="pad">
         <h3 style="margin:0 0 10px;font-size:13px">Nội dung website</h3>
         <p class="hint" style="margin:0 0 12px">Sửa tại đây sẽ cập nhật trực tiếp sản phẩm trên website, không cần vào Supabase.</p>
-        <label class="fld"><span>Mô tả website</span><textarea class="inp" data-webcontent="webDescription" data-id="${id}" rows="4" placeholder="Mô tả sản phẩm trên website">${esc(p.webDescription!==undefined ? p.webDescription : (wnOf(p).description || p.note || ''))}</textarea></label>
+        <label class="fld"><span>Mô tả website</span><textarea class="inp" data-webcontent="webDescription" data-id="${id}" rows="4" placeholder="Mô tả sản phẩm trên website">${esc(p.webDescription!==undefined ? p.webDescription : (wnOf(p).description || ''))}</textarea></label>
         <div class="grid3">
           <label class="fld"><span>Hương đầu</span><input class="inp" data-webcontent="webTopNote" data-id="${id}" value="${esc(p.webTopNote!==undefined ? p.webTopNote : wnOf(p).top)}" placeholder="Hương đầu"></label>
           <label class="fld"><span>Hương giữa</span><input class="inp" data-webcontent="webMidNote" data-id="${id}" value="${esc(p.webMidNote!==undefined ? p.webMidNote : wnOf(p).mid)}" placeholder="Hương giữa"></label>
@@ -1450,9 +1490,11 @@ function openDetail(id){
         <label class="fld" style="margin-top:10px"><span>Nốt hương phẳng — khi hãng không chia tầng</span><input class="inp" data-webcontent="webAllNote" data-id="${id}" value="${esc(p.webAllNote!==undefined ? p.webAllNote : wnOf(p).all)}" placeholder="VD: Bergamot, tiêu hồng, xạ hương trắng…"></label>
         <p class="hint" style="margin:6px 0 0">Điền ô này thì website hiện một danh sách nốt hương duy nhất (bỏ qua 3 ô tầng phía trên) — dùng cho hãng chỉ công bố danh sách note. Xoá trống để quay lại 3 tầng.</p>
         <div class="grid2">
-          <label class="fld"><span>Độ lưu hương (1–5)</span><input class="inp" data-webcontent="webLongevity" data-id="${id}" value="${esc(p.webLongevity??p.longevity??'')}" inputmode="numeric" placeholder="1–5"></label>
-          <label class="fld"><span>Độ tỏa hương (1–5)</span><input class="inp" data-webcontent="webSillage" data-id="${id}" value="${esc(p.webSillage??p.sillage??'')}" inputmode="numeric" placeholder="1–5"></label>
+          <label class="fld"><span>Độ lưu hương (1–5)</span><input class="inp" data-webcontent="webLongevity" data-id="${id}" value="${esc(p.longevity??p.webLongevity??'')}" inputmode="numeric" placeholder="1–5"></label>
+          <label class="fld"><span>Độ tỏa hương (1–5)</span><input class="inp" data-webcontent="webSillage" data-id="${id}" value="${esc(p.sillage??p.webSillage??'')}" inputmode="numeric" placeholder="1–5"></label>
         </div>
+        <div id="plWeb" data-id="${id}" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line2)">
+          <p class="hint" style="margin:0">Đang tải giới tính và điểm mùi…</p></div>
       </div></div>` : ''}
 
       <div class="card" style="box-shadow:none;background:var(--panel2)"><div class="pad">
@@ -1483,6 +1525,7 @@ function openDetail(id){
       <button class="btn primary" data-close="1">Xong</button>
     </footer>
   </div></div>`;
+  if(p.webSlug && typeof plTai==='function') plTai(id);      // giới tính + điểm mùi đọc thẳng từ web
 }
 </script>
 <script>
@@ -1757,7 +1800,8 @@ document.addEventListener('click', e=>{
       if(c.priceDecant) L.push(`• Chiết ${num(DB.settings.decantSize)}ml: ${fmt(Math.round(c.priceDecant))}${U()}`);
       copyText(L.join('\n')); },
     openbottle(){ const p=productById(id); if(num(p.stockFull)<1) return;
-      p.stockFull=num(p.stockFull)-1; p.openMl=num(p.openMl)+num(p.sizeMl); save(); render(); toast('Đã bóc 1 chai để chiết'); },
+      p.stockFull=num(p.stockFull)-1; p.openMl=num(p.openMl)+num(p.sizeMl); save(); render(); toast('Đã bóc 1 chai để chiết');
+      if(typeof webAutoSync==='function') webAutoSync(id, {quiet:true}); },   // bớt 1 chai full trên web
     restock(){ openRestock(id); },
     dorestock(){ doRestock(id); },
     addch(){ const n=chList().length+1;
@@ -1773,6 +1817,8 @@ document.addEventListener('click', e=>{
         save();
       },'Xoá kênh',true); },
     askyes(){ const cb=CONFIRM_CB; CONFIRM_CB=null; CONFIRM_NO=null; closeModal(); if(cb) cb(); render(); },
+    unitlabel(){ const to=b.dataset.to; if(to!=='k' && to!=='d') return;
+      closeModal(); DB.settings.unit=to; save(); render(); toast('Đã đổi đơn vị, số giữ nguyên'); },
     neworder(){ newOrder(); },
     editorder(){ editOrder(id); },
     delorder(){ const o=DB.orders.find(x=>x.id===id); if(!o) return;
@@ -1857,7 +1903,7 @@ document.addEventListener('change', e=>{
   }
   if(t.matches('#chPick')){ UI.channel = t.value; render(); return; }
   if(t.matches('#szPick')){ UI.dsize = num(t.value); render(); return; }
-  if(t.matches('.cell')){                                  // ô trong bảng
+  if(t.matches('.cell[data-f]')){                          // ô trong bảng (ô tab Đăng web có handler riêng)
     setField(t.dataset.id, t.dataset.f, t.value.trim());
     if(WEB_GIA_FIELDS.has(t.dataset.f)) webAutoSync(t.dataset.id);
     if(UI.tab==='price') refreshRow(t.dataset.id); else render();
@@ -1872,8 +1918,9 @@ document.addEventListener('change', e=>{
     const f = t.dataset.webcontent;
     const v = t.value.trim();
     if(f==='webLongevity' || f==='webSillage'){
-      if(v==='') { p[f]=''; }
-      else { const n=parseInt(v,10); if(!Number.isFinite(n) || n<1 || n>5){ toast('Độ lưu/tỏa hương phải từ 1 đến 5'); return; } p[f]=n; }
+      const goc = f==='webLongevity' ? 'longevity' : 'sillage';   // trường dùng chung với tab Đăng web
+      if(v==='') { p[f]=''; delete p[goc]; }
+      else { const n=parseInt(v,10); if(!Number.isFinite(n) || n<1 || n>5){ toast('Độ lưu/tỏa hương phải từ 1 đến 5'); return; } p[f]=n; p[goc]=n; }
     } else {
       p[f]=v;
     }
@@ -1927,11 +1974,16 @@ document.addEventListener('change', e=>{
     const to = t.value, from = DB.settings.unit || 'k';
     if(to===from) return;
     const factor = (from==='k' && to==='d') ? 1000 : 1/1000;
-    ask(`Đổi đơn vị sang <b>${to==='d'?'đồng':'nghìn đồng'}</b>.<br>Bạn có muốn quy đổi luôn toàn bộ số đang có (nhân ${factor>=1?factor:'1/1000'})?`,
+    ask(`Đổi đơn vị sang <b>${to==='d'?'đồng':'nghìn đồng'}</b>.<br><br>
+         <b>Đổi và quy đổi số</b> — nhân ${factor>=1?factor:'1/1000'} toàn bộ giá đang có (nên chọn).<br>
+         <b>Chỉ đổi nhãn</b> — giữ nguyên số, chỉ dùng khi trước giờ bạn đã gõ theo đơn vị mới.`,
       ()=>{ convertUnit(factor); DB.settings.unit=to; save(); toast('Đã đổi đơn vị và quy đổi số liệu'); },
       'Đổi và quy đổi số');
-    // nếu bấm Không thì chỉ đổi nhãn, số giữ nguyên
-    CONFIRM_NO = ()=>{ DB.settings.unit=to; save(); render(); toast('Đã đổi đơn vị, số giữ nguyên'); };
+    // Huỷ / ✕ / Esc / bấm ra nền = giữ nguyên đơn vị cũ; "Chỉ đổi nhãn" là nút riêng
+    const ft = $('#modalRoot footer');
+    if(ft){ ft.firstElementChild.textContent = 'Huỷ';
+      ft.lastElementChild.insertAdjacentHTML('beforebegin',
+        `<button class="btn" data-act="unitlabel" data-to="${to}">Chỉ đổi nhãn</button>`); }
     return;
   }
   if(t.matches('#monthPick')){ UI.month = t.value; render(); return; }
@@ -2151,12 +2203,13 @@ async function gopVaDay(remote){
     const goc = lsGet(SB_BASE_DATA, null);
     DB = gopDB(goc, DB, remote.data); normalizeDB();
     localStorage.setItem(KEY, JSON.stringify(DB));
+    const seq0 = SUA_SEQ, daGui = JSON.parse(JSON.stringify(DB));      // chụp đúng bản gửi đi
     const uid = (sbSess()||{}).user_id;
     const out = await sbFetch(`${ROW}?user_id=eq.${uid}&version=eq.${remote.version}`, {
       method:'PATCH', headers:{Prefer:'return=representation'},
-      body: JSON.stringify({data:DB, version:remote.version+1, updated_at:new Date().toISOString()})});
+      body: JSON.stringify({data:daGui, version:remote.version+1, updated_at:new Date().toISOString()})});
     if(out && out.length){
-      lsSet(SB_BASE, remote.version+1); lsSet(SB_DIRTY, false); luuBanGoc(DB);
+      ghiDaDay(remote.version+1, daGui, seq0);
       setSync('ok','Đã gộp thay đổi của máy này với máy chủ'); render();
       return true;
     }
@@ -2164,18 +2217,27 @@ async function gopVaDay(remote){
   }
   return false;
 }
+/* Đẩy xong 1 bản: bản gốc để gộp = ĐÚNG bản đã gửi (không phải DB lúc này). Nếu trong lúc chờ máy chủ
+   bạn lại sửa gì (SUA_SEQ đã tăng) thì vẫn để "chờ đẩy" — trước đây cờ bị xoá nên thay đổi đó không bao giờ lên. */
+function ghiDaDay(ver, daGui, seq0){
+  lsSet(SB_BASE, ver); luuBanGoc(daGui);
+  if(SUA_SEQ === seq0) lsSet(SB_DIRTY, false);
+}
 async function syncNow(silent){
-  if(SYNC.busy || !sbOn()) return;
+  if(!sbOn()) return;
+  if(SYNC.busy){ if(syncDirty()) _syncLai = true; return; }   // đang đẩy dở → xong sẽ tự đẩy tiếp
   SYNC.busy = true; setSync('busy');
+  const seqStart = SUA_SEQ; _syncLai = false;
   try{
     await sbReady();
     const uid = (sbSess()||{}).user_id;
     const remote = await sbRow();
 
     if(!remote){                                   // lần đầu: tạo bản ghi
+      const seq0 = SUA_SEQ, daGui = JSON.parse(JSON.stringify(DB));
       await sbFetch(ROW, {method:'POST', headers:{Prefer:'return=minimal'},
-        body: JSON.stringify({user_id:uid, data:DB, version:1})});
-      lsSet(SB_BASE,1); lsSet(SB_DIRTY,false); luuBanGoc(DB); setSync('ok','Đã tạo bản trên máy chủ');
+        body: JSON.stringify({user_id:uid, data:daGui, version:1})});
+      ghiDaDay(1, daGui, seq0); setSync('ok','Đã tạo bản trên máy chủ');
     }
     else if(remote.version > syncBase() && syncDirty() && syncBase()===0 && laMayMoi()){
       adopt(remote); render(); setSync('ok','Đã tải dữ liệu về máy này');
@@ -2191,10 +2253,11 @@ async function syncNow(silent){
     }
     else if(syncDirty()){                          // máy này có thay đổi -> đẩy lên
       const exp = syncBase();
+      const seq0 = SUA_SEQ, daGui = JSON.parse(JSON.stringify(DB));    // chụp đúng bản gửi đi
       const out = await sbFetch(`${ROW}?user_id=eq.${uid}&version=eq.${exp}`, {
         method:'PATCH', headers:{Prefer:'return=representation'},
-        body: JSON.stringify({data:DB, version:exp+1, updated_at:new Date().toISOString()})});
-      if(out && out.length){ lsSet(SB_BASE, exp+1); lsSet(SB_DIRTY,false); luuBanGoc(DB); setSync('ok','Đã lưu lên máy chủ'); }
+        body: JSON.stringify({data:daGui, version:exp+1, updated_at:new Date().toISOString()})});
+      if(out && out.length){ ghiDaDay(exp+1, daGui, seq0); setSync('ok','Đã lưu lên máy chủ'); }
       else {
         const r2 = await sbRow();
         if(!(await gopVaDay(r2))){ SYNC.busy=false; setSync('conflict','Bản trên máy chủ đã đổi'); askConflict(await sbRow()); return; }
@@ -2204,11 +2267,18 @@ async function syncNow(silent){
   }catch(e){
     setSync(/đăng nhập/i.test(e.message)?'off':'error', e.message);
     if(!silent) toast('Đồng bộ lỗi: ' + e.message);
-  }finally{ SYNC.busy = false; if($('#syncPanel')) paintSyncPanel(); }
+  }finally{
+    SYNC.busy = false; if($('#syncPanel')) paintSyncPanel();
+    // có sửa trong lúc đang đồng bộ → đẩy tiếp phần đó (trừ khi đang chờ bạn xử lý xung đột)
+    if((_syncLai || SUA_SEQ !== seqStart) && syncDirty() && SYNC.state !== 'conflict'){
+      _syncLai = false; clearTimeout(syncTimer); syncTimer = setTimeout(()=>syncNow(true), 1500);
+    }
+  }
 }
-let syncTimer = null;
+let syncTimer = null, SUA_SEQ = 0, _syncLai = false;    // SUA_SEQ tăng mỗi lần lưu — biết có sửa trong lúc đang đẩy
 function syncTouch(){
   if(!sbOn()) return;
+  SUA_SEQ++;
   lsSet(SB_DIRTY, true); setSync('pending');
   clearTimeout(syncTimer); syncTimer = setTimeout(()=>syncNow(true), 2500);
 }
@@ -2552,8 +2622,46 @@ const webList = () => {
 };
 
 const webSlugHopLe = slug => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug);
-const slugTuTen = s => norm(s).replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+/* chữ thường, bỏ dấu, nối bằng "-": "L'Homme Prada" → "lhomme-prada" */
+const slugTuTen = s => norm(s).replace(/['’`]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
 const coTrongCatalog = p => !!(p.webSlug && WEB_SLUGS && WEB_SLUGS.some(x=>x.slug===p.webSlug));
+
+/* mã gợi ý cho món chưa ghép: hãng (nếu tên chưa có) + tên, nồng độ viết tắt như catalog web (edp/edt…) */
+function maGoiY(p){
+  const ten = String(p.name||'').trim(); if(!ten) return '';
+  const hang = String(p.brand||'').trim();
+  let s = slugTuTen((hang && !norm(ten).includes(norm(hang)) ? hang+' ' : '') + ten);
+  [['eau-de-parfum','edp'],['eau-de-toilette','edt'],['eau-de-cologne','edc']]
+    .forEach(([dai,ngan])=>{ s = s.replace(new RegExp('(^|-)'+dai+'(?=-|$)','g'), '$1'+ngan); });
+  return s;
+}
+/* món có sẵn trên web mà có thể chính là món này (mã này chứa trọn mã kia hoặc ngược lại) — ghép vào thay vì tạo trùng */
+function maGanGiong(goiY, pid){
+  if(!goiY || !WEB_SLUGS) return [];
+  const daDung = new Set(DB.products.filter(x=>x.id!==pid).map(x=>x.webSlug).filter(Boolean));
+  const a = goiY.split('-');
+  return WEB_SLUGS.filter(w=>{
+    if(w.slug===goiY || daDung.has(w.slug)) return false;
+    const b = w.slug.split('-');
+    return a.every(t=>b.includes(t)) || b.every(t=>a.includes(t));
+  }).slice(0,3);
+}
+function oGoiYMa(p){
+  const goiY = maGoiY(p);
+  if(!goiY) return `<div class="tiny muted" style="margin-top:4px">Nhập tên sản phẩm ở tab Bảng giá để có mã gợi ý.</div>`;
+  const cua = DB.products.find(x=>x.id!==p.id && x.webSlug===goiY);
+  const coSan = WEB_SLUGS && WEB_SLUGS.some(w=>w.slug===goiY);
+  const gan = maGanGiong(goiY, p.id);
+  const nut = (slug, nhan) => `<button class="btn sm" data-act="webdungma" data-id="${p.id}" data-slug="${esc(slug)}"
+      style="margin-top:4px;max-width:100%;white-space:normal;text-align:left;font-size:11.5px">${nhan}</button>`;
+  return `<div style="margin-top:2px">
+    ${cua ? `<div class="tiny" style="color:var(--warn);margin-top:4px">Mã gợi ý <b>${esc(goiY)}</b> đã thuộc “${esc(cua.name)}” — gõ mã khác.</div>`
+          : nut(goiY, `${coSan?'✓ Ghép':'Dùng mã'}: <b>${esc(goiY)}</b>`)
+            + `<div class="tiny muted">${coSan ? 'Món này đã có trên web — bấm để ghép.' : 'Mã mới — dùng xong bấm “＋ Tạo sản phẩm mới”.'}</div>`}
+    ${gan.length ? `<div class="tiny muted" style="margin-top:6px">Có thể đã có trên web — ghép vào thay vì tạo trùng:</div>
+      ${gan.map(w=>nut(w.slug, `Ghép: ${esc(w.name||w.slug)} <span class="muted">(${esc(w.slug)})</span>`)).join('')}` : ''}
+  </div>`;
+}
 
 /* Tạo bản ghi catalog tối thiểu cho một mã mới. Bản ghi luôn là nháp;
    chỉ webPush mới chuyển is_published thành true sau khi đã có giá. */
@@ -2578,7 +2686,7 @@ async function webTaoMoi(pid){
       const row = {
         slug, name:p.name.trim(), is_published:false,
         category: p.brand ? `Nước hoa · ${p.brand}` : 'Nước hoa',
-        description: p.note || `${p.name.trim()} chính hãng tại Puvela.`,
+        description: `${p.name.trim()} chính hãng tại Puvela.`,     // KHÔNG lấy Ghi chú — đó là ghi chú nội bộ (có thể có giá nhập)
         notes:{top:'',mid:'',base:''}
       };
       if(brandSlug) row.brand_slug = brandSlug;
@@ -2587,7 +2695,7 @@ async function webTaoMoi(pid){
       await sbFetch('/rest/v1/products', {
         method:'POST', headers:{Prefer:'return=minimal'}, body:JSON.stringify([row])});
     }
-    const item = {slug, name:p.name};
+    const item = {slug, name:p.name, gender:'', pub:false, dna:false};   // món mới: chưa giới tính, chưa điểm mùi
     WEB_SLUGS = (WEB_SLUGS||[]).filter(x=>x.slug!==slug).concat(item);
     lsSet('pm_web_slugs', WEB_SLUGS);
     save(); render();
@@ -2603,11 +2711,18 @@ const anhURL = (slug, slot, v) => slug
 const anhSlots = p => (p.anhSlots || (p.anhSlots = {}));
 
 /* gom lại rồi ghi một lần: hero_image + gallery */
-async function anhLuuMeta(p){
+async function anhLuuMeta(p, fileVuaXoa){
   const S = anhSlots(p);
   const gallery = [1,2,3].filter(i=>S[i]).map(i=>anhURL(p.webSlug, i, S[i]));
   const body = { gallery };
   if(S[1]) body.hero_image = anhURL(p.webSlug, 1, S[1]);
+  else if(fileVuaXoa){
+    /* ảnh chính trên web đang trỏ đúng file vừa xoá → đổi sang ảnh còn lại đầu tiên, hết ảnh thì để trống
+       (web tự hiện ảnh chờ). Ảnh chính trỏ file khác thì giữ nguyên. */
+    const cur = await sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(p.webSlug)}&select=hero_image`);
+    const h = String(((cur||[])[0]||{}).hero_image || '').split('?')[0];
+    if(h.endsWith('/products/' + fileVuaXoa)) body.hero_image = gallery[0] || null;
+  }
   await sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(p.webSlug)}`, {
     method:'PATCH', headers:{Prefer:'return=minimal'}, body: JSON.stringify(body)});
 }
@@ -2615,15 +2730,17 @@ async function anhUpload(pid, file, slot){
   slot = num(slot) || 1;
   const p = productById(pid); if(!p || !p.webSlug){ toast('Ghép mã sản phẩm trên web trước đã'); return; }
   if(!coTrongCatalog(p)){ toast('Bấm “Tạo sản phẩm mới” trên tab Đăng web trước khi tải ảnh'); return; }
-  if(!/^image\//.test(file.type)){ toast('File này không phải ảnh'); return; }
-  if(file.size > 5*1024*1024){ toast('Ảnh nặng quá 5MB — nén bớt rồi thử lại'); return; }
-  toast('Đang tải ảnh lên…');
+  if(!/^image\//.test(file.type) && !/\.(hei[cf]|jpe?g|png|webp)$/i.test(file.name||'')){ toast('File này không phải ảnh'); return; }
+  if(file.size > 40*1024*1024){ toast('Ảnh nặng quá 40MB — chọn ảnh khác'); return; }
+  toast('Đang nén và tải ảnh lên…');
   try{
+    const anh = await nenAnh(file, 1600);                  // ảnh điện thoại 3–8MB → còn vài trăm KB, web tải nhanh
+    if(anh.size > 5*1024*1024) throw new Error('ảnh vẫn nặng quá 5MB sau khi nén');
     await sbReady();
     const c = sbCfg(), sess = sbSess();
     const res = await fetch(`${c.url.replace(/\/+$/,'')}/storage/v1/object/products/${anhTen(p.webSlug,slot)}`, {
       method:'POST', headers:{apikey:c.key, Authorization:'Bearer '+sess.access_token,
-                              'x-upsert':'true', 'Content-Type':file.type}, body:file});
+                              'x-upsert':'true', 'Content-Type':anh.type||'image/jpeg'}, body:anh});
     if(!res.ok){ let d=''; try{ d=(await res.json()).message||''; }catch(e){}
                  throw new Error(d || ('HTTP '+res.status)); }
     anhSlots(p)[slot] = Date.now();
@@ -2639,7 +2756,7 @@ async function anhXoa(pid, slot){
     await sbFetch(`/storage/v1/object/products/${anhTen(p.webSlug,slot)}`, {method:'DELETE'});
   }catch(e){ /* ảnh có thể chưa từng tồn tại — không sao */ }
   delete anhSlots(p)[slot];
-  try{ await anhLuuMeta(p); }catch(e){ toast('Xoá được ảnh nhưng chưa cập nhật web: '+e.message); }
+  try{ await anhLuuMeta(p, anhTen(p.webSlug, slot)); }catch(e){ toast('Xoá được ảnh nhưng chưa cập nhật web: '+e.message); }
   save(); if(ANH) openAnh(pid); else render();
   toast('Đã bỏ ảnh ' + (slot===1?'chính':slot));
 }
@@ -2672,7 +2789,7 @@ function openAnh(pid){
     <div class="body">
       <div class="anhluoi">${o(1)}${o(2)}${o(3)}</div>
       <p class="hint" style="margin-top:14px">Ảnh chính hiện ở trang chủ và trang bộ sưu tập. Cả ba ảnh hiện ở trang chi tiết sản phẩm.
-        Ảnh dọc (tỉ lệ 3:4) lên hình đẹp nhất. Tối đa 5MB mỗi ảnh.</p>
+        Ảnh dọc (tỉ lệ 3:4) lên hình đẹp nhất. Ảnh chụp điện thoại cứ chọn thẳng — admin tự nén trước khi tải lên.</p>
       <p class="hint">Ảnh lưu trong kho <b>products</b> trên Supabase, đặt tên theo mã sản phẩm nên đăng lại là tự ghi đè.</p>
     </div>
     <footer><button class="btn primary" data-close="1">Xong</button></footer>
@@ -2693,31 +2810,40 @@ const siteURL = key => {
   return `${sbCfg().url.replace(/\/+$/,'')}/storage/v1/object/public/products/site/${key}.jpg?v=${v}`;
 };
 async function siteAnhUpload(key, file){
-  if(!/^image\//.test(file.type)){ toast('File này không phải ảnh'); return; }
-  if(file.size > 5*1024*1024){ toast('Ảnh nặng quá 5MB — nén bớt rồi thử lại'); return; }
-  toast('Đang tải ảnh lên…');
+  if(!/^image\//.test(file.type) && !/\.(hei[cf]|jpe?g|png|webp)$/i.test(file.name||'')){ toast('File này không phải ảnh'); return; }
+  if(file.size > 40*1024*1024){ toast('Ảnh nặng quá 40MB — chọn ảnh khác'); return; }
+  toast('Đang nén và tải ảnh lên…');
+  let daTai = false;
   try{
+    const anh = await nenAnh(file, 2000);                  // ảnh nền đầu trang cần khổ rộng hơn ảnh sản phẩm
+    if(anh.size > 5*1024*1024) throw new Error('ảnh vẫn nặng quá 5MB sau khi nén');
     await sbReady();
     const c = sbCfg(), sess = sbSess();
     const res = await fetch(`${c.url.replace(/\/+$/,'')}/storage/v1/object/products/site/${key}.jpg`, {
       method:'POST', headers:{apikey:c.key, Authorization:'Bearer '+sess.access_token,
-                              'x-upsert':'true', 'Content-Type':file.type}, body:file});
+                              'x-upsert':'true', 'Content-Type':anh.type||'image/jpeg'}, body:anh});
     if(!res.ok){ let d=''; try{ d=(await res.json()).message||''; }catch(e){}
                  throw new Error(d || ('HTTP '+res.status)); }
+    daTai = true;
     const v = Date.now(); siteV()[key] = v;
     await sbFetch('/rest/v1/site_images?on_conflict=key', {
       method:'POST', headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
       body: JSON.stringify([{key, url:siteURL(key), updated_at:new Date().toISOString()}])});
     save(); render();
     toast('Đã đổi ' + (SITE_ANH.find(x=>x.key===key)||{}).ten);
-  }catch(e){ toast('Ảnh đã tải lên nhưng chưa cập nhật được vào web: ' + e.message); save(); render(); }
+  }catch(e){
+    toast((daTai ? 'Ảnh đã tải lên nhưng chưa cập nhật được vào web: ' : 'Không đăng được ảnh: ') + e.message);
+    save(); render(); }
 }
 
 /* ---------- tải danh sách slug từ web ---------- */
 async function webLoadSlugs(){
   await sbReady();
-  const r = await sbFetch('/rest/v1/products?select=slug,name&order=name');
-  WEB_SLUGS = r || []; lsSet('pm_web_slugs', WEB_SLUGS);
+  const r = await sbFetch('/rest/v1/products?select=slug,name,gender,is_published,scent_dna&order=name');
+  /* kèm giới tính + có điểm mùi chưa → tab Đăng web lọc được món chưa vào quiz / chưa vào trang Nam-Nữ */
+  WEB_SLUGS = (r || []).map(x=>({slug:x.slug, name:x.name, gender:x.gender||'', pub:!!x.is_published,
+    dna: !!(x.scent_dna && Object.values(x.scent_dna).some(v=>num(v)>0))}));
+  lsSet('pm_web_slugs', WEB_SLUGS);
   /* kèm luôn nội dung hiện tại (mô tả + notes) để điền sẵn vào ô sửa */
   try{
     const rows = await sbFetch('/rest/v1/products?select=slug,description,notes&order=name');
@@ -2739,7 +2865,8 @@ function webSlugsTuTai(){
   if(!sbOn()) return;
   const duSlugs = WEB_SLUGS && WEB_SLUGS.length;
   const duNotes = WEB_NOTES && Object.keys(WEB_NOTES).length;
-  if(_slugsDaTai || (duSlugs && duNotes)) return;
+  const banCu = duSlugs && !('dna' in WEB_SLUGS[0]);      // danh sách lưu từ bản cũ, chưa có giới tính/điểm mùi
+  if(_slugsDaTai || (duSlugs && duNotes && !banCu)) return;
   _slugsDaTai = true;
   webLoadSlugs().then(n=>{ if(n>0) render(); }).catch(()=>{});
 }
@@ -2753,7 +2880,8 @@ async function webSyncProduct(p){
   if(!p.webPublish) return {ok:false, why:'chưa tích đăng'};
   await sbReady();
   const plan = webPlan(p);
-  const chan = plan.van.filter(v=>/trùng mã|chưa tạo trong catalog|≤ vốn/.test(v));
+  // mã do máy tự ghép mà bạn chưa bấm "✓ Mã đúng" thì không đăng — ghép nhầm sẽ đẩy giá vào sản phẩm khác
+  const chan = plan.van.filter(v=>/trùng mã|chưa tạo trong catalog|≤ vốn|máy tự ghép/.test(v));
   if(chan.length) return {ok:false, why:chan.join(' · ')};
 
   const slug = encodeURIComponent(p.webSlug);
@@ -2764,7 +2892,8 @@ async function webSyncProduct(p){
                  compare_at_price: r.compare};     // null = hết sale, phải gửi để xoá gạch ngang cũ
       // gửi tồn kho khi có theo dõi: còn hàng (tồn > 0) hoặc bạn đã nhập số tồn — kể cả 0 = hết hàng trên web
       const daNhapTon = String(p.stockFull??'')!=='' || String(p.openMl??'')!=='';
-      if(plan.stock > 0 || daNhapTon) o.stock = Math.max(0, Math.floor(plan.stock / (r.kind==='full' ? (num(p.sizeMl)||1) : r.volume_ml)));
+      // chai full = chỉ chai còn nguyên seal; ml lẻ của chai đã bóc chỉ bán được dạng chiết
+      if(plan.stock > 0 || daNhapTon) o.stock = tonWebCua(p, r);
       return o;});
     await sbFetch('/rest/v1/product_variants?on_conflict=product_slug,label', {
       method:'POST', headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
@@ -2790,25 +2919,50 @@ async function webSyncProduct(p){
   return {ok:true, n:plan.rows.length, removed:xoa.length};
 }
 
+/* số còn hàng gửi lên web cho một mức giá: full = chai còn nguyên seal; chiết = tổng ml / cỡ lọ */
+const tonWebCua = (p, r) => Math.max(0, Math.floor(r.kind==='full' ? num(p.stockFull) : calc(p).totalMl / r.volume_ml));
+/* chỉ cập nhật cột stock của các mức giá đang có — dùng sau chốt đơn / nhập kho / bóc chai */
+async function webDayTon(p){
+  if(chuaTheoDoiTon(p)) return {ok:true, n:0};               // chưa nhập tồn → không đụng tồn trên web
+  const plan = webPlan(p);
+  const chan = plan.van.filter(v=>/trùng mã|chưa tạo trong catalog|máy tự ghép/.test(v));
+  if(chan.length) return {ok:false, why:chan.join(' · ')};
+  await sbReady();
+  const slug = encodeURIComponent(p.webSlug);
+  for(const r of plan.rows)
+    await sbFetch(`/rest/v1/product_variants?product_slug=eq.${slug}&label=eq.${encodeURIComponent(r.label)}`, {
+      method:'PATCH', headers:{Prefer:'return=minimal'}, body: JSON.stringify({stock: tonWebCua(p, r)})});
+  return {ok:true, n:plan.rows.length};
+}
+
 /* Sửa/xoá giá ở bất kỳ đâu → tự đưa database về khớp bảng giá (debounce theo sản phẩm). */
 const WEB_GIA_FIELDS = new Set(['sizeMl','costFull','costDecant','stockFull','openMl']);
-const _webSyncTimers = {};
+const _webSyncTimers = {}, _webSyncLoud = {};
 let _webSyncHint = 0;
-function webAutoSync(pid){
-  const p = productById(pid);
-  if(!p || !p.webSlug || !p.webPublish) return;
+/* opts.quiet: gọi từ chốt đơn / nhập kho / bóc chai — chỉ cập nhật số còn hàng, thành công thì không báo
+   (để không đè thông báo "Đã chốt đơn"); trong cùng lượt mà có lần gọi thường thì vẫn báo như cũ */
+function webAutoSync(pid, opts){
+  const quiet = !!(opts && opts.quiet);
+  const p0 = productById(pid);
+  if(!p0 || !p0.webSlug || !p0.webPublish) return;
   if(!sbOn()){
-    if(!_webSyncHint){ _webSyncHint = 1;
+    if(!quiet && !_webSyncHint){ _webSyncHint = 1;
       toast('Đã lưu trên máy. Đăng nhập Supabase (tab Cài đặt) để giá tự đẩy lên web'); }
     return;
   }
+  if(!quiet) _webSyncLoud[pid] = true;
   clearTimeout(_webSyncTimers[pid]);
   _webSyncTimers[pid] = setTimeout(()=>{
-    webSyncProduct(p)
-      .then(r=>{ if(!r.ok) return;
+    const loud = !!_webSyncLoud[pid]; delete _webSyncLoud[pid];
+    const p = productById(pid); if(!p || !p.webSlug || !p.webPublish) return;   // lấy bản mới nhất sau 700ms
+    // chỉ chốt đơn / nhập kho / bóc chai → CHỈ sửa số còn hàng; không đẩy giá, không gỡ mức giá, không bật/tắt hiển thị
+    (loud ? webSyncProduct(p) : webDayTon(p))
+      .then(r=>{ if(!r.ok || !loud) return;
+        save();                                      // giữ cờ webLive — cần để ẩn món khi bỏ tích
         toast(r.n ? `Đã cập nhật ${r.n} mức giá lên web${r.removed ? ` · gỡ ${r.removed} mức cũ` : ''}`
                   : `Đã gỡ ${r.removed} mức giá khỏi web`); })
-      .catch(e=>toast('Đã lưu trên máy, chưa đẩy được giá lên web: '+e.message));
+      .catch(e=>toast((loud ? 'Đã lưu trên máy, chưa đẩy được giá lên web: '
+                            : 'Đã lưu trên máy, chưa cập nhật số còn hàng lên web: ')+e.message));
   }, 700);
 }
 
@@ -2928,9 +3082,28 @@ function giaWebCell(p, plan, ch){
   }).join('');
 }
 
+/* bộ lọc tab Đăng web — để điền nhanh giá chiết / phân loại cho từng nhóm còn thiếu */
+const webInfo = slug => (WEB_SLUGS||[]).find(x=>x.slug===slug);
+const webThieuGia = p => p.webOnly || !dxGet(p, dsz(), webCh());
+const webThieuPL  = p => { const w = p.webSlug && webInfo(p.webSlug);
+  return !!(w && ('dna' in w) && (!w.gender || !w.dna)); };
+function webPLPills(p){
+  const w = p.webSlug && webInfo(p.webSlug);
+  if(!w || !('dna' in w)) return '';
+  const nut = (t, tip) => p.webOnly
+    ? `<span class="pill warn" style="display:inline-block;margin-top:5px" title="${tip}">${t}</span>`
+    : `<button class="pill warn" data-act="detail" data-id="${p.id}" style="display:inline-block;margin-top:5px;border:0;cursor:pointer" title="${tip} — bấm để điền">${t}</button>`;
+  return (!w.gender ? nut('chưa có giới tính', 'Không hiện ở trang Nam/Nữ, quiz lọc theo giới tính sẽ bỏ qua') : '')
+       + (!w.dna    ? nut('chưa có điểm mùi',  'Quiz chưa gợi ý được chai này') : '');
+}
 function viewWeb(){
   webSlugsTuTai();
-  const list = webList();
+  const tatCa = webList();
+  const loc = UI.webLoc || 'all';
+  const list = loc==='thieu10' ? tatCa.filter(webThieuGia)
+             : loc==='thieupl' ? tatCa.filter(webThieuPL)
+             : loc==='webonly' ? tatCa.filter(p=>p.webOnly) : tatCa;
+  const soWebOnly = tatCa.filter(p=>p.webOnly).length;
   const ch = webCh();
   const sanSang = DB.products.filter(p=>p.webPublish && p.webSlug && !webPlan(p).van.length).length;
   const slugOpts = (WEB_SLUGS||[]).map(x=>`<option value="${esc(x.slug)}">${esc(x.name||'')}</option>`).join('');
@@ -2955,8 +3128,10 @@ function viewWeb(){
         <td data-l="Giá web sẽ đăng"><span class="muted tiny">—</span></td>
         <td data-l="Giá sale (${U()})"><span class="muted tiny">—</span></td>
         <td data-l="Mùi hương"><span class="muted tiny">—</span></td>
-        <td data-l="Tình trạng"><span class="pill mute">chỉ có trên web</span></td>
+        <td data-l="Tình trạng"><span class="pill mute">chỉ có trên web</span>${webPLPills(p)}</td>
         <td data-l="Đăng">
+          <button class="btn sm primary" data-act="webnhap" data-slug="${esc(p.webSlug)}"
+            title="Tạo dòng trong bảng giá, lấy sẵn tên, dung tích và giá đang bán trên web — để nhập giá chiết, giá vốn, tồn kho">＋ Đưa vào bảng giá</button>
           <button class="btn sm danger" data-act="deletewebonly" data-slug="${esc(p.webSlug)}" style="margin-top:4px">🗑 Xóa</button>
         </td>
       </tr>`;
@@ -2982,7 +3157,8 @@ function viewWeb(){
       </td>
       <td class="l" data-l="Mã trên web">
         <input class="cell txt" data-web="webSlug" data-id="${p.id}" value="${esc(p.webSlug||'')}"
-               placeholder="vd: chanel-coco-mademoiselle-edp" list="webslugs" style="font-weight:500;font-size:12.5px">
+               placeholder="${esc(maGoiY(p) || 'vd: chanel-coco-mademoiselle-edp')}" list="webslugs" style="font-weight:500;font-size:12.5px">
+        ${p.webSlug ? '' : oGoiYMa(p)}
       </td>
       <td data-l="Giá web sẽ đăng">${giaWebCell(p, plan, ch)}</td>
       <td data-l="Giá sale (${U()})">
@@ -3001,7 +3177,7 @@ function viewWeb(){
       </td>
       <td data-l="Tình trạng">${plan.van.length
         ? `<span class="pill warn" title="${esc(plan.van.join(' · '))}">${esc(plan.van[0])}</span>`
-        : `<span class="pill ok">sẵn sàng</span>`}
+        : `<span class="pill ok">sẵn sàng</span>`}${webPLPills(p)}
         ${laMaMoi?`<button class="btn sm" data-act="webcreate" data-id="${p.id}" style="display:block;margin-top:5px">＋ Tạo sản phẩm mới</button>`
           :(chuaTaiDS&&p.webSlug?`<span class="pill warn" style="display:inline-block;margin-top:5px" title="Bấm ⇩ Tải danh sách sản phẩm từ web, hoặc đăng nhập Supabase để tự tải">chưa tải danh sách mã web</span>`:'')}</td>
       <td data-l="Đăng">
@@ -3051,6 +3227,15 @@ function viewWeb(){
       <span class="spacer"></span>
       <button class="btn primary" data-act="webpush" ${sanSang?'':'disabled style="opacity:.4"'}>↑ Đăng giá lên web (${sanSang})</button>
     </div>
+    <div class="filters" style="padding-top:0">
+      ${[['all','Tất cả',tatCa.length],
+         ['thieu10',`Chưa có giá ${dsz()}ml`,tatCa.filter(webThieuGia).length],
+         ['thieupl','Chưa vào quiz / trang Nam-Nữ',tatCa.filter(webThieuPL).length],
+         ['webonly','Chỉ có trên web',soWebOnly]]
+        .map(([k,t,n])=>`<button class="chip ${loc===k?'active':''}" data-act="webloc" data-k="${k}">${t} <span class="n">${n}</span></button>`).join('')}
+      ${soWebOnly && (loc==='webonly'||loc==='thieu10') ? `<span class="spacer"></span>
+        <button class="btn sm" data-act="webnhapall">＋ Đưa cả ${soWebOnly} món chỉ-có-trên-web vào bảng giá</button>` : ''}
+    </div>
     <div class="pad" style="padding-bottom:0">
       <p class="hint"><b>Gán mã trước khi thêm ảnh:</b> bấm “Tải danh sách sản phẩm từ web”, rồi chọn hoặc gõ mã ở cột <b>Mã trên web</b>. Nếu đó là mã mới, bấm <b>＋ Tạo sản phẩm mới</b>: web tạo bản nháp, sau đó bạn thêm ảnh và đăng giá để mở bán. Mã chỉ dùng chữ thường, số và dấu <code>-</code>; mỗi mã chỉ thuộc một sản phẩm.<br><b>Về giá ở cột “Giá web sẽ đăng”:</b> mọi cỡ chiết và full đều có ô sửa ngay tại chỗ (đơn vị ${U()}). <b>Giá chỉ lên web khi bạn tự nhập</b> — hệ thống không còn tự tính giá từ vốn × markup. Ô để trống ⇒ mức giá đó <b>không được đăng</b>, và nếu trước đó đã có trên web thì sẽ bị <b>tự gỡ</b> khỏi database khi đồng bộ.</p>
     </div>
@@ -3059,8 +3244,8 @@ function viewWeb(){
           <th class="l">Ảnh &amp; sản phẩm</th><th class="l">Mã trên web</th><th>Giá web sẽ đăng</th>
           <th>Giá sale (${U()})</th><th>Mùi hương</th><th>Tình trạng</th><th>Đăng</th>
         </tr></thead><tbody>${rows}</tbody></table>`
-      : `<div class="empty"><b>Không có sản phẩm nào khớp với tìm kiếm</b>
-          Xoá từ khoá tìm kiếm để xem và gán mã cho sản phẩm.</div>`}
+      : `<div class="empty"><b>${loc!=='all' && !UI.q ? 'Không còn món nào trong mục này' : 'Không có sản phẩm nào khớp với tìm kiếm'}</b>
+          ${loc!=='all' && !UI.q ? 'Chọn “Tất cả” để xem toàn bộ.' : 'Xoá từ khoá tìm kiếm để xem và gán mã cho sản phẩm.'}</div>`}
     </div>
     <div class="legend">
       <span>Giá đăng lên web đổi sang <b>đồng</b> (${isD()?'giữ nguyên':'nhân 1000'}).</span>
@@ -3074,17 +3259,19 @@ function viewWeb(){
 function webAutoMatch(){
   if(!WEB_SLUGS || !WEB_SLUGS.length){ toast('Tải danh sách sản phẩm từ web trước đã'); return; }
   let n=0;
+  const daDung = new Set(DB.products.map(x=>x.webSlug).filter(Boolean));   // mã đã thuộc món khác thì không giành
   DB.products.forEach(p=>{
     if(p.webSlug) return;
     const t = norm(p.name).split(/\s+/).filter(x=>x.length>2);
     if(!t.length) return;
     let best=null, bestScore=0;
     WEB_SLUGS.forEach(w=>{
+      if(daDung.has(w.slug)) return;
       const hay = norm((w.name||'')+' '+w.slug);
       const score = t.filter(x=>hay.includes(x)).length / t.length;
       if(score > bestScore){ bestScore=score; best=w; }
     });
-    if(best && bestScore >= 0.6){ p.webSlug = best.slug; p.webSlugAuto = true; n++; }
+    if(best && bestScore >= 0.6){ p.webSlug = best.slug; p.webSlugAuto = true; daDung.add(best.slug); n++; }
   });
   save(); render();
   toast(n ? `Đã tự ghép ${n} sản phẩm — kiểm tra lại trước khi đăng` : 'Không tìm được cặp nào đủ giống');
@@ -3110,9 +3297,15 @@ document.addEventListener('change', e=>{
   if(!t.matches('[data-web]')) return;
   const p = productById(t.dataset.id); if(!p) return;
   const f = t.dataset.web;
-  if(f==='longevity' || f==='sillage'){
+  const muiF = f==='longevity' ? 'webLongevity' : f==='sillage' ? 'webSillage' : null;
+  if(muiF){
     const v = t.value.trim();
     if(v==='') delete p[f]; else p[f] = Math.max(1, Math.min(5, parseInt(v,10)||3));
+    p[muiF] = p[f] ?? '';                          // ô ở Chi tiết sản phẩm đọc cùng giá trị
+  } else if(f==='webSlug'){
+    const go = t.value.trim(), ma = slugTuTen(go);          // "Dior Sauvage EDP" → "dior-sauvage-edp"
+    p.webSlug = ma;
+    if(ma && ma!==go) toast('Mã đã chuyển thành “'+ma+'” — chữ thường, nối bằng dấu gạch ngang');
   } else {
     p[f] = f==='webPublish' ? t.checked : t.value.trim();
   }
@@ -3120,7 +3313,25 @@ document.addEventListener('change', e=>{
   p.updatedAt = today(); delete p.sample; save();
   if(f==='webSlug' || f==='webPublish') render();
   if(f==='webPublish' && t.checked) webAutoSync(p.id);   // tick đăng → đẩy giá lên web ngay
+  if(f==='webPublish' && !t.checked) webAnMon(p);        // bỏ tích → ẩn khỏi web ngay
+  // lưu/tỏa: đẩy thẳng lên web (bỏ trống = web giữ giá trị cũ)
+  if(muiF && p[f] && p.webSlug && sbOn() && (!WEB_SLUGS || coTrongCatalog(p)))
+    syncWebContentField(p, muiF, String(p[f]))
+      .then(()=>toast('Đã cập nhật độ '+(f==='longevity'?'lưu':'tỏa')+' hương trên web'))
+      .catch(e=>toast('Đã lưu trên máy, chưa cập nhật lên web: '+e.message));
 });
+
+/* bỏ tích "đang bán" → ẩn món khỏi web ngay, không đợi nút Đăng giá (nút đó bị khoá khi không còn món sẵn sàng) */
+async function webAnMon(p){
+  if(!p || !p.webSlug || !sbOn() || (WEB_SLUGS && !coTrongCatalog(p))) return;
+  try{
+    await sbReady();
+    await sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(p.webSlug)}`, {
+      method:'PATCH', headers:{Prefer:'return=minimal'}, body: JSON.stringify({is_published:false})});
+    p.webLive = false; save();
+    toast('Đã ẩn '+p.name+' khỏi web');
+  }catch(e){ toast('Chưa ẩn được trên web: '+e.message); }
+}
 document.addEventListener('click', async e=>{
   const b = e.target.closest('[data-act]'); if(!b) return;
   if(b.dataset.act==='webslugs'){ e.preventDefault();
@@ -3137,7 +3348,7 @@ document.addEventListener('click', async e=>{
     render(); toast('Ghép mã web cho sản phẩm này rồi quay lại thêm ảnh'); }
   if(b.dataset.act==='anhxoa'){ e.preventDefault(); anhXoa(b.dataset.id, num(b.dataset.slot)); }
   if(b.dataset.act==='webok'){ e.preventDefault();
-    const p=productById(b.dataset.id); if(p){ delete p.webSlugAuto; save(); render(); } }
+    const p=productById(b.dataset.id); if(p){ delete p.webSlugAuto; save(); render(); if(p.webPublish) webAutoSync(p.id); } }
   if(b.dataset.act==='webpush'){ e.preventDefault();
     const n = DB.products.filter(p=>p.webPublish && p.webSlug).length;
     ask(`Đăng giá của <b>${n} sản phẩm</b> lên web puvela?<br>Khách sẽ thấy giá mới ngay khi tải lại trang.`,
@@ -3159,7 +3370,193 @@ document.addEventListener('click', async e=>{
   }
 });
 </script>
+<script>
+/* ============================================================
+   ĐƯA MÓN "CHỈ CÓ TRÊN WEB" VÀO BẢNG GIÁ
+   Lấy sẵn tên, hãng, dung tích, giá đang bán (kể cả giá sale) để KHÔNG làm đổi gì trên web.
+   Tồn kho để trống (không phải 0) → lần đồng bộ sau không biến món thành "hết hàng".
+   ============================================================ */
+async function webNhapVeBangGia(slugs){
+  slugs = slugs.filter(s=>s && !DB.products.some(x=>x.webSlug===s));
+  if(!slugs.length) return 0;
+  await sbReady();
+  const ch = webCh(), std = dsz(), doiDV = v => isD() ? num(v) : num(v)/1000;
+  const rows = [];
+  for(let i=0; i<slugs.length; i+=40){                       // chia lô cho URL không quá dài
+    const lst = slugs.slice(i, i+40).map(s=>'"'+encodeURIComponent(s)+'"').join(',');
+    rows.push(...(await sbFetch(`/rest/v1/products?slug=in.(${lst})&select=slug,name,is_published,longevity,sillage,brands(name),product_variants(label,kind,volume_ml,price,compare_at_price)`) || []));
+  }
+  let n = 0;
+  rows.forEach(r=>{
+    if(DB.products.some(x=>x.webSlug===r.slug)) return;
+    const vs = r.product_variants || [];
+    const mlCua = v => num(v.volume_ml) || num((String(v.label||'').match(/(\d+(?:[.,]\d+)?)\s*ml/i)||[])[1]);
+    const thuong = v => doiDV(num(v.compare_at_price) > num(v.price) ? v.compare_at_price : v.price);
+    const sale   = v => num(v.compare_at_price) > num(v.price) ? doiDV(v.price) : 0;
+    const full = vs.find(v=>/^full/i.test(v.label||'') || v.kind==='full');
+    const p = { id:uid(), name:r.name || r.slug, brand:(r.brands && r.brands.name) || '',
+      sizeMl: full ? (mlCua(full) || '') : '', costFull:'', costDecant:'', stockFull:'', openMl:'',
+      priceFull:{}, priceDecant:{}, webSlug:r.slug, webPublish:!!r.is_published, webLive:!!r.is_published,
+      updatedAt: today() };
+    if(full && num(full.price)){ p.priceFull[ch] = thuong(full); if(sale(full)) (p.salePrice = p.salePrice||{}).full = sale(full); }
+    vs.filter(v=>!/^full/i.test(v.label||'') && v.kind!=='full' && num(v.price)).forEach(v=>{
+      const ml = mlCua(v); if(!ml) return;
+      // admin chỉ giữ được giá sale cho cỡ chuẩn; cỡ khác lấy đúng giá đang bán để khách không thấy giá đổi
+      dxSet(p, ml, ch, ml===std ? thuong(v) : doiDV(v.price));
+      if(ml===std && sale(v)) (p.salePrice = p.salePrice||{}).decant = sale(v);
+    });
+    if(r.longevity){ p.longevity = r.longevity; p.webLongevity = r.longevity; }
+    if(r.sillage){ p.sillage = r.sillage; p.webSillage = r.sillage; }
+    DB.products.push(p); n++;
+  });
+  normalizeDB(); save(); render();
+  return n;
+}
+
+/* ============================================================
+   GIỚI TÍNH · NICHE · ĐIỂM MÙI (scent_dna) — sửa thẳng trên web từ Chi tiết sản phẩm
+   Trang Nam/Nữ/Unisex lọc theo giới tính; quiz chỉ gợi ý chai đã có điểm mùi.
+   ============================================================ */
+const PL_DIMS = [['fresh','Tươi mát'],['clean','Sạch, xà phòng'],['floral','Hoa'],['green','Xanh, thảo mộc'],
+  ['woody','Gỗ'],['warm','Ấm, cay'],['sweet','Ngọt'],['powdery','Phấn'],['dark','Trầm, khói'],
+  ['sensual','Cuốn hút'],['elegant','Thanh lịch'],['bold','Nổi bật, tỏa xa']];
+let PL = null;                     // {pid, slug, gender, niche, dna, sua}
+function plCapNhatDS(slug, doi){   // giữ danh sách mã web khớp để bộ lọc "Chưa vào quiz" đúng ngay
+  const w = webInfo(slug); if(!w) return;
+  Object.assign(w, doi); lsSet('pm_web_slugs', WEB_SLUGS);
+}
+async function plTai(pid){
+  const p = productById(pid), box = $('#plWeb'); if(!p || !box) return;
+  if(!sbOn()){ box.innerHTML = '<p class="hint" style="margin:0">Đăng nhập để sửa giới tính và điểm mùi.</p>'; return; }
+  try{
+    await sbReady();
+    const r = await sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(p.webSlug)}&select=gender,is_niche,scent_dna`);
+    const row = (r||[])[0];
+    if(!$('#plWeb') || $('#plWeb').dataset.id!==pid) return;            // hộp đã đóng / đổi sang món khác
+    if(!row){ $('#plWeb').innerHTML = '<p class="hint" style="margin:0">Mã này chưa có trên web — bấm “＋ Tạo sản phẩm mới” ở tab Đăng web trước.</p>'; return; }
+    PL = { pid, slug:p.webSlug, gender:row.gender||'', niche:!!row.is_niche, dna:Object.assign({}, row.scent_dna||{}), sua:false };
+    plVe();
+  }catch(e){ const b=$('#plWeb'); if(b) b.innerHTML = `<p class="hint" style="margin:0;color:var(--bad)">Không tải được giới tính / điểm mùi: ${esc(e.message)}</p>`; }
+}
+function plVe(){
+  const box = $('#plWeb'); if(!box || !PL || box.dataset.id!==PL.pid) return;
+  const coDna = PL_DIMS.some(([k])=>num(PL.dna[k])>0);
+  const nguon = (WEB_SLUGS||[]).filter(w=>w.slug!==PL.slug && w.dna!==false)
+                 .sort((a,b)=>(a.name||'').localeCompare(b.name||'','vi'));
+  const opt = (v,t,cur)=>`<option value="${v}" ${String(cur)===String(v)?'selected':''}>${t}</option>`;
+  box.innerHTML = `
+    <h3 style="margin:0 0 4px;font-size:13px">Phân loại &amp; điểm mùi</h3>
+    <p class="hint" style="margin:0 0 10px">Giới tính quyết định món hiện ở trang <b>Nam / Nữ / Unisex</b> và câu hỏi đầu của quiz.
+      Điểm mùi là thứ quiz dùng để gợi ý — chưa có thì chai này <b>không bao giờ</b> được quiz gợi ý.</p>
+    <div class="grid2">
+      <label class="fld"><span>Giới tính</span><select class="inp" data-pl="gender">
+        ${opt('','— chưa chọn —',PL.gender)}${opt('nu','Nữ',PL.gender)}${opt('nam','Nam',PL.gender)}${opt('unisex','Unisex (cả nam và nữ)',PL.gender)}
+      </select></label>
+      <label class="fld"><span>Dòng niche</span><select class="inp" data-pl="niche">
+        ${opt('0','Không',PL.niche?1:0)}${opt('1','Có — nước hoa niche',PL.niche?1:0)}</select></label>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 8px">
+      <b style="font-size:12.5px">Điểm mùi</b>
+      <span class="tiny muted">0 = không có · 5 = rất rõ</span>
+      ${coDna ? '' : '<span class="pill warn">chưa có — chưa vào quiz</span>'}
+    </div>
+    ${nguon.length ? `<label class="fld"><span>Chép điểm từ chai giống nhất rồi chỉnh lại</span>
+      <select class="inp" data-pl="copy"><option value="">— chọn chai để chép —</option>
+        ${nguon.map(w=>`<option value="${esc(w.slug)}">${esc(w.name||w.slug)}</option>`).join('')}</select></label>` : ''}
+    <div class="pldna">
+      ${PL_DIMS.map(([k,t])=>`<label class="fld"><span>${t}</span><select class="inp" data-pl-dna="${k}">
+        ${[0,1,2,3,4,5].map(n=>opt(n,n,Math.round(num(PL.dna[k])))).join('')}</select></label>`).join('')}
+    </div>
+    <button class="btn sm ${PL.sua?'primary':''}" data-act="pldna" style="margin-top:8px">${PL.sua?'● Lưu điểm mùi lên web':'Lưu điểm mùi lên web'}</button>`;
+}
+async function plPatch(body, ok){
+  try{
+    await sbReady();
+    await sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(PL.slug)}`, {
+      method:'PATCH', headers:{Prefer:'return=minimal'}, body: JSON.stringify(body)});
+    toast(ok); return true;
+  }catch(e){ toast('Chưa lưu được lên web: '+e.message); return false; }
+}
+document.addEventListener('change', async e=>{
+  const t = e.target;
+  if(!PL || !t.closest('#plWeb')) return;
+  if(t.matches('[data-pl="gender"]')){
+    const v = ['nu','nam','unisex'].includes(t.value) ? t.value : null;
+    if(await plPatch({gender:v}, v ? 'Đã lưu giới tính trên web' : 'Đã bỏ giới tính')){ PL.gender = v||''; plCapNhatDS(PL.slug,{gender:v||''}); }
+    else plVe();
+  }
+  if(t.matches('[data-pl="niche"]')){
+    const v = t.value==='1';
+    if(await plPatch({is_niche:v}, v ? 'Đã đánh dấu niche' : 'Đã bỏ đánh dấu niche')) PL.niche = v; else plVe();
+  }
+  if(t.matches('[data-pl="copy"]') && t.value){
+    try{
+      await sbReady();
+      const r = await sbFetch(`/rest/v1/products?slug=eq.${encodeURIComponent(t.value)}&select=name,scent_dna`);
+      const src = ((r||[])[0]||{}).scent_dna;
+      if(!src || !Object.keys(src).length){ toast('Chai đó cũng chưa có điểm mùi'); t.value=''; return; }
+      PL_DIMS.forEach(([k])=>{ PL.dna[k] = Math.max(0, Math.min(5, Math.round(num(src[k])))); });
+      PL.sua = true; plVe(); toast('Đã chép điểm — chỉnh cho đúng rồi bấm Lưu');
+    }catch(err){ toast('Không chép được: '+err.message); }
+  }
+  if(t.matches('[data-pl-dna]')){
+    PL.dna[t.dataset.plDna] = num(t.value); PL.sua = true;
+    const b = $('#plWeb [data-act="pldna"]'); if(b){ b.classList.add('primary'); b.textContent = '● Lưu điểm mùi lên web'; }
+  }
+});
+document.addEventListener('click', async e=>{
+  const b = e.target.closest('[data-act]'); if(!b) return;
+  if(b.dataset.act==='pldna' && PL){ e.preventDefault();
+    const dna = {}; PL_DIMS.forEach(([k])=>{ dna[k] = Math.max(0, Math.min(5, Math.round(num(PL.dna[k])))); });
+    if(!Object.values(dna).some(v=>v>0)){ toast('Chưa có điểm nào — chọn ít nhất một nhóm mùi'); return; }
+    if(await plPatch({scent_dna:dna}, 'Đã lưu điểm mùi — quiz sẽ gợi ý được chai này')){
+      PL.dna = dna; PL.sua = false; plCapNhatDS(PL.slug,{dna:true}); plVe(); }
+  }
+  if(b.dataset.act==='webloc'){ e.preventDefault(); UI.webLoc = b.dataset.k; render(); }
+  if(b.dataset.act==='webdungma'){ e.preventDefault();
+    const p = productById(b.dataset.id), ma = slugTuTen(b.dataset.slug||''); if(!p || !ma) return;
+    const cua = DB.products.find(x=>x.id!==p.id && x.webSlug===ma);
+    if(cua){ toast('Mã này đang thuộc “'+cua.name+'”'); return; }
+    p.webSlug = ma; delete p.webSlugAuto; p.updatedAt = today(); save(); render();
+    toast(WEB_SLUGS && WEB_SLUGS.some(w=>w.slug===ma) ? 'Đã ghép với món có sẵn trên web'
+                                                     : 'Đã đặt mã — bấm “＋ Tạo sản phẩm mới” để tạo trên web'); }
+  if(b.dataset.act==='webnhap'){ e.preventDefault();
+    try{ const n = await webNhapVeBangGia([b.dataset.slug]);
+      toast(n ? 'Đã đưa vào bảng giá — nhập giá chiết, giá vốn, tồn kho' : 'Món này đã có trong bảng giá'); }
+    catch(err){ toast('Không lấy được dữ liệu từ web: '+err.message); } }
+  if(b.dataset.act==='webnhapall'){ e.preventDefault();
+    const slugs = webList().filter(p=>p.webOnly).map(p=>p.webSlug);
+    ask(`Đưa <b>${slugs.length} món</b> đang có trên web vào bảng giá?<br><br>Tên, dung tích và giá đang bán được lấy sẵn nên
+         <b>web không đổi gì</b>. Tồn kho để trống; giá vốn bạn tự nhập sau.`, async ()=>{
+      try{ const n = await webNhapVeBangGia(slugs); toast(`Đã đưa ${n} món vào bảng giá`); }
+      catch(err){ toast('Không lấy được dữ liệu từ web: '+err.message); }
+    }, 'Đưa vào bảng giá'); }
+});
+
+/* ============================================================
+   NÉN ẢNH TRƯỚC KHI TẢI — ảnh điện thoại thường 3–8MB; thu về cạnh dài tối đa maxCanh px, JPG ~85%
+   ============================================================ */
+async function nenAnh(file, maxCanh){
+  let bmp;
+  try{ bmp = await createImageBitmap(file); }
+  catch(e){ throw new Error(/hei[cf]/i.test(file.type + ' ' + file.name)
+    ? 'ảnh HEIC của iPhone chưa đọc được trên trình duyệt này — mở ảnh, chụp màn hình hoặc xuất sang JPG rồi chọn lại'
+    : 'không đọc được file ảnh này'); }
+  const k = Math.min(1, maxCanh / Math.max(bmp.width, bmp.height));
+  const w = Math.max(1, Math.round(bmp.width*k)), h = Math.max(1, Math.round(bmp.height*k));
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+  const g = cv.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0,0,w,h);    // PNG nền trong → nền trắng, không bị đen
+  g.drawImage(bmp, 0, 0, w, h); if(bmp.close) bmp.close();
+  const blob = await new Promise(res=>cv.toBlob(res, 'image/jpeg', 0.85));
+  if(!blob) throw new Error('không nén được ảnh');
+  if(file.type==='image/jpeg' && k===1 && file.size <= blob.size) return file;   // ảnh gốc đã gọn hơn → giữ gốc
+  return blob;
+}
+</script>
 <style>
+.pldna{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 8px}
+.pldna .fld{margin:0}
+@media(max-width:560px){.pldna{grid-template-columns:repeat(2,1fr)}}
 .anhluoi{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:560px){.anhluoi{grid-template-columns:1fr 1fr}}
 .anhkhung{display:block;position:relative;width:100%;aspect-ratio:3/4;max-height:210px;border:1px dashed var(--line);border-radius:10px;
@@ -3268,7 +3665,75 @@ async function woDoiTT(id, tt){
       body: JSON.stringify({status:tt})});
     const o = (WO.list||[]).find(x=>x.id==id); if(o) o.status = tt;
     render(); toast('Đã chuyển sang "'+(WO_TT[tt]||{}).ten+'"');
-  }catch(e){ toast('Không đổi được trạng thái: '+e.message); }
+    if(!o) return;
+    const so = woDaGhi(o);
+    if(tt==='confirmed' && !so) woGhiSo(o, true);    // vừa xác nhận với khách → hỏi ghi sổ để trừ kho (một hộp duy nhất)
+    if(tt==='cancelled' && so && so.applied)         // huỷ đơn đã trừ kho → trả hàng về kho
+      ask(`Đơn <b>${esc(o.code||'')}</b> đã ghi sổ và trừ kho.<br>Huỷ luôn đơn trong tab Đơn hàng và hoàn hàng về kho?`,
+        ()=>setOrderStatus(so.id,'cancel'), 'Huỷ & hoàn kho', true);
+  }catch(e){ render(); toast('Không đổi được trạng thái: '+e.message); }   // render để ô chọn quay về trạng thái cũ
+}
+
+/* ---------- ĐƠN WEB → SỔ ĐƠN HÀNG: trừ kho + vào Báo cáo, mỗi đơn web chỉ ghi một lần (theo mã đơn) ---------- */
+const woMa = o => String(o.code || ('web-'+o.id));
+const woDaGhi = o => DB.orders.find(x=>x.webCode && x.webCode===woMa(o) && x.status!=='cancel');
+const woDaHuy = o => DB.orders.find(x=>x.webCode && x.webCode===woMa(o) && x.status==='cancel');
+/* đơn ghi TAY trước đây (chưa có mã đơn web) có thể chính là đơn này: cùng tên khách, lệch ≤ 3 ngày, có chung món */
+function woCoTheDaGhiTay(o, pids){
+  const ten = norm(o.customer_name||''); if(!ten || !pids.length) return null;
+  const ngay = o.created_at ? new Date(o.created_at).getTime() : Date.now();
+  return DB.orders.find(x=>!x.webCode && x.status!=='cancel' && norm(x.customer||'')===ten
+    && Math.abs(new Date((x.date||today())+'T12:00:00').getTime() - ngay) <= 3*864e5
+    && (x.items||[]).some(i=>pids.includes(i.pid)));
+}
+/* hoi = true khi gọi từ đổi trạng thái "Đã xác nhận": luôn hỏi trước, gộp mọi cảnh báo vào MỘT hộp */
+function woGhiSo(o, hoi){
+  if(!o) return;
+  if(woDaGhi(o)){ toast('Đơn này đã ghi sổ rồi'); return; }
+  const huy = woDaHuy(o);
+  if(huy){                                   // từng ghi sổ rồi huỷ → chốt lại đúng đơn đó, không tạo đơn mới
+    ask(`Đơn <b>${esc(woMa(o))}</b> đã ghi sổ trước đây rồi bị huỷ.<br>Chốt lại đơn đó trong tab Đơn hàng và trừ kho?`,
+      ()=>setOrderStatus(huy.id,'done'), 'Chốt lại & trừ kho');
+    return;
+  }
+  const ch = webCh(), thieu = [];
+  const items = (o.items||[]).map(it=>{
+    const p = DB.products.find(x=>x.webSlug && x.webSlug===it.slug);
+    const lb = String(it.label||'');
+    const full = /^full/i.test(lb);
+    const m = lb.match(/(\d+(?:[.,]\d+)?)\s*ml/i);
+    const ml = full ? '' : (m ? num(m[1]) : dsz());
+    const type = full ? 'full' : 'decant';
+    if(!p) thieu.push(it.name || it.slug || '?');
+    return { pid: p ? p.id : '', name: p ? p.name : (it.name || it.slug || '—'), type, ml,
+             qty: num(it.qty) || 1,
+             price: isD() ? num(it.price) : num(it.price)/1000,               // web lưu đồng, admin có thể đang dùng nghìn
+             cost: p ? itemPriceFor(p, type, ml || dsz(), ch).cost : 0 };
+  });
+  const tong = items.reduce((a,i)=>a + i.price*i.qty, 0);
+  const sub  = isD() ? num(o.subtotal) : num(o.subtotal)/1000;
+  const giam = sub && tong > sub ? Math.round((tong - sub)*1000)/1000 : '';
+  const ghi = ()=>{
+    if(woDaGhi(o)) return;
+    const don = { id:uid(), date: o.created_at ? dstr(new Date(o.created_at)) : today(),
+      customer: o.customer_name || '', channel: ch, webCode: woMa(o),
+      note: ['Đơn web '+woMa(o), o.phone, o.address, o.note].filter(Boolean).join(' · '),
+      items, discount: giam, shipFee:'', status:'done', applied:false };
+    const w = applyStock(don, +1); don.applied = true;
+    DB.orders.push(don); save(); render();
+    stockWarn(w, `Đã ghi đơn ${woMa(o)} vào Đơn hàng và trừ kho`);
+  };
+  const canhBao = [];
+  const tay = woCoTheDaGhiTay(o, items.map(i=>i.pid).filter(Boolean));
+  if(tay) canhBao.push(`⚠ Có vẻ đơn này <b>đã được ghi tay</b> ở tab Đơn hàng: <b>${esc(tay.customer||'Khách lẻ')}</b> · ${esc(tay.date||'')} · `
+      + `${esc((tay.items||[]).map(i=>i.name).join(', '))}.<br>Ghi sổ nữa sẽ <b>trừ kho lần hai</b>.`);
+  if(thieu.length) canhBao.push(`Có ${thieu.length} món chưa ghép với sản phẩm nào trong bảng giá: <b>${thieu.map(esc).join(', ')}</b>.<br>
+      Vẫn ghi sổ được, nhưng các món này <b>không trừ kho</b> và tính vốn = 0. Ghép mã ở tab Đăng web trước sẽ chính xác hơn.`);
+  if(hoi || canhBao.length)
+    ask((hoi ? `Đã xác nhận đơn <b>${esc(woMa(o))}</b>.<br>Ghi đơn này vào tab <b>Đơn hàng</b> để trừ kho và tính vào Báo cáo?` : '')
+        + (canhBao.length ? (hoi ? '<br><br>' : '') + canhBao.join('<br><br>') : ''),
+      ghi, canhBao.length ? 'Vẫn ghi sổ' : 'Ghi sổ & trừ kho');
+  else ghi();
 }
 
 function viewWebOrders(){
@@ -3317,6 +3782,9 @@ function viewWebOrders(){
         <select class="inp" data-wott="${o.id}" style="padding:6px 8px;font-size:12.5px">
           ${Object.entries(WO_TT).map(([k,v])=>`<option value="${k}" ${(o.status||'new')===k?'selected':''}>${v.ten}</option>`).join('')}
         </select>
+        ${woDaGhi(o) ? `<div style="margin-top:6px"><span class="pill ok" title="Đã có trong tab Đơn hàng">✓ Đã ghi sổ</span></div>`
+          : o.status!=='cancelled' ? `<button class="btn sm primary" data-act="woghiso" data-id="${o.id}" style="margin-top:6px;width:100%"
+            title="Đưa đơn vào tab Đơn hàng: trừ kho và tính vào Báo cáo">＋ Ghi sổ &amp; trừ kho</button>` : ''}
         ${o.status==='done' && sdt ? `<button class="btn sm" data-act="xindg" data-id="${o.id}" style="margin-top:6px;width:100%"
             title="Mở Zalo với tin nhắn xin đánh giá đã soạn sẵn">✎ Xin đánh giá</button>` : ''}
       </td>
@@ -3352,7 +3820,8 @@ function viewWebOrders(){
     <div class="legend"><span>Đây là đơn <b>khách tự đặt trên website</b>, khác với tab Đơn hàng (đơn bạn tự ghi).
       Có đơn mới: admin đang mở sẽ <b>tự kêu chuông + hiện thông báo + tải lại danh sách</b> (cần chạy SQL realtime ở Cài đặt).
       Điện thoại nhận tin nhắn Telegram nếu đã bật Function order-telegram.</span>
-      <span>Đổi trạng thái ở đây <b>không</b> trừ tồn kho — ghi đơn tay ở tab Đơn hàng nếu muốn trừ kho.</span></div>
+      <span>Bấm <b>＋ Ghi sổ &amp; trừ kho</b> để đưa đơn vào tab Đơn hàng (trừ kho, tính vào Báo cáo) — mỗi đơn chỉ ghi được một lần.
+        Huỷ đơn đã ghi sổ thì admin hỏi hoàn kho.</span></div>
   </div>`;
 }
 
@@ -3360,18 +3829,31 @@ document.addEventListener('click', e=>{
   const b = e.target.closest('[data-act]'); if(!b) return;
   if(b.dataset.act==='wotai'){ e.preventDefault(); WO.list=null; woTai(); }
   if(b.dataset.act==='woloc'){ e.preventDefault(); WO.loc=b.dataset.k; render(); }
+  if(b.dataset.act==='woghiso'){ e.preventDefault(); woGhiSo((WO.list||[]).find(x=>x.id==b.dataset.id)); }
   if(b.dataset.act==='xindg'){ e.preventDefault();
     const o=(WO.list||[]).find(x=>x.id==b.dataset.id); if(!o) return;
     const sdt=String(o.phone||'').replace(/\D/g,'');
-    const goc=(sbCfg().url||'').replace(/\/+$/,'');
-    // địa chỉ web thật của bạn — sửa ở đây nếu đã có tên miền
-    const web = DB.settings.webDomain || '';
-    const link = it => web ? `${web}/product.html?p=${it.slug}` : `product.html?p=${it.slug}`;
-    const mon = (o.items||[]).map(it=>`• ${it.name}: ${link(it)}`).join('\n');
-    const tin = `Chào ${o.customer_name||'bạn'}, Puvela đây ạ.\n`+
-      `Đơn ${o.code||''} mình đã giao xong rồi, bạn dùng thấy sao ạ?\n\n`+
-      `Nếu tiện, bạn để lại vài dòng cảm nhận giúp Puvela nhé — bấm vào link, kéo xuống cuối trang, chọn "Viết đánh giá của bạn":\n${mon}\n\n`+
-      `Cảm ơn bạn nhiều ạ.`;
+    // địa chỉ web — đổi ở Cài đặt › Địa chỉ website
+    const web = (DB.settings.webDomain || 'https://puvela.store').replace(/\/+$/,'');
+    const link = it => `${web}/product.html?p=${encodeURIComponent(it.slug||'')}#reviews`;   // #reviews: mở thẳng phần đánh giá
+    // một chai một dòng (cùng mùi mua 2 cỡ thì chỉ xin 1 lần)
+    const chai = (o.items||[]).filter((it,i,a)=>it.slug && a.findIndex(x=>x.slug===it.slug)===i);
+    const ten = String(o.customer_name||'').trim() || 'bạn';
+    const tin = chai.length > 1
+      ? /* đơn nhiều chai — cùng giọng với mẫu 1 */
+        `Chào ${ten}, Puvela đây ạ.\n`+
+        `Mấy hôm nay bạn dùng thử các mùi thấy sao rồi ạ? Mùi nào hợp với bạn nhất?\n\n`+
+        `Nếu tiện, bạn để lại vài dòng cảm nhận giúp Puvela nhé, chỉ mất khoảng 1 phút. Bạn bấm link của chai muốn viết rồi chọn "Viết đánh giá của bạn":\n`+
+        chai.map(it=>`• ${it.name}: ${link(it)}`).join('\n')+`\n\n`+
+        `Bạn có thể kể mùi chuyển thế nào sau vài tiếng, lưu trên da bao lâu, hợp dịp nào. `+
+        `Chia sẻ thật của bạn giúp người sau chọn đúng mùi hơn. Puvela cảm ơn bạn nhiều ạ!`
+      : /* mẫu 1 — một chai (bản user chọn) */
+        `Chào ${ten}, Puvela đây ạ.\n`+
+        `Mấy hôm nay bạn dùng ${(chai[0]||{}).name||'nước hoa Puvela gửi'} thấy sao rồi ạ? Từ lúc mới xịt đến khi mùi lắng xuống trên da, bạn thích giai đoạn nào nhất?\n\n`+
+        `Nếu tiện, bạn để lại vài dòng cảm nhận giúp Puvela nhé, chỉ mất khoảng 1 phút. Bạn bấm link dưới rồi chọn "Viết đánh giá của bạn":\n`+
+        (chai[0] ? link(chai[0]) : `${web}`)+`\n\n`+
+        `Bạn có thể kể mùi chuyển thế nào sau vài tiếng, lưu trên da bao lâu, hợp dịp nào. `+
+        `Chia sẻ thật của bạn giúp người sau chọn đúng mùi hơn. Puvela cảm ơn bạn nhiều ạ!`;
     copyText(tin);
     window.open('https://zalo.me/'+sdt, '_blank', 'noopener');
   }
@@ -3514,7 +3996,9 @@ function daBan(){
     (o.items||[]).forEach(it=>{ const p=productById(it.pid);
       if(p && p.webSlug) dem[p.webSlug] = (dem[p.webSlug]||0) + num(it.qty); });
   });
-  ((typeof WO!=='undefined' && WO.list) || []).filter(o=>o.status==='done' && (o.created_at||'') >= moc).forEach(o=>{
+  const daGhiSo = new Set((DB.orders||[]).filter(o=>o.status==='done').map(o=>o.webCode).filter(Boolean));   // đã đếm ở trên → không đếm lại
+  ((typeof WO!=='undefined' && WO.list) || []).filter(o=>o.status==='done' && (o.created_at||'') >= moc
+      && !daGhiSo.has(String(o.code || ('web-'+o.id)))).forEach(o=>{
     (o.items||[]).forEach(it=>{ if(it.slug) dem[it.slug] = (dem[it.slug]||0) + num(it.qty); });
   });
   return dem;

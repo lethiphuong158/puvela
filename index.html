@@ -3393,12 +3393,15 @@ section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 
       if (!track || !(window.puvela && window.puvela.client)) return;
       window.puvela.client.from('reviews').select('author,rating,body,image_url,verified,product_slug,products(name)').eq('is_published', true).order('created_at', { ascending: false }).limit(4).then(function (r) {
         var rows = (r && r.data) || []; if (!rows.length) return;
+        /* nội dung do khách gõ → luôn escape trước khi chèn vào trang */
+        var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
         track.innerHTML = rows.map(function (v) {
-          var st = '★'.repeat(v.rating || 5) + '☆'.repeat(5 - (v.rating || 5));
+          var n = Math.max(0, Math.min(5, Math.round(Number(v.rating) || 5)));
+          var st = '★'.repeat(n) + '☆'.repeat(5 - n);
           var ten = (v.products && v.products.name) || '';
           return '<div class="ucard"><div class="stars">' + st + '</div>' +
-            (ten ? '<a class="ucard-sp" href="product.html?p=' + (v.product_slug || '') + '">' + ten + '</a>' : '') +
-            '<p class="ucard-body">' + (v.body || '') + '</p><div class="ucard-meta"><b>' + (v.author || 'Khách hàng') + '</b>' + (v.verified ? '<span class="verified">✓ Đã mua</span>' : '') + '</div></div>';
+            (ten ? '<a class="ucard-sp" href="product.html?p=' + encodeURIComponent(v.product_slug || '') + '">' + esc(ten) + '</a>' : '') +
+            '<p class="ucard-body">' + esc(v.body) + '</p><div class="ucard-meta"><b>' + esc(v.author || 'Khách hàng') + '</b>' + (v.verified ? '<span class="verified">✓ Đã mua</span>' : '') + '</div></div>';
         }).join('');
       }).catch(function (e) { console.warn('[Puvela] ugc lỗi:', e && e.message); });
     })();

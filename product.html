@@ -696,8 +696,20 @@
         if(!rows.length){list.innerHTML='<p class="rv-empty">Chưa có đánh giá cho sản phẩm này. Hãy là người đầu tiên chia sẻ cảm nhận!</p>';return;}
         var avg=rows.reduce(function(s,x){return s+(x.rating||0);},0)/rows.length;
         document.querySelector('#rv-summary').innerHTML='<span class="rv-summary">★ '+avg.toFixed(1)+'/5 · '+rows.length+' đánh giá</span>';
-        list.innerHTML=rows.map(function(v){var st='★'.repeat(v.rating||0)+'☆'.repeat(5-(v.rating||0));return '<div class="rv-card">'+(v.image_url?'<img class="rv-img" src="'+v.image_url+'" alt="" />':'')+'<div class="rv-stars">'+st+'</div><p class="rv-body">'+(v.body||'')+'</p><div class="rv-meta"><b>'+(v.author||'Khách hàng')+'</b>'+(v.verified?'<span class="rv-verified">✓ Đã mua</span>':'')+'</div></div>';}).join('');
+        /* nội dung do khách gõ → luôn escape; ảnh chỉ nhận link https */
+        var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+        list.innerHTML=rows.map(function(v){var n=Math.max(0,Math.min(5,Math.round(Number(v.rating)||0)));var st='★'.repeat(n)+'☆'.repeat(5-n);var img=/^https:\/\//i.test(v.image_url||'')?v.image_url:'';return '<div class="rv-card">'+(img?'<img class="rv-img" src="'+esc(img)+'" alt="" />':'')+'<div class="rv-stars">'+st+'</div><p class="rv-body">'+esc(v.body)+'</p><div class="rv-meta"><b>'+esc(v.author||'Khách hàng')+'</b>'+(v.verified?'<span class="rv-verified">✓ Đã mua</span>':'')+'</div></div>';}).join('');
       }catch(e){list.innerHTML='<p class="rv-empty">Không tải được đánh giá.</p>';}
+    })();
+
+    /* link ...#reviews (tin xin đánh giá qua Zalo): trình duyệt nhảy tới phần đánh giá ngay lúc mở, nhưng nội dung
+       sản phẩm tải sau đẩy lệch đi → cuộn lại vài lần cho đúng chỗ; khách tự cuộn/chạm thì thôi */
+    (function(){
+      if(location.hash!=='#reviews') return;
+      var dung=false;
+      ['wheel','touchstart','keydown'].forEach(function(ev){ addEventListener(ev,function(){dung=true;},{once:true,passive:true}); });
+      function cuon(){ if(dung) return; var el=document.getElementById('reviews'); if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-8, behavior:'instant'}); }
+      [500,1300,2600].forEach(function(t){ setTimeout(cuon,t); });
     })();
 
     /* ===== sản phẩm liên quan: cùng hãng trước, thiếu thì bù cùng giới tính ===== */
