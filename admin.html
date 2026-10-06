@@ -50,6 +50,7 @@ header.top{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1
 .topbar{max-width:1400px;margin:0 auto;padding:0 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .brand{font-weight:800;letter-spacing:-.02em;font-size:16px;color:var(--wine);white-space:nowrap}
 .brand small{display:block;font-weight:500;font-size:11px;color:var(--muted);letter-spacing:0}
+.brand small:empty{display:none}
 .search{flex:1;min-width:190px;position:relative}
 .search input{width:100%;padding:9px 34px 9px 34px;border:1px solid var(--line);border-radius:999px;background:var(--panel);outline:none}
 .search input:focus{border-color:var(--wine)}
@@ -106,6 +107,15 @@ tbody tr:hover{background:var(--panel2)}
 tbody td.l{text-align:left}
 td.nm{min-width:250px}
 .nmrow{display:flex;align-items:center;gap:6px}
+/* ảnh nhỏ cạnh tên — nhiều chai tên na ná nhau */
+.nmwrap{display:flex;align-items:center;gap:9px}
+.nmwrap .nmtxt{flex:1;min-width:0}
+.anhnho{flex:none;width:38px;height:50px;border-radius:6px;overflow:hidden;background:var(--panel2);border:1px solid var(--line2)}
+.anhnho img{width:100%;height:100%;object-fit:cover;display:block}
+/* đánh dấu "đã chắc tên & giá" — chỉ để bạn tự theo dõi, không liên quan web */
+.chac{display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:11.5px;white-space:nowrap;color:var(--warn);font-weight:600}
+.chac input{width:15px;height:15px;accent-color:var(--ok);margin:0}
+.chac.ok{color:var(--ok)}
 .dot{width:7px;height:7px;border-radius:99px;flex:none}
 .dot.bad{background:var(--bad)} .dot.warn{background:var(--warn)} .dot.ok{background:transparent;border:1px solid var(--line)}
 .cell{width:100%;min-width:66px;border:1px solid transparent;background:transparent;text-align:right;padding:6px 6px;border-radius:8px;outline:none}
@@ -223,10 +233,10 @@ label.fld span{display:block;font-size:12px;color:var(--muted);font-weight:600;m
 <body>
 <header class="top">
   <div class="topbar">
-    <div class="brand">Quản lý nước hoa<small id="brandSub">bảng giá · tồn kho · đơn hàng</small></div>
+    <div class="brand">Quản lý nước hoa<small id="brandSub"></small></div>
     <div class="search">
       <span class="ic">⌕</span>
-      <input id="q" type="search" placeholder="Tìm nhanh: gõ không dấu cũng ra (vd: coco, nar trang)" autocomplete="off" />
+      <input id="q" type="search" placeholder="Tìm nhanh" autocomplete="off" />
       <button class="clr" id="qclr" hidden>✕</button>
     </div>
     <div class="tools">
@@ -260,7 +270,8 @@ const KEY = 'perfume_manager_v1';
 /* ---------- utils ---------- */
 const $  = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
-const norm = s => (s||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+/* NFKD: chữ "in đậm/nghiêng kiểu Facebook" (𝐕𝐞𝐫𝐬𝐚𝐜𝐞) cũng về chữ thường → tìm kiếm, mã web không bị trượt */
+const norm = s => (s||'').toString().normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
                     .replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase().trim();
 /* đọc số kiểu Việt: "3.200" = 3200, "1,5" = 1.5, "1.234,5" = 1234.5; "350,000" (kiểu Anh) = 350000.
    Số đã lưu (kiểu number) trả nguyên — đọc lại như chuỗi sẽ biến 10.625 thành 10625. */
@@ -327,6 +338,8 @@ function normalizeDB(){
   if(Array.isArray(DB.history)) DB.history = DB.history.filter(h=>h && h.field && h.field!=='undefined');
   DB.products.forEach(p=>{
     delete p['undefined'];
+    if(typeof p.name==='string')  p.name  = p.name.normalize('NFKC');     // 𝐕𝐞𝐫𝐬𝐚𝐜𝐞 → Versace
+    if(typeof p.brand==='string') p.brand = p.brand.normalize('NFKC');
     if(p.stockFull===undefined)p.stockFull=0; if(p.openMl===undefined)p.openMl=0;
     ['priceFull','priceDecant'].forEach(k=>{
       if(p[k]===null || p[k]===undefined) p[k] = {};
@@ -525,6 +538,8 @@ function setPrice(pid, kind, ch, value){
 function setField(pid, field, value){
   const p = DB.products.find(x=>x.id===pid); if(!p) return false;
   let v = value;
+  // tên/hãng dán từ Facebook, TikTok hay bị kiểu chữ đặc biệt (𝐕𝐞𝐫𝐬𝐚𝐜𝐞) → đưa về chữ thường, dấu tiếng Việt giữ nguyên
+  if(field==='name' || field==='brand') v = String(value??'').normalize('NFKC');
 
   if(NUMF.has(field)){
     if(String(value).trim()==='') v = '';
@@ -627,6 +642,7 @@ function filtered(){
       if(UI.filter==='missing') return !num(p.costFull) && !num(p.costDecant);
       if(UI.filter==='instock') return c.totalMl>0;
       if(UI.filter==='low')     return c.totalMl>0 && c.totalMl < num(DB.settings.lowMl);
+      if(UI.filter==='chuachac') return !p.chac;
       return true;
     });
   }
@@ -667,8 +683,7 @@ function render(){
   document.body.classList.remove('gated');
   document.body.classList.toggle('sell', UI.sell);
   $('#sellBtn').classList.toggle('on', UI.sell);
-  $('#brandSub').textContent = UI.sell ? 'đang ẩn giá vốn — an toàn để khách xem'
-                                       : 'bảng giá · tồn kho · đơn hàng';
+  $('#brandSub').textContent = UI.sell ? 'đang ẩn giá vốn — an toàn để khách xem' : '';
   const sb=$('#syncBadge'); if(sb){ sb.hidden = UI.sell; if(typeof paintSyncBadge==='function') paintSyncBadge(); }
   const lk=$('#lockBtn'); if(lk) lk.hidden = UI.sell || !(typeof sbSess==='function' && sbSess());
   if(UI.sell) UI.tab = 'price';                      // khách chỉ được thấy bảng giá bán
@@ -762,23 +777,38 @@ function stockLabel(p,c){
   return `<span class="tiny ${low?'':'muted'}" ${low?'style="color:var(--bad);font-weight:700"':''}>${parts.join(' · ')}</span>`;
 }
 
+/* ảnh nhỏ nhận diện chai: ảnh bạn tải ở admin → ảnh chính đang hiện trên web → theo quy ước products/<mã>.jpg */
+function anhNho(p){
+  let src = '';
+  try{
+    if(p.webSlug){
+      const S = typeof anhSlots==='function' ? anhSlots(p) : {};
+      const w = typeof webInfo==='function' ? webInfo(p.webSlug) : null;
+      src = S[1] ? anhURL(p.webSlug, 1, S[1]) : ((w && w.img) || anhURL(p.webSlug, 1));
+    }
+  }catch(e){ src = ''; }
+  return `<span class="anhnho">${src ? `<img src="${esc(src)}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : ''}</span>`;
+}
+
 /* ============================ TAB: BẢNG GIÁ ============================ */
 function viewPrice(){
+  if(typeof webSlugsTuTai==='function') webSlugsTuTai();     // lấy ảnh chính từ web cho cột ảnh (một lần)
   const list = filtered();
   const counts = {
     all: DB.products.length,
     alert: DB.products.filter(p=>calc(p).flags.length).length,
     missing: DB.products.filter(p=>!num(p.costFull)&&!num(p.costDecant)).length,
-    instock: DB.products.filter(p=>calc(p).totalMl>0).length
+    instock: DB.products.filter(p=>calc(p).totalMl>0).length,
+    chuachac: DB.products.filter(p=>!p.chac).length
   };
   const chip=(k,label,n)=>`<button class="chip ${UI.filter===k?'active':''}" data-filter="${k}">${label} <span class="n">${n}</span></button>`;
   const rows = list.map(p=> UI.sell ? sellRow(p) : priceRow(p)).join('');
   const head = UI.sell ? `
       <tr><th class="l">Sản phẩm</th><th>ml</th><th class="sep">Giá full</th><th>Thị trường</th>
           <th class="sep">Chiết ${num(DB.settings.decantSize)}ml</th><th>Thị trường</th><th></th></tr>`
-    : `<tr class="grp"><th class="l"></th><th></th><th class="sep" colspan="4">Chai full</th>
+    : `<tr class="grp"><th class="l"></th><th></th><th></th><th class="sep" colspan="4">Chai full</th>
           <th class="sep" colspan="4">Chiết ${curSize()}ml</th><th class="sep" colspan="2"></th></tr>
-       <tr><th class="l">Sản phẩm</th><th>ml</th>
+       <tr><th class="l">Sản phẩm</th><th title="Tick khi bạn đã chắc tên và giá — chỉ để tự theo dõi, không ảnh hưởng web">Tên &amp; giá</th><th>ml</th>
            <th class="sep">Vốn</th><th>Bán · ${esc(chName(curCh()))}</th><th>Lãi</th><th>Thị trường</th>
            <th class="sep">Vốn</th><th>Bán · ${esc(chName(curCh()))}</th><th>Lãi</th><th>Thị trường</th>
            <th class="sep">Tồn</th><th></th></tr>`;
@@ -790,6 +820,7 @@ function viewPrice(){
       ${UI.sell?'':chip('alert','⚠ Cần xem lại',counts.alert)}
       ${UI.sell?'':chip('missing','Thiếu giá vốn',counts.missing)}
       ${chip('instock','Còn hàng',counts.instock)}
+      ${UI.sell?'':chip('chuachac','Còn phân vân',counts.chuachac)}
       <span class="spacer"></span>
       <span class="chsel">Giá bán ở
         <select id="chPick">${chList().map(c=>`<option value="${esc(c.id)}" ${c.id===curCh()?'selected':''}>${esc(c.name)}</option>`).join('')}</select>
@@ -817,10 +848,12 @@ function priceRow(p){
   const c = calc(p);
   const dot = c.worst==='ok' ? '' : `<span class="dot ${c.worst}" title="${esc(c.flags.map(f=>f.t).join(' · '))}"></span>`;
   return `<tr data-row="${p.id}">
-    <td class="l nm" data-l="Sản phẩm">
+    <td class="l nm" data-l="Sản phẩm"><div class="nmwrap">${anhNho(p)}<div class="nmtxt">
       <div class="nmrow">${dot}<input class="cell txt" data-id="${p.id}" data-f="name" value="${esc(p.name)}" placeholder="Tên nước hoa"></div>
       <input class="cell brand" data-id="${p.id}" data-f="brand" value="${esc(p.brand||'')}" placeholder="Thương hiệu" list="brands">
-    </td>
+    </div></div></td>
+    <td data-l="Đã chắc tên &amp; giá"><label class="chac ${p.chac?'ok':''}" title="Tick khi bạn đã chắc tên và giá chai này — chỉ để bạn tự theo dõi, không ảnh hưởng gì tới web">
+      <input type="checkbox" data-chac="${p.id}" ${p.chac?'checked':''}><span>${p.chac?'Đã chắc':'Phân vân'}</span></label></td>
     <td data-l="Dung tích">${inp(p,'sizeMl','ml','')}</td>
     <td class="sep" data-l="Vốn full">${inp(p,'costFull', c.d.costFull?money(c.costFull):'')}</td>
     <td data-l="Bán full · ${esc(chName(curCh()))}">${pxInp(p,'full')}</td>
@@ -846,7 +879,7 @@ function sellRow(p){
   const c = calc(p);
   const cp = (label,val)=> val ? `<button class="sellprice" data-act="copy" data-copy="${esc(p.name)} — ${label}: ${fmt(Math.round(val))}${U()}">${fmt(Math.round(val))}</button>` : '<span class="muted">—</span>';
   return `<tr data-row="${p.id}">
-    <td class="l nm" data-l="Sản phẩm"><b>${esc(p.name)}</b>${p.brand?`<div class="tiny muted">${esc(p.brand)}</div>`:''}</td>
+    <td class="l nm" data-l="Sản phẩm"><div class="nmwrap">${anhNho(p)}<div class="nmtxt"><b>${esc(p.name)}</b>${p.brand?`<div class="tiny muted">${esc(p.brand)}</div>`:''}</div></div></td>
     <td data-l="Dung tích"><span class="muted">${p.sizeMl?esc(p.sizeMl)+'ml':'—'}</span></td>
     <td class="sep" data-l="Giá full · ${esc(chName(curCh()))}">${cp('full', c.priceFull)}</td>
     <td data-l="Thị trường"><span class="muted tiny">${c.refF.n>1?`${money(c.refF.min)}–${money(c.refF.max)}`:money(c.refF.min)}</span></td>
@@ -1605,7 +1638,7 @@ function importCSV(text){
   let added=0, updated=0;
   for(let i=hi+1;i<rows.length;i++){
     const r = rows[i]; const rec = {};
-    map.forEach((f,j)=>{ if(f && r[j]!==undefined && String(r[j]).trim()!=='') rec[f]=String(r[j]).trim(); });
+    map.forEach((f,j)=>{ if(f && r[j]!==undefined && String(r[j]).trim()!=='') rec[f]=String(r[j]).normalize('NFKC').trim(); });   // NFKC: 𝐕𝐞𝐫𝐬𝐚𝐜𝐞 → Versace
     if(!rec.name) continue;
     const numFields=['sizeMl','costFull','priceFull','refFull','costDecant','priceDecant','refDecant','stockFull','openMl'];
     numFields.forEach(f=>{ if(rec[f]!==undefined){ const v=num(rec[f]); rec[f]= v? v : ''; } });
@@ -1778,7 +1811,7 @@ document.addEventListener('click', e=>{
   const id = b.dataset.id, act = b.dataset.act;
   const acts = {
     add(){ const p={id:uid(),name:'',brand:'',sizeMl:'',costFull:'',priceFull:{},costDecant:'',
-            priceDecant:{},refsFull:[],refsDecant:[],note:'',stockFull:0,openMl:0,updatedAt:today()};
+            priceDecant:{},refsFull:[],refsDecant:[],note:'',stockFull:5,openMl:0,updatedAt:today()};   // mặc định 5 chai — web không báo hết hàng
            DB.products.unshift(p); save(); UI.filter='all'; UI.q=''; $('#q').value=''; render();
            const f=document.querySelector('.cell.txt'); if(f) f.focus(); },
     khoa(){ ask('Khoá màn hình? Bạn sẽ phải đăng nhập lại để xem dữ liệu.', ()=>{
@@ -1901,6 +1934,13 @@ document.addEventListener('change', e=>{
     if(UI.tab==='price') refreshRow(t.dataset.id); else render();
     return;
   }
+  if(t.matches('[data-chac]')){
+    const p = productById(t.dataset.chac); if(!p) return;
+    p.chac = t.checked; save();
+    if(UI.tab==='price' && UI.filter!=='chuachac') refreshRow(p.id); else render();
+    const n = document.querySelector('[data-filter="chuachac"] .n'); if(n) n.textContent = DB.products.filter(x=>!x.chac).length;
+    return;
+  }
   if(t.matches('#chPick')){ UI.channel = t.value; render(); return; }
   if(t.matches('#szPick')){ UI.dsize = num(t.value); render(); return; }
   if(t.matches('.cell[data-f]')){                          // ô trong bảng (ô tab Đăng web có handler riêng)
@@ -1911,12 +1951,14 @@ document.addEventListener('change', e=>{
   }
   if(t.matches('[data-p]')){
     setField(t.dataset.id, t.dataset.p, t.value.trim());
+    if(t.dataset.p==='name' || t.dataset.p==='brand'){ const p=productById(t.dataset.id); if(p) t.value = p[t.dataset.p]; }
     if(t.dataset.p==='brand'){ const dl=$('#brands'); if(dl) dl.innerHTML = brandOptions(); }
     return; }
   if(t.matches('[data-webcontent]')){
     const p = productById(t.dataset.id); if(!p || !p.webSlug) return;
     const f = t.dataset.webcontent;
-    const v = t.value.trim();
+    const v = t.value.normalize('NFKC').trim();      // chữ kiểu lạ dán từ MXH → chữ thường như website
+    if(t.value !== v) t.value = v;
     if(f==='webLongevity' || f==='webSillage'){
       const goc = f==='webLongevity' ? 'longevity' : 'sillage';   // trường dùng chung với tab Đăng web
       if(v==='') { p[f]=''; delete p[goc]; }
@@ -2322,147 +2364,10 @@ function syncCardHTML(){
         <label class="fld"><span>Mật khẩu</span><input class="inp" id="sbPw" type="password" autocomplete="current-password" placeholder="mật khẩu"></label>
       </div>
       <button class="btn primary" data-act="sblogin">Đăng nhập &amp; bật đồng bộ</button>
-      <p class="hint" style="margin-top:12px">Tài khoản tạo trong Supabase: <b>Authentication → Users → Add user</b>. Chạy đoạn SQL ở dưới trước.</p>`}
+      <p class="hint" style="margin-top:12px">Tài khoản tạo trong Supabase: <b>Authentication → Users → Add user</b>.</p>`}
     <p class="hint" style="margin-top:14px">Dữ liệu vẫn nằm trong máy này trước, Supabase chỉ là bản chung. Mất mạng vẫn ghi đơn bình thường, có mạng lại thì tự đẩy lên.</p>
-  </div></div>
-
-  <details class="card sqlbox" data-keep="sql"${sess?'':' open'}>
-    <summary><b>SQL cài đặt</b> <span class="sub">chỉ cần khi cài lần đầu, hoặc khi có tính năng mới yêu cầu</span></summary>
-    <div class="pad">
-      <p class="hint">Tạo bảng riêng, chỉ chủ tài khoản đọc ghi được. Khách vào web puvela <b>không</b> đọc được bảng này.
-        Chạy lại nhiều lần vô hại — mọi câu đều có <code>if not exists</code>.</p>
-      <textarea class="inp" rows="12" readonly style="font-family:ui-monospace,Menlo,monospace;font-size:12px;white-space:pre" onclick="this.select()">${esc(SB_SQL)}</textarea>
-      <button class="btn sm" data-act="copysql" style="margin-top:8px">⧉ Copy đoạn SQL</button>
-    </div>
-  </details>`;
+  </div></div>`;
 }
-const SB_SQL = `create table if not exists pm_state (
-  user_id    uuid primary key references auth.users(id) on delete cascade,
-  data       jsonb       not null default '{}'::jsonb,
-  version    bigint      not null default 1,
-  updated_at timestamptz not null default now()
-);
-
-alter table pm_state enable row level security;
-
--- chỉ chủ tài khoản thấy dòng của mình; anon không có quyền nào
-drop policy if exists "pm_state_select" on pm_state;
-drop policy if exists "pm_state_insert" on pm_state;
-drop policy if exists "pm_state_update" on pm_state;
-
-create policy "pm_state_select" on pm_state for select to authenticated
-  using (auth.uid() = user_id);
-create policy "pm_state_insert" on pm_state for insert to authenticated
-  with check (auth.uid() = user_id);
-create policy "pm_state_update" on pm_state for update to authenticated
-  using (auth.uid() = user_id) with check (auth.uid() = user_id);
-
-
--- ===== PHẦN 2: cho phép đăng giá lên web puvela =====
--- ai được sửa catalog (chỉ người có tên trong bảng này)
-create table if not exists pm_admins (
-  user_id uuid primary key references auth.users(id) on delete cascade
-);
-alter table pm_admins enable row level security;
-drop policy if exists "pm_admins_self" on pm_admins;
-create policy "pm_admins_self" on pm_admins for select to authenticated
-  using (auth.uid() = user_id);
-
--- ĐỔI EMAIL DƯỚI ĐÂY THÀNH EMAIL BẠN VỪA TẠO Ở BƯỚC 2
-insert into pm_admins(user_id)
-  select id from auth.users where email = 'email-cua-ban@gmail.com'
-  on conflict do nothing;
-
--- khoá duy nhất để ghi đè giá theo (mã sản phẩm, nhãn dung tích)
-create unique index if not exists ux_variants_slug_label
-  on product_variants(product_slug, label);
-
-drop policy if exists "admin_write_products" on products;
-drop policy if exists "admin_write_variants" on product_variants;
-drop policy if exists "admin_write_brands" on brands;
-create policy "admin_write_brands" on brands for all to authenticated
-  using      (exists (select 1 from pm_admins a where a.user_id = auth.uid()))
-  with check (exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-create policy "admin_write_products" on products for all to authenticated
-  using      (exists (select 1 from pm_admins a where a.user_id = auth.uid()))
-  with check (exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-create policy "admin_write_variants" on product_variants for all to authenticated
-  using      (exists (select 1 from pm_admins a where a.user_id = auth.uid()))
-  with check (exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-
-
--- ===== PHẦN 3: giá sale (gạch ngang) + đăng ảnh từ admin =====
--- giá gốc để gạch ngang; NULL = không sale
-alter table product_variants add column if not exists compare_at_price int;
-
--- kho ảnh sản phẩm, ai cũng xem được, chỉ admin được ghi
-insert into storage.buckets (id, name, public) values ('products','products',true)
-  on conflict (id) do update set public = true;
-
-drop policy if exists "products_img_read"  on storage.objects;
-drop policy if exists "products_img_write" on storage.objects;
-
-create policy "products_img_read" on storage.objects for select to public
-  using (bucket_id = 'products');
-create policy "products_img_write" on storage.objects for all to authenticated
-  using      (bucket_id = 'products' and exists (select 1 from pm_admins a where a.user_id = auth.uid()))
-  with check (bucket_id = 'products' and exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-
-
--- ===== PHẦN 4: ảnh trang trí của website (nhóm hương, ảnh nền, ảnh câu chuyện) =====
-create table if not exists site_images (
-  key        text primary key,
-  url        text not null,
-  updated_at timestamptz not null default now()
-);
-alter table site_images enable row level security;
-
-drop policy if exists "site_images_read"  on site_images;
-drop policy if exists "site_images_write" on site_images;
-
--- khách xem web cần đọc được; chỉ admin được sửa
-create policy "site_images_read" on site_images for select to anon, authenticated
-  using (true);
-create policy "site_images_write" on site_images for all to authenticated
-  using      (exists (select 1 from pm_admins a where a.user_id = auth.uid()))
-  with check (exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-
-
--- ===== PHẦN 5: cho admin xem và xử lý đơn khách đặt trên web =====
--- Khách vẫn chỉ được GHI đơn (policy "insert order" có sẵn), không đọc được đơn của ai.
-drop policy if exists "admin_read_orders"   on orders;
-drop policy if exists "admin_update_orders" on orders;
-
-create policy "admin_read_orders" on orders for select to authenticated
-  using (exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-create policy "admin_update_orders" on orders for update to authenticated
-  using      (exists (select 1 from pm_admins a where a.user_id = auth.uid()))
-  with check (exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-
-
--- ===== PHẦN 6: cho khách gửi đánh giá, bạn duyệt rồi mới hiện =====
--- Mặc định của cột is_published là true -> phải ép về false cho đánh giá mới,
--- nếu không spam sẽ hiện thẳng lên web.
-alter table reviews alter column is_published set default false;
-
-drop policy if exists "guest_write_review"  on reviews;
-drop policy if exists "admin_read_reviews"  on reviews;
-drop policy if exists "admin_write_reviews" on reviews;
-
--- khách chỉ được GHI, và bắt buộc chưa duyệt + chưa gắn nhãn "đã mua"
-create policy "guest_write_review" on reviews for insert to anon
-  with check (is_published = false and verified = false
-              and rating between 1 and 5
-              and length(coalesce(body,'')) between 10 and 1000
-              and length(coalesce(author,'')) between 1 and 60);
-
--- bạn xem được cả đánh giá chưa duyệt, và sửa/xoá được
-create policy "admin_read_reviews" on reviews for select to authenticated
-  using (exists (select 1 from pm_admins a where a.user_id = auth.uid()));
-create policy "admin_write_reviews" on reviews for all to authenticated
-  using      (exists (select 1 from pm_admins a where a.user_id = auth.uid()))
-  with check (exists (select 1 from pm_admins a where a.user_id = auth.uid()));`;
-
 function paintSyncPanel(){ if(UI.tab==='settings') render(); }
 
 /* ---------- nối vào giao diện ---------- */
@@ -2510,7 +2415,6 @@ document.addEventListener('click', async e=>{
     ask('Đăng xuất khỏi Supabase? Dữ liệu trong máy này vẫn còn nguyên.', ()=>{
       localStorage.removeItem(SB_SESS); setSync('off','Đã đăng xuất');
     }, 'Đăng xuất', true); }
-  if(act==='copysql'){ e.preventDefault(); copyText(SB_SQL); }
 });
 
 window.addEventListener('online', ()=>{ if(sbOn() && syncDirty()) syncNow(true); });
@@ -2839,9 +2743,9 @@ async function siteAnhUpload(key, file){
 /* ---------- tải danh sách slug từ web ---------- */
 async function webLoadSlugs(){
   await sbReady();
-  const r = await sbFetch('/rest/v1/products?select=slug,name,gender,is_published,scent_dna&order=name');
+  const r = await sbFetch('/rest/v1/products?select=slug,name,gender,is_published,scent_dna,hero_image&order=name');
   /* kèm giới tính + có điểm mùi chưa → tab Đăng web lọc được món chưa vào quiz / chưa vào trang Nam-Nữ */
-  WEB_SLUGS = (r || []).map(x=>({slug:x.slug, name:x.name, gender:x.gender||'', pub:!!x.is_published,
+  WEB_SLUGS = (r || []).map(x=>({slug:x.slug, name:x.name, gender:x.gender||'', pub:!!x.is_published, img:x.hero_image||'',
     dna: !!(x.scent_dna && Object.values(x.scent_dna).some(v=>num(v)>0))}));
   lsSet('pm_web_slugs', WEB_SLUGS);
   /* kèm luôn nội dung hiện tại (mô tả + notes) để điền sẵn vào ô sửa */
@@ -2855,7 +2759,7 @@ async function webLoadSlugs(){
     WEB_NOTES = m; lsSet('pm_web_notes', WEB_NOTES);
   }catch(e){}
   if(!WEB_SLUGS.length)
-    toast('Tải được 0 sản phẩm — kiểm tra đăng nhập hoặc chưa chạy SQL phân quyền (SB_SQL)');
+    toast('Tải được 0 sản phẩm — kiểm tra lại đăng nhập');
   return WEB_SLUGS.length;
 }
 
@@ -2865,7 +2769,7 @@ function webSlugsTuTai(){
   if(!sbOn()) return;
   const duSlugs = WEB_SLUGS && WEB_SLUGS.length;
   const duNotes = WEB_NOTES && Object.keys(WEB_NOTES).length;
-  const banCu = duSlugs && !('dna' in WEB_SLUGS[0]);      // danh sách lưu từ bản cũ, chưa có giới tính/điểm mùi
+  const banCu = duSlugs && !('img' in WEB_SLUGS[0]);      // danh sách lưu từ bản cũ, chưa có giới tính/điểm mùi/ảnh
   if(_slugsDaTai || (duSlugs && duNotes && !banCu)) return;
   _slugsDaTai = true;
   webLoadSlugs().then(n=>{ if(n>0) render(); }).catch(()=>{});
@@ -2893,7 +2797,7 @@ async function webSyncProduct(p){
       // gửi tồn kho khi có theo dõi: còn hàng (tồn > 0) hoặc bạn đã nhập số tồn — kể cả 0 = hết hàng trên web
       const daNhapTon = String(p.stockFull??'')!=='' || String(p.openMl??'')!=='';
       // chai full = chỉ chai còn nguyên seal; ml lẻ của chai đã bóc chỉ bán được dạng chiết
-      if(plan.stock > 0 || daNhapTon) o.stock = tonWebCua(p, r);
+      if(plan.stock > 0 || daNhapTon){ const t = tonWebCua(p, r); if(t!==null) o.stock = t; }
       return o;});
     await sbFetch('/rest/v1/product_variants?on_conflict=product_slug,label', {
       method:'POST', headers:{Prefer:'resolution=merge-duplicates,return=minimal'},
@@ -2920,7 +2824,11 @@ async function webSyncProduct(p){
 }
 
 /* số còn hàng gửi lên web cho một mức giá: full = chai còn nguyên seal; chiết = tổng ml / cỡ lọ */
-const tonWebCua = (p, r) => Math.max(0, Math.floor(r.kind==='full' ? num(p.stockFull) : calc(p).totalMl / r.volume_ml));
+const tonWebCua = (p, r) => {
+  // có chai nhưng chưa nhập dung tích → chưa tính được số lọ chiết: KHÔNG gửi (null), tránh web báo hết hàng oan
+  if(r.kind!=='full' && !num(p.sizeMl) && num(p.stockFull)>0) return null;
+  return Math.max(0, Math.floor(r.kind==='full' ? num(p.stockFull) : calc(p).totalMl / r.volume_ml));
+};
 /* chỉ cập nhật cột stock của các mức giá đang có — dùng sau chốt đơn / nhập kho / bóc chai */
 async function webDayTon(p){
   if(chuaTheoDoiTon(p)) return {ok:true, n:0};               // chưa nhập tồn → không đụng tồn trên web
@@ -2929,9 +2837,11 @@ async function webDayTon(p){
   if(chan.length) return {ok:false, why:chan.join(' · ')};
   await sbReady();
   const slug = encodeURIComponent(p.webSlug);
-  for(const r of plan.rows)
+  for(const r of plan.rows){
+    const t = tonWebCua(p, r); if(t===null) continue;
     await sbFetch(`/rest/v1/product_variants?product_slug=eq.${slug}&label=eq.${encodeURIComponent(r.label)}`, {
-      method:'PATCH', headers:{Prefer:'return=minimal'}, body: JSON.stringify({stock: tonWebCua(p, r)})});
+      method:'PATCH', headers:{Prefer:'return=minimal'}, body: JSON.stringify({stock: t})});
+  }
   return {ok:true, n:plan.rows.length};
 }
 
@@ -3236,9 +3146,6 @@ function viewWeb(){
       ${soWebOnly && (loc==='webonly'||loc==='thieu10') ? `<span class="spacer"></span>
         <button class="btn sm" data-act="webnhapall">＋ Đưa cả ${soWebOnly} món chỉ-có-trên-web vào bảng giá</button>` : ''}
     </div>
-    <div class="pad" style="padding-bottom:0">
-      <p class="hint"><b>Gán mã trước khi thêm ảnh:</b> bấm “Tải danh sách sản phẩm từ web”, rồi chọn hoặc gõ mã ở cột <b>Mã trên web</b>. Nếu đó là mã mới, bấm <b>＋ Tạo sản phẩm mới</b>: web tạo bản nháp, sau đó bạn thêm ảnh và đăng giá để mở bán. Mã chỉ dùng chữ thường, số và dấu <code>-</code>; mỗi mã chỉ thuộc một sản phẩm.<br><b>Về giá ở cột “Giá web sẽ đăng”:</b> mọi cỡ chiết và full đều có ô sửa ngay tại chỗ (đơn vị ${U()}). <b>Giá chỉ lên web khi bạn tự nhập</b> — hệ thống không còn tự tính giá từ vốn × markup. Ô để trống ⇒ mức giá đó <b>không được đăng</b>, và nếu trước đó đã có trên web thì sẽ bị <b>tự gỡ</b> khỏi database khi đồng bộ.</p>
-    </div>
     <div class="tblwrap">
       ${list.length ? `<table class="resp"><thead><tr>
           <th class="l">Ảnh &amp; sản phẩm</th><th class="l">Mã trên web</th><th>Giá web sẽ đăng</th>
@@ -3394,7 +3301,7 @@ async function webNhapVeBangGia(slugs){
     const thuong = v => doiDV(num(v.compare_at_price) > num(v.price) ? v.compare_at_price : v.price);
     const sale   = v => num(v.compare_at_price) > num(v.price) ? doiDV(v.price) : 0;
     const full = vs.find(v=>/^full/i.test(v.label||'') || v.kind==='full');
-    const p = { id:uid(), name:r.name || r.slug, brand:(r.brands && r.brands.name) || '',
+    const p = { id:uid(), name:String(r.name || r.slug).normalize('NFKC'), brand:String((r.brands && r.brands.name) || '').normalize('NFKC'),
       sizeMl: full ? (mlCua(full) || '') : '', costFull:'', costDecant:'', stockFull:'', openMl:'',
       priceFull:{}, priceDecant:{}, webSlug:r.slug, webPublish:!!r.is_published, webLive:!!r.is_published,
       updatedAt: today() };
@@ -3807,8 +3714,7 @@ function viewWebOrders(){
       <span class="spacer"></span>
       <button class="btn sm" data-act="wotai" ${WO.dangTai?'disabled':''}>${WO.dangTai?'Đang tải…':'⟳ Tải lại'}</button>
     </div>
-    ${WO.loi?`<div class="pad" style="color:var(--bad)">Không tải được đơn: ${esc(WO.loi)}<br>
-      <span class="tiny muted">Nếu báo permission denied thì chạy lại đoạn SQL trong Cài đặt (phần 5).</span></div>`:''}
+    ${WO.loi?`<div class="pad" style="color:var(--bad)">Không tải được đơn: ${esc(WO.loi)}</div>`:''}
     <div class="tblwrap">
       ${WO.dangTai && !all.length ? `<div class="empty">Đang tải đơn…</div>`
         : ds.length ? `<table class="resp"><thead><tr>
@@ -3818,7 +3724,7 @@ function viewWebOrders(){
             ${all.length?'Thử chọn mục khác.':'Đơn khách đặt trên web sẽ hiện ở đây.'}</div>`}
     </div>
     <div class="legend"><span>Đây là đơn <b>khách tự đặt trên website</b>, khác với tab Đơn hàng (đơn bạn tự ghi).
-      Có đơn mới: admin đang mở sẽ <b>tự kêu chuông + hiện thông báo + tải lại danh sách</b> (cần chạy SQL realtime ở Cài đặt).
+      Có đơn mới: admin đang mở sẽ <b>tự kêu chuông + hiện thông báo + tải lại danh sách</b>.
       Điện thoại nhận tin nhắn Telegram nếu đã bật Function order-telegram.</span>
       <span>Bấm <b>＋ Ghi sổ &amp; trừ kho</b> để đưa đơn vào tab Đơn hàng (trừ kho, tính vào Báo cáo) — mỗi đơn chỉ ghi được một lần.
         Huỷ đơn đã ghi sổ thì admin hỏi hoàn kho.</span></div>
@@ -3935,7 +3841,7 @@ function dgThe(){
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
         <button class="btn sm" data-act="dgtai" ${DG.dangTai?'disabled':''}>${DG.dangTai?'Đang tải…':'⟳ Tải lại'}</button>
       </div>
-      ${DG.loi?`<p class="hint" style="color:var(--bad)">Không tải được: ${esc(DG.loi)}<br>Nếu báo permission denied thì chạy lại đoạn SQL (phần 6).</p>`:''}
+      ${DG.loi?`<p class="hint" style="color:var(--bad)">Không tải được: ${esc(DG.loi)}</p>`:''}
       ${all.length ? all.map(dong).join('')
         : `<p class="hint">${DG.dangTai?'Đang tải…':'Chưa có đánh giá nào. Khách viết ở cuối trang sản phẩm trên web.'}</p>`}
       <p class="hint" style="margin-top:12px">Đánh giá mới <b>không tự hiện</b> trên web — phải bấm Duyệt. Nhãn “đã mua” chỉ bạn gắn được, khách không tự gắn.</p>

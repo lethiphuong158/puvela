@@ -2140,6 +2140,10 @@
       color: var(--ink);
     }
 
+    .ask-copy[hidden] {
+      display: none;   /* chỉ hiện khi chép tự động thất bại */
+    }
+
     .ask-go {
       border: 1px solid var(--ink);
       background: var(--ink);
@@ -3256,7 +3260,8 @@ section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 
               var het = dungStock && priced.length > 0 && priced.every(function (v) { return v.stock === 0; });
               var goc = main && main.compare_at_price > main.price ? main.compare_at_price : 0;
               var giam = goc ? Math.round((1 - main.price / goc) * 100) : 0;
-              var priceHtml = !main ? '' :
+              /* chưa điền giá → "Liên hệ giá" + nút hỏi qua Zalo (giống quiz), không để "Mua full" giá 0₫ */
+              var priceHtml = !main ? '<p class="pcard-price"><span class="pr-lb">Chiết 10ml</span><span class="pr-main"><b>Liên hệ giá</b></span></p>' :
                 '<p class="pcard-price"><span class="pr-lb">' + (v10 ? 'Chiết 10ml' : 'Giá từ') + '</span>' +
                 '<span class="pr-main">' + (goc ? '<s>' + money(goc) + '</s>' : '') + '<b>' + money(main.price) + '</b>' +
                 (giam ? ' <span class="pct">-' + giam + '%</span>' : '') + '</span>' +
@@ -3266,10 +3271,14 @@ section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 
                 '<div class="pcard-body"><a href="product.html?p=' + p.slug + '"><h3>' + p.name + '</h3></a>' +
                 (function () { var d = DGX[p.slug]; return d && d.n ? '<p class="pstar">★ ' + (d.tong / d.n).toFixed(1) + ' <i>(' + d.n + ')</i></p>' : '<p class="pstar" aria-hidden="true"></p>'; })() +
                 priceHtml +
-                '<div class="pcard-cta"><button class="btn btn-solid" data-add data-slug="' + p.slug + '" data-name="' + p.name.replace(/"/g, '&quot;') + '" data-price="' + ((v10 || main) ? (v10 || main).price : 0) + '" data-label="' + ((v10 || main) ? (v10 || main).label : 'Chiết') + '" data-img="' + (p.hero_image || '') + '"' + (het ? ' disabled' : '') + '>' + (het ? 'Hết hàng' : (v10 ? 'Thử 10ml' : 'Mua full')) + '</button>' +
+                '<div class="pcard-cta">' + (!main ? '<button class="btn btn-solid" data-hoigia="' + p.name.replace(/"/g, '&quot;') + '">Hỏi giá Zalo</button>' :
+                '<button class="btn btn-solid" data-add data-slug="' + p.slug + '" data-name="' + p.name.replace(/"/g, '&quot;') + '" data-price="' + ((v10 || main) ? (v10 || main).price : 0) + '" data-label="' + ((v10 || main) ? (v10 || main).label : 'Chiết') + '" data-img="' + (p.hero_image || '') + '"' + (het ? ' disabled' : '') + '>' + (het ? 'Hết hàng' : (v10 ? 'Thử 10ml' : 'Mua full')) + '</button>') +
                 '<a class="btn btn-line" href="product.html?p=' + p.slug + '">Chi tiết</a></div></div></article>';
             }).join('');
             grid.querySelectorAll('[data-add]').forEach(function (b) { b.addEventListener('click', function () { window.puvelaCart && window.puvelaCart.add({ slug: b.dataset.slug, name: b.dataset.name, label: b.dataset.label, price: Number(b.dataset.price), image: b.dataset.img }); }); });
+            grid.querySelectorAll('[data-hoigia]').forEach(function (b) { b.addEventListener('click', function () {
+              if (window.puvelaHoiGia) window.puvelaHoiGia('Chào PUVELA, mình muốn hỏi giá chiết 10ml ' + b.dataset.hoigia);
+              else window.open('https://zalo.me/0368574940', '_blank', 'noopener'); }); });
           }).catch(function (e) { console.warn('[Puvela] bestsellers lỗi:', e && e.message); trong('Không tải được sản phẩm. Thử tải lại trang.'); });
       });
     })();
@@ -4115,6 +4124,7 @@ section.wrap { padding-top: clamp(56px, 7vw, 88px); padding-bottom: clamp(56px, 
       chepCauHoi(msg).then(trangThaiChep);
     }
     function dongKhungHoiGia() { askSheet.hidden = true; }
+    window.puvelaHoiGia = moKhungHoiGia;      /* thẻ "Best seller" chưa có giá cũng dùng chung khung này */
     document.querySelector('#ask-copy').onclick = function () {
       chepCauHoi(document.querySelector('#ask-msg').textContent).then(trangThaiChep);
     };
